@@ -19,46 +19,50 @@
         <el-tab-pane label="个人信息" name="first" style="padding-left:20px;">
           <div id="information" v-show="!change">
             <p>
-              <span>登录名：</span>
-              <span>{{userInfor.userName}}</span>
+              <span class="label-span">用户名：</span>
+              <span class="text-span">{{userInfor.username}}</span>
             </p>
             <p>
-              <span>性别：</span>
-              <span>{{userInfor.gender}}</span>
+              <span class="label-span">电话号码：</span>
+              <span class="text-span">{{userInfor.teleNumber}}</span>
             </p>
             <p>
-              <span>年龄：</span>
-              <span>{{userInfor.age}}</span>
+              <span class="label-span">邮箱：</span>
+              <span class="text-span">{{userInfor.email}}</span>
             </p>
             <p>
-              <span>所在公司：</span>
-              <span>{{userInfor.group}}</span>
+              <span class="label-span">研究领域：</span>
+              <span class="text-span">{{userInfor.reaserch_field}}</span>
             </p>
             <p>
-              <span>手机号码：</span>
-              <span>{{userInfor.phone}}</span>
+              <span class="label-span">机构名称：</span>
+              <span class="text-span">{{userInfor.institutionName}}</span>
             </p>
             <p>
-              <span>联系邮箱：</span>
-              <span>{{userInfor.email}}</span>
+              <span class="label-span">支付方式：</span>
+              <span class="text-span">{{userInfor.payMethod}}</span>
             </p>
             <p>
-              <span>学历：</span>
-              <span>{{userInfor.grade}}</span>
+              <span class="label-span">性别：</span>
+              <span class="text-span">{{userInfor.gender}}</span>
             </p>
             <p>
-              <span>毕业院校：</span>
-              <span>{{userInfor.school}}</span>
+              <span class="label-span">年龄：</span>
+              <span class="text-span">{{userInfor.age}}</span>
             </p>
             <p>
-              <span>联系地址：</span>
-              <span>{{userInfor.address}}</span>
+              <span class="label-span">联系地址：</span>
+              <span class="text-span">{{userInfor.address}}</span>
+            </p>
+            <p>
+              <span class="label-span">账户余额：</span>
+              <span class="text-span">{{userInfor.balance}}</span>
             </p>
             <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:block;">修改</el-button>
           </div>
           <el-form v-show="change" :label-position="'left'" label-width="80px">
-            <el-form-item label="登录名">
-              <el-input v-model="userInfor.userName"></el-input>
+            <el-form-item label="用户名">
+              <el-input v-model="userInfor.username"></el-input>
             </el-form-item>
             <el-form-item label="性别">
               <el-select v-model="userInfor.gender">
@@ -68,25 +72,22 @@
             <el-form-item label="年龄">
               <el-input v-model="userInfor.age"></el-input>
             </el-form-item>
-            <el-form-item label="所在公司">
-              <el-input v-model="userInfor.group"></el-input>
+            <el-form-item label="研究领域">
+              <el-input v-model="userInfor.reaserch_field"></el-input>
             </el-form-item>
-            <el-form-item label="手机号码">
-              <el-input v-model="userInfor.phone"></el-input>
-            </el-form-item>
-            <el-form-item label="联系邮箱">
-              <el-input v-model="userInfor.email"></el-input>
-            </el-form-item>
-            <el-form-item label="学历">
-              <el-input v-model="userInfor.grade"></el-input>
-            </el-form-item>
-            <el-form-item label="毕业院校">
-              <el-input v-model="userInfor.school"></el-input>
+            <el-form-item label="机构名称">
+              <el-input v-model="userInfor.institutionName"></el-input>
             </el-form-item>
             <el-form-item label="联系地址">
               <el-input v-model="userInfor.address"></el-input>
             </el-form-item>
+            <el-form-item label="支付方式">
+              <el-select v-model="userInfor.payMethod">
+                <el-option v-for="pay in payMethods" :key="pay" :value="pay"></el-option>
+              </el-select>
+            </el-form-item>
             <p style="text-align:center">
+              <el-button type="primary" @click="cancelChange">取消修改</el-button>
               <el-button type="primary" @click="changeEnsure">确认修改</el-button>
             </p>
           </el-form>
@@ -139,47 +140,83 @@ export default {
       },
       change: false,
       userInfor: {
-        userName: "1",
-        gender: "2",
-        age: "3",
-        group: "4",
-        phone: "5",
-        email: "6",
-        grade: "本科",
-        school: "同济",
-        address: "9"
+        username: "",
+        name: "",
+        teleNumber: "",
+        reaserch_field: "",
+        institutionName: "",
+        address: "",
+        payMethod: "",
+        gender: "",
+        age: "",
+        balance: "",
+        email: "",
+        eMail: "",
+        requesterId: ""
       },
-      genders: ["男", "女"]
+      genders: ["男", "女"],
+      payMethods: ["支付宝", "微信支付"]
     };
   },
   components: {
     "worker-header": WorkerHeader
   },
   methods: {
+    loadInfor: function() {
+      axios({
+        method: "get",
+        url: "/api/requester/find-myself"
+      }).then(response => {
+        this.userInfor.username = response.data.requester.username;
+        this.userInfor.name = response.data.requester.name;
+        this.userInfor.gender = response.data.requester.gender;
+        this.userInfor.age = response.data.requester.age;
+        this.userInfor.teleNumber = response.data.requester.teleNumber;
+        this.userInfor.email = response.data.requester.email;
+        this.userInfor.eMail = response.data.requester.eMail;
+        this.userInfor.address = response.data.requester.address;
+        this.userInfor.requesterId = response.data.requester.requesterId;
+        this.userInfor.balance = response.data.requester.balance;
+        this.userInfor.reaserch_field = response.data.requester.research_field;
+        this.userInfor.institutionName =
+          response.data.requester.institutionName;
+        this.userInfor.payMethod = response.data.requester.payMethod;
+      });
+    },
+    uploadInfor:function(){
+      let newInfor = {};
+      newInfor.username = this.userInfor.username;
+      newInfor.name = this.userInfor.name;
+      newInfor.teleNumber = this.userInfor.teleNumber;
+      newInfor.eMail = this.userInfor.email;
+      newInfor.reaserch_field = this.userInfor.reaserch_field;
+      newInfor.institutionName = this.userInfor.institutionName;
+      newInfor.address = this.userInfor.address;
+      newInfor.payMethod = this.userInfor.payMethod;
+      newInfor.gender = this.userInfor.gender;
+      newInfor.age = this.userInfor.age;
+
+      axios.put("/api/requester/update",newInfor
+      ).then(response => {
+        console.log("success");
+      });
+    },
+    cancelChange: function() {
+      this.change = false;
+      this.$options.methods.loadInfor.call(this);
+    },
     changeInfor: function() {
       this.change = true;
     },
     changeEnsure: function() {
       this.change = false;
-      
-    }
+      this.$options.methods.uploadInfor.call(this);
+      this.$options.methods.loadInfor.call(this);
+    },
+    
   },
   mounted: function() {
-    axios({
-      method: "get",
-      url: "/api/requester/find-myself"
-    }).then(response => {
-      console.log(response.data)
-      this.userInfor.userName = response.data.requester.username;
-      this.userInfor.gender = response.data.requester.gender;
-      this.userInfor.age = response.data.requester.age;
-      this.userInfor.group = response.data.requester.institutionName;
-      this.userInfor.phone = response.data.requester.teleNumber;
-      this.userInfor.email = response.data.requester.eMail;
-      // this.userInfo.grade=
-      // this.school=
-      this.userInfor.address = response.data.requester.address;
-    });
+    this.$options.methods.loadInfor.call(this);
   }
 };
 </script>
@@ -188,5 +225,16 @@ export default {
 <style scoped>
 .el-input {
   width: 500px;
+}
+
+.label-span {
+  width: 100px;
+  display: inline-block;
+  color: #666;
+}
+
+.text-span {
+  color: #333;
+  font-size: 14px;
 }
 </style>
