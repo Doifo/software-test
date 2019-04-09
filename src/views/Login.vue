@@ -47,20 +47,22 @@
             <div style="padding-left:70px;padding-top:24px">
               
                 <el-button
-                  style="width:300px"
+                  style="width:300px;display:block;margin-top:5px;"
                   type="primary"
                   @click="loginWorker"
                 >worker登录</el-button>
               
               
                 <el-button
-                  style="width:300px;margin-top:5px"
+                  style="width:300px;margin-top:5px;display:block"
                   type="primary"
+                  @click="loginRequester"
                 >requester登录</el-button>
              
                 <el-button
-                  style="width:300px;margin-top:5px"
+                  style="width:300px;margin-top:5px;display:block"
                   type="primary"
+                  
                 >admin登录</el-button>
             </div>
           </el-col>
@@ -123,7 +125,7 @@ export default {
                   };
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
-                  that.$router.replace("/requester_manage_main");
+                  that.$router.replace("/requester-information");
                   that.button_disabled = false;
                 })
                 .catch(function(error) {
