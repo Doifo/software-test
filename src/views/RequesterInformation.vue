@@ -19,39 +19,39 @@
         <el-tab-pane label="个人信息" name="first" style="padding-left:20px;">
           <p>
             <span>登录名：</span>
-            <span></span>
+            <span>{{userName}}</span>
           </p>
           <p>
             <span>性别：</span>
-            <span></span>
+            <span>{{gender}}</span>
           </p>
           <p>
-            <span>出生年月：</span>
-            <span></span>
+            <span>年龄：</span>
+            <span>{{age}}</span>
           </p>
           <p>
             <span>所在公司：</span>
-            <span></span>
+            <span>{{group}}</span>
           </p>
           <p>
             <span>手机号码：</span>
-            <span></span>
+            <span>{{phone}}</span>
           </p>
           <p>
             <span>联系邮箱：</span>
-            <span></span>
+            <span>{{email}}</span>
           </p>
           <p>
             <span>学历：</span>
-            <span></span>
+            <span>{{grade}}</span>
           </p>
           <p>
             <span>毕业院校：</span>
-            <span></span>
+            <span>{{school}}</span>
           </p>
           <p>
             <span>联系地址：</span>
-            <span></span>
+            <span>{{address}}</span>
           </p>
           <el-button type="primary" @click="confirmupdate" style="margin:0 auto;display:block;">修改</el-button>
         </el-tab-pane>
@@ -96,6 +96,7 @@
 
 <script>
 import WorkerHeader from "@/components/WorkerHeader";
+import axios from "axios";
 
 export default {
   name: "RequesterInformation",
@@ -104,11 +105,29 @@ export default {
       sizeForm: {
         money: "",
         chooseMoney: ""
-      }
+      },
+      userName: "1",
+      gender: "2",
+      age: "3",
+      group: "4",
+      phone: "5",
+      email: "6",
+      grade: "7",
+      school: "8",
+      address: "9"
     };
   },
   components: {
     "worker-header": WorkerHeader
+  },
+  mounted: function() {
+    axios({
+      method: "get",
+      url: "/api/requester/find-myself",
+    }).then(response=>{
+      alert("OK");
+      this.userName=response.data.requester.username;
+    })
   }
 };
 </script>
