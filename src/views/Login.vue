@@ -1,44 +1,70 @@
-
 <template>
-  <div style="background-color:#E4E5E6;height:740px;">
-    <el-row type="flex" justify="center">
-      <el-col :span="7">
-        <!--logo-->
-        <div style="height:120px"></div>
-        <!--login-->
-        <div class="login_box">
-          <b style="font-size:38px;color:#303133;margin-bottom:20px;">登录</b>
-          <br>
-          <span style="color:#909399;font-size:15px;">登录以进入你的账号</span>
-          <el-form label-position="top" label-width="60px" style=" margin-top: 30px;">
-            <el-form-item label>
-              <el-input v-model="email" placeholder="邮箱">
-                <template slot="prepend">&nbsp;&nbsp;</template>
-              </el-input>
-            </el-form-item>
-            <el-form-item label>
-              <el-input v-model="pwd" type="password" placeholder="密码">
-                <template slot="prepend">&nbsp;&nbsp;</template>
-              </el-input>
-              <span style="color:#e4260c">{{wrong_pwd}}</span>
-            </el-form-item>
-            <el-form-item>
-              <b class="forget" @click="forget">忘记密码？</b>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="loginRequester" class="login_button login_requester">以Requester身份登录</el-button>
-            </el-form-item>
-            <el-form-item>
-              <el-button @click="loginWorker" class="login_button login_worker">以Worker身份登录</el-button>
-            </el-form-item>
+  <div>
+    <el-row style="border-bottom:1px solid #ccc;display:flex;flex-direction:row;align-items:center;">
+      <el-col :span="4">
+        <div>
+          <p style="font-size:30px;font-weight:bold;color:rgb(59,94,135);text-align:right;padding-right:20px;border-right:1.5px solid #ccc;">众包平台</p>
+        </div>
+      </el-col>
 
-            <el-form-item>
-              <div class="sign_up">
-                <el-button @click="register" style="width:100%;">注册新账户</el-button>
-              </div>
+      <el-col :span="10">
+        <div>
+          <p style="font-size:18px;padding-left:25px;">登录</p>
+        </div>
+      </el-col>
+      <el-col :span="6" style="">
+        <div>
+          <p style="font-size:14px;text-align:right;padding-right:15px;">立即</p>
+        </div>
+      </el-col>
+      <el-col :span="4" style="">
+        <div>
+          <router-link to="/register">
+            <el-button @click="register">注册</el-button>
+          </router-link>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-row>
+      <el-col :span="10">
+        <div class="picture">
+          <img :src="signup">
+        </div>
+      </el-col>
+
+      <el-col :span="14" style="padding-top:50px;padding-right:30px;padding-left:90px">
+        <template>
+          <el-form ref="form" :model="form" label-width="60px">
+            <el-form-item label="用户名">
+              <el-input v-model="email" placeholder="请输入用户名" style="width:60%"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" style="padding-top:20px">
+              <el-input v-model="pwd" placeholder="请输入密码" style="width:60%"></el-input>
             </el-form-item>
           </el-form>
-        </div>
+          <el-col>
+            <div style="padding-left:70px;padding-top:24px">
+              
+                <el-button
+                  style="width:300px"
+                  type="primary"
+                  @click="loginWorker"
+                >worker登录</el-button>
+              
+              
+                <el-button
+                  style="width:300px;margin-top:5px"
+                  type="primary"
+                >requester登录</el-button>
+             
+                <el-button
+                  style="width:300px;margin-top:5px"
+                  type="primary"
+                >admin登录</el-button>
+            </div>
+          </el-col>
+        </template>
       </el-col>
     </el-row>
   </div>
@@ -50,14 +76,9 @@ import axios from "axios";
 let self = this;
 export default {
   computed: {
-    getToken() {
-      return this.$store.state.token;
-    }
+    
   },
   methods: {
-    setToken: function() {
-      this.$store.commit("newToken", this.textValue);
-    },
     register() {
       this.$router.push("/register");
     },
@@ -162,7 +183,7 @@ export default {
                   };
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
-                  that.$router.replace("/worker_task_square");
+                  that.$router.replace("/homepage");
                   that.button_disabled = false;
                 })
                 .catch(function(error) {
@@ -207,12 +228,18 @@ export default {
   data() {
     return {
       email: "",
-      pwd: "",
+      pwd:"",
       role: "",
       wrong_pwd: "",
       button_disabled: false,
       radio: false,
-      logo: require("../../static/logo_black.png")
+      logo: require("../../static/logo_black.png"),
+      signup: require("../../static/signup.png"),
+      form:{
+
+      },
+      username:"",
+      password:""
     };
   }
 };

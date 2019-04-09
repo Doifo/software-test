@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-row class="homepage">
-      <el-col span="8" class="title">众测平台</el-col>
-      <el-col span="16">
+      <el-col :span="8" class="title">众测平台</el-col>
+      <el-col :span="16">
         <div style="text-align:right;padding-right:30px;">
           <router-link to="/register">
             <el-button>注册</el-button>
