@@ -147,17 +147,16 @@ export default {
       change: false,
       userInfor: {   
         userName: "1",
-        gender: "男",
+        gender: "2",
         age: "3",
         group: "4",
         phone: "5",
         email: "6",
-        grade: "7",
-        school: "8",
+        grade: "本科",
+        school: "同济",
         address: "9"
       },
       genders:["男","女"],
-      
     };
   },
   components: {
@@ -173,8 +172,15 @@ export default {
       method: "get",
       url: "/api/requester/find-myself"
     }).then(response => {
-      alert("OK");
-      this.userName = response.data.requester.username;
+      this.userInfor.userName=response.data.requester.username;
+      this.userInfor.gender = response.data.requester.gender;
+      this.userInfor.age=response.data.requester.age;
+      this.userInfor.group=response.data.requester.institutionName;
+      this.userInfor.phone=response.data.requester.teleNumber;
+      this.userInfor.email=response.data.requester.eMail;
+      // this.userInfo.grade=
+      // this.school=
+      this.userInfor.address=response.data.requester.address;
     });
   }
 };
