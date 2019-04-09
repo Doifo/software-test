@@ -56,17 +56,13 @@
             </p>
             <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:block;">修改</el-button>
           </div>
-          <el-form v-show="change" :label-position="'left'"  label-width="80px">
+          <el-form v-show="change" :label-position="'left'" label-width="80px">
             <el-form-item label="登录名">
               <el-input v-model="userInfor.userName"></el-input>
             </el-form-item>
             <el-form-item label="性别">
               <el-select v-model="userInfor.gender">
-                <el-option
-                  v-for="gender in genders"
-                  :key="gender"
-                  :value="gender"
-                ></el-option>
+                <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="年龄">
@@ -90,7 +86,9 @@
             <el-form-item label="联系地址">
               <el-input v-model="userInfor.address"></el-input>
             </el-form-item>
-            <p style="text-align:center"><el-button type="primary" @click="change = !change">确认修改</el-button></p>
+            <p style="text-align:center">
+              <el-button type="primary" @click="changeEnsure">确认修改</el-button>
+            </p>
           </el-form>
         </el-tab-pane>
 
@@ -114,12 +112,7 @@
         </el-tab-pane>
 
         <el-tab-pane label="交易历史" name="third">
-          <el-table
-            
-            style="width: 100%;"
-            type="flex"
-            :header-cell-style="{background:'#eff0f1'}"
-          >
+          <el-table style="width: 100%;" type="flex" :header-cell-style="{background:'#eff0f1'}">
             <el-table-column prop="time" label="订单编号"></el-table-column>
             <el-table-column prop="time" label="订单金额"></el-table-column>
             <el-table-column prop="time" label="购买金额"></el-table-column>
@@ -145,7 +138,7 @@ export default {
         chooseMoney: ""
       },
       change: false,
-      userInfor: {   
+      userInfor: {
         userName: "1",
         gender: "2",
         age: "3",
@@ -156,7 +149,7 @@ export default {
         school: "同济",
         address: "9"
       },
-      genders:["男","女"],
+      genders: ["男", "女"]
     };
   },
   components: {
@@ -165,6 +158,10 @@ export default {
   methods: {
     changeInfor: function() {
       this.change = true;
+    },
+    changeEnsure: function() {
+      this.change = false;
+      
     }
   },
   mounted: function() {
@@ -172,15 +169,16 @@ export default {
       method: "get",
       url: "/api/requester/find-myself"
     }).then(response => {
-      this.userInfor.userName=response.data.requester.username;
+      console.log(response.data)
+      this.userInfor.userName = response.data.requester.username;
       this.userInfor.gender = response.data.requester.gender;
-      this.userInfor.age=response.data.requester.age;
-      this.userInfor.group=response.data.requester.institutionName;
-      this.userInfor.phone=response.data.requester.teleNumber;
-      this.userInfor.email=response.data.requester.eMail;
+      this.userInfor.age = response.data.requester.age;
+      this.userInfor.group = response.data.requester.institutionName;
+      this.userInfor.phone = response.data.requester.teleNumber;
+      this.userInfor.email = response.data.requester.eMail;
       // this.userInfo.grade=
       // this.school=
-      this.userInfor.address=response.data.requester.address;
+      this.userInfor.address = response.data.requester.address;
     });
   }
 };
@@ -188,7 +186,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.el-input{
+.el-input {
   width: 500px;
 }
 </style>
