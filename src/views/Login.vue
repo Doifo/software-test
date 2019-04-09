@@ -54,13 +54,13 @@
               
               
                 <el-button
-                  style="width:300px;margin-top:5px;display:block"
+                  style="width:300px;margin-top:5px;display:block;margin-left:0px"
                   type="primary"
                   @click="loginRequester"
                 >requester登录</el-button>
              
                 <el-button
-                  style="width:300px;margin-top:5px;display:block"
+                  style="width:300px;margin-top:5px;display:block;margin-left:0px"
                   type="primary"
                   
                 >admin登录</el-button>
