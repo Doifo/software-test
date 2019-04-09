@@ -56,6 +56,7 @@
                 <el-button
                   style="width:300px;margin-top:5px"
                   type="primary"
+                  @click="loginRequester"
                 >requester登录</el-button>
              
                 <el-button
