@@ -63,20 +63,20 @@
                 type="primary"
                 @click="loginWorker"
                 v-show="worker"
-              >worker登录</el-button>
+              >登录</el-button>
 
               <el-button
                 style="width:300px;margin-top:5px;display:block;margin-left:0px"
                 type="primary"
                 @click="loginRequester"
                 v-show="requester"
-              >requester登录</el-button>
+              >登录</el-button>
 
               <el-button
                 style="width:300px;margin-top:5px;display:block;margin-left:0px"
                 type="primary"
                 v-show="admin"
-              >admin登录</el-button>
+              >登录</el-button>
 
               <el-button
                 style="width:300px;margin-top:5px;display:block;margin-left:0px"
@@ -144,7 +144,7 @@ export default {
     },
     loginRequester: function() {
       let that = this;
-      this.button_disabled = true;
+      //this.button_disabled = true;
       this.role = "ROLE_REQUESTER";
       if (this.email == "") {
         this.$message({
@@ -165,18 +165,18 @@ export default {
           data: param
         })
           .then(function(response) {
-            console.log("first:" + response);
+            //console.log(response);
             if (response.data.code[0] == "2") {
               let token = response.data.X_Auth_Token;
               that.$store.commit("UserLogin", token);
               that.wrong_pwd = "";
-              console.log(that.$store.state.token);
+              //console.log(that.$store.state.token);
               axios.defaults.headers.common["X_Auth_Token"] =
                 that.$store.state.token;
               axios
                 .get("/api/requester/find-myself")
                 .then(function(response) {
-                  console.log(response);
+                  //console.log(response);
                   let username = response.data.requester.username;
                   let user_information = {
                     username: ""
@@ -184,28 +184,28 @@ export default {
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
                   that.$router.replace("/requester-information");
-                  that.button_disabled = false;
+                  //that.button_disabled = false;
                 })
                 .catch(function(error) {
                   console.log(error);
                 });
             } else if (response.data.code[0] == "4") {
-              that.wrong_pwd = "用户名或密码错误";
-              that.button_disabled = false;
+              that.$message.error("用户名或密码错误");
+              //that.button_disabled = false;
             } else if (response.data.code[0] == "5") {
-              that.wrong_pwd("服务器错误");
-              that.button_disabled = false;
+              that.$message.error("服务器错误");
+              //that.button_disabled = false;
             }
           })
           .catch(function(error) {
             alert(error);
-            token_pointer.button_disabled = false;
+            //token_pointer.button_disabled = false;
           });
       }
     },
     loginWorker: function() {
       let that = this;
-      this.button_disabled = true;
+      //this.button_disabled = true;
       this.role = "ROLE_WORKER";
       if (this.email == "") {
         this.$message({
@@ -226,17 +226,17 @@ export default {
         })
           .then(function(response) {
             if (response.data.code[0] == "2") {
-              console.log("first:" + response.data);
+              //console.log("first:" + response.data);
               let token = response.data.X_Auth_Token;
               that.$store.commit("UserLogin", token);
               that.wrong_pwd = "";
-              console.log(that.$store.state.token);
+              //console.log(that.$store.state.token);
               axios.defaults.headers.common["X_Auth_Token"] =
                 that.$store.state.token;
               axios
                 .get("/api/worker/find-myself")
                 .then(function(response) {
-                  console.log(response);
+                  //console.log(response);
                   let username = response.data.worker.username;
                   let user_information = {
                     username: ""
@@ -244,17 +244,17 @@ export default {
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
                   that.$router.replace("/worker-information");
-                  that.button_disabled = false;
+                  //that.button_disabled = false;
                 })
                 .catch(function(error) {
                   console.log(error);
                 });
             } else if (response.data.code[0] == "4") {
-              that.wrong_pwd = "用户名或密码错误";
-              that.button_disabled = false;
+              that.$message.error("用户名或密码错误");
+              t//hat.button_disabled = false;
             } else if (response.data.code[0] == "5") {
-              that.wrong_pwd("服务器错误");
-              that.button_disabled = false;
+              that.$message.error("服务器错误");
+              //that.button_disabled = false;
             }
           })
           .catch(function(error) {

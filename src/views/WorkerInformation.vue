@@ -179,7 +179,7 @@ export default {
         method: "get",
         url: "/api/worker/find-myself"
       }).then(response => {
-        console.log(response)
+        console.log(response.data.message)
         this.userInfor.id = response.data.worker.id;
         this.userInfor.username = response.data.worker.username;
         this.userInfor.name = response.data.worker.name;
@@ -217,7 +217,7 @@ export default {
         url: "/api/worker/update",
         data: param
       }).then(response => {
-        console.log("put succeed");
+        console.log(response.data.message);
         this.$options.methods.loadInfor.call(this);
       });
     },
