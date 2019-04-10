@@ -11,9 +11,9 @@
             <span v-show="worker">
               <router-link to="/worker-information" style="text-decoration:none;"> <el-dropdown-item>个人中心</el-dropdown-item></router-link> 
             </span>
-            <span>
+            <span v-show="requester">
               <router-link to="/requester-information" style="text-decoration:none;"> <el-dropdown-item>个人中心</el-dropdown-item></router-link> 
-            </span v-show="requester">
+            </span>
             <el-dropdown-item>退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -22,7 +22,7 @@
 
     <el-row class="worker-nav">
       <el-col :span="7" :offset="2"> 
-        <router-link to="/homepage"><button class="nav-button">首页</button></router-link>
+        <router-link to="/"><button class="nav-button">首页</button></router-link>
         <span v-show="worker">
           <router-link to="/worker-task"><button class="nav-button" >任务</button></router-link>
           <router-link to="/worker-statistic"><button class="nav-button" >统计</button></router-link>
@@ -68,7 +68,6 @@ export default {
   },
   mounted:function(){
     let path = window.location.pathname;
-    console.log( path.indexOf("worker") );
     let buttons = document.getElementsByClassName("nav-button"); 
     if(path.indexOf("worker") != -1){
       this.worker = true;

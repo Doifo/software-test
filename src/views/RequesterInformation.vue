@@ -26,10 +26,7 @@
               <span class="label-span">电话号码：</span>
               <span class="text-span">{{userInfor.teleNumber}}</span>
             </p>
-            <p>
-              <span class="label-span">邮箱：</span>
-              <span class="text-span">{{userInfor.email}}</span>
-            </p>
+            
             <p>
               <span class="label-span">研究领域：</span>
               <span class="text-span">{{userInfor.reaserch_field}}</span>
@@ -53,6 +50,11 @@
             <p>
               <span class="label-span">联系地址：</span>
               <span class="text-span">{{userInfor.address}}</span>
+            </p>
+            <hr style="border:none;background:#ccc;height:1.5px">
+            <p>
+              <span class="label-span">邮箱：</span>
+              <span class="text-span">{{userInfor.email}}</span>
             </p>
             <p>
               <span class="label-span">账户余额：</span>
@@ -167,6 +169,8 @@ export default {
         method: "get",
         url: "/api/requester/find-myself"
       }).then(response => {
+        console.log("load succeed")
+        console.log(response)
         this.userInfor.username = response.data.requester.username;
         this.userInfor.name = response.data.requester.name;
         this.userInfor.gender = response.data.requester.gender;
@@ -183,22 +187,26 @@ export default {
         this.userInfor.payMethod = response.data.requester.payMethod;
       });
     },
-    uploadInfor:function(){
-      let newInfor = {};
-      newInfor.username = this.userInfor.username;
-      newInfor.name = this.userInfor.name;
-      newInfor.teleNumber = this.userInfor.teleNumber;
-      newInfor.eMail = this.userInfor.email;
-      newInfor.reaserch_field = this.userInfor.reaserch_field;
-      newInfor.institutionName = this.userInfor.institutionName;
-      newInfor.address = this.userInfor.address;
-      newInfor.payMethod = this.userInfor.payMethod;
-      newInfor.gender = this.userInfor.gender;
-      newInfor.age = this.userInfor.age;
+    uploadInfor: function() {
+      let param = new URLSearchParams();
+      param.append("teleNumber", this.userInfor.teleNumber);
+      param.append("username", this.userInfor.username);
+      param.append("name", this.userInfor.name);
+      param.append("eMail", this.userInfor.eMail);
+      param.append("research_field", this.userInfor.research_field);
+      param.append("institutionName", this.userInfor.institutionName);
+      param.append("address", this.userInfor.address);
+      param.append("payMethod", this.userInfor.payMethod);
+      param.append("gender", this.userInfor.gender);
+      param.append("age", this.userInfor.age);
 
-      axios.put("/api/requester/update",newInfor
-      ).then(response => {
-        console.log("success");
+      axios({
+        method: "put",
+        url: "/api/requester/update",
+        data: param
+      }).then(response => {
+        console.log("put succeed");
+        this.$options.methods.loadInfor.call(this);
       });
     },
     cancelChange: function() {
@@ -211,9 +219,7 @@ export default {
     changeEnsure: function() {
       this.change = false;
       this.$options.methods.uploadInfor.call(this);
-      this.$options.methods.loadInfor.call(this);
-    },
-    
+    }
   },
   mounted: function() {
     this.$options.methods.loadInfor.call(this);

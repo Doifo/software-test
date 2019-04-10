@@ -35,7 +35,7 @@ export default new Router({
       name:"RequesterInformation",
       component:RequesterInformation
     },{
-      path:'/homepage',
+      path:'/',
       name:"Homepage",
       component:Homepage
     },{

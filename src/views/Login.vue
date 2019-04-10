@@ -46,7 +46,6 @@
                   v-for="singleStatus in statuses"
                   :key="singleStatus"
                   :value="singleStatus"
-                  @click="test"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -54,7 +53,7 @@
               <el-input v-model="email" placeholder="请输入用户名" style="width:60%"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-              <el-input v-model="pwd" placeholder="请输入密码" style="width:60%"></el-input>
+              <el-input type="password" v-model="pwd" placeholder="请输入密码" style="width:60%"></el-input>
             </el-form-item>
           </el-form>
           <el-col>
@@ -244,7 +243,7 @@ export default {
                   };
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
-                  that.$router.replace("/homepage");
+                  that.$router.replace("/worker-information");
                   that.button_disabled = false;
                 })
                 .catch(function(error) {
