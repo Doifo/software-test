@@ -1,15 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Worker from './module/worker'
 
 Vue.use(Vuex);
 
 //初始化时用sessionStore.getItem('token'),这样子刷新页面就无需重新登录
 
 const store = new Vuex.Store({
+  modules:{
+    Worker
+  },
   state: {
     // 存储token
     token: window.localStorage.getItem('token'),
     username: window.localStorage.getItem('username'),
+    allTasks:[]
   },
 
   mutations: {
