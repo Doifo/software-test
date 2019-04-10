@@ -46,6 +46,7 @@
                   v-for="singleStatus in statuses"
                   :key="singleStatus"
                   :value="singleStatus"
+                  @click="test"
                 ></el-option>
               </el-select>
             </el-form-item>
@@ -62,18 +63,28 @@
                 style="width:300px;display:block;margin-top:5px;"
                 type="primary"
                 @click="loginWorker"
+                v-show="worker"
               >worker登录</el-button>
 
               <el-button
                 style="width:300px;margin-top:5px;display:block;margin-left:0px"
                 type="primary"
                 @click="loginRequester"
+                v-show="requester"
               >requester登录</el-button>
 
               <el-button
                 style="width:300px;margin-top:5px;display:block;margin-left:0px"
                 type="primary"
+                v-show="admin"
               >admin登录</el-button>
+
+              <el-button
+                style="width:300px;margin-top:5px;display:block;margin-left:0px"
+                type="primary"
+                disabled
+                v-show="!(worker || requester || admin)"
+              >登录</el-button>
             </div>
           </el-col>
         </template>
@@ -87,8 +98,48 @@ import axios from "axios";
 
 let self = this;
 export default {
-  computed: {},
+  data() {
+    return {
+      status: "",
+      statuses: ["worker", "requester", "admin"],
+      email: "",
+      pwd: "",
+      role: "",
+      wrong_pwd: "",
+      button_disabled: false,
+      radio: false,
+      logo: require("../../static/logo_black.png"),
+      signup: require("../../static/signup.png"),
+      form: {},
+      username: "",
+      password: ""
+    };
+  },
+  computed: {
+    worker(){
+      if(this.status == "worker"){
+        return true;
+      }else{
+        return false;
+      }
+    },
+    requester(){
+      if(this.status == "requester"){
+        return true;
+      }else{
+        return false;
+      }
+    },
+    admin(){
+      if(this.status == "admin"){
+        return true;
+      }else{
+        return false;
+      }
+    },
+  },
   methods: {
+    
     register() {
       this.$router.push("/register");
     },
@@ -233,26 +284,7 @@ export default {
         });
     }
   },
-  data() {
-    return {
-      status: "",
-      statuses:["worker","requester","admin"],
-      worker: false,
-      requester: false,
-      admin: false,
-      email: "",
-      pwd: "",
-      role: "",
-      wrong_pwd: "",
-      button_disabled: false,
-      radio: false,
-      logo: require("../../static/logo_black.png"),
-      signup: require("../../static/signup.png"),
-      form: {},
-      username: "",
-      password: ""
-    };
-  }
+  
 };
 </script>
 
