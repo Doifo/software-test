@@ -13,7 +13,8 @@
       <p style="color:#1471eb;border-left:2px solid #1471eb;padding-left:10px;">众包任务</p>
       <el-tabs value="first" type="card">
           <el-tab-pane label="所有任务" name="first" >
-              <worker-all-task></worker-all-task>
+              <!-- <worker-all-task></worker-all-task> -->
+              <task-for-worker></task-for-worker>
           </el-tab-pane>
           <el-tab-pane label="已参与任务" name="second">
             <worker-task-participated></worker-task-participated>
@@ -30,6 +31,7 @@
 import WorkerHeader from "@/components/WorkerHeader"
 import WorkerAllTask from '@/components/WorkerAllTask'
 import WorkerTaskParticipated from '@/components/WorkerTaskParticipated'
+import TaskForWorker from '@/components/TaskForWorker'
 
 export default {
   name: 'WorkerTask',
@@ -39,9 +41,10 @@ export default {
     }
   },
   components:{
-      'worker-header':WorkerHeader,
-      'worker-all-task':WorkerAllTask,
-      'worker-task-participated':WorkerTaskParticipated,
+      WorkerHeader,
+      WorkerAllTask,
+      WorkerTaskParticipated,
+      TaskForWorker
   }
 }
 </script>
