@@ -5,7 +5,7 @@
       <el-col class="user-button">
         <el-dropdown trigger="click">
           <span class="el-dropdown-link">
-            username
+            {{username}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -19,6 +19,11 @@
                 <el-dropdown-item>个人中心</el-dropdown-item>
               </router-link>
             </span>
+            <span v-show="admin">
+              <router-link to="/admin-information" style="text-decoration:none;">
+                <el-dropdown-item>个人中心</el-dropdown-item>
+              </router-link>
+            </span>
             <span @click="logout"><el-dropdown-item>退出</el-dropdown-item></span>
           </el-dropdown-menu>
         </el-dropdown>
@@ -27,9 +32,7 @@
 
     <el-row class="worker-nav">
       <el-col :span="7" :offset="2">
-        <router-link to="/">
-          <button class="nav-button">首页</button>
-        </router-link>
+        
         <span v-show="worker">
           <router-link to="/worker-task">
             <button class="nav-button">任务</button>
@@ -47,6 +50,11 @@
           </router-link>
           <router-link to="/">
             <button class="nav-button">管理</button>
+          </router-link>
+        </span>
+        <span v-show="admin">
+          <router-link to="/admin-work">
+            <button class="nav-button">工人</button>
           </router-link>
         </span>
       </el-col>
@@ -72,7 +80,8 @@ export default {
     return {
       worker: false,
       requester: false,
-      admin: false
+      admin: false,
+      username:window.localStorage.getItem('username')
     };
   },
   methods: {
@@ -89,20 +98,23 @@ export default {
       this.worker = true;
 
       if (path == "/worker-task") {
-        buttons[1].style.background = "#1471eb";
+        buttons[0].style.background = "#1471eb";
       } else if (path == "/worker-statistic") {
-        buttons[2].style.background = "#1471eb";
+        buttons[1].style.background = "#1471eb";
       } else if (path == "/worker-qualification") {
-        buttons[3].style.background = "#1471eb";
+        buttons[2].style.background = "#1471eb";
       }
     } else if (path.indexOf("requester") != -1) {
       this.requester = true;
 
       if (path == "/requester-edit-project") {
-        buttons[4].style.background = "#1471eb";
+        buttons[3].style.background = "#1471eb";
       }
     } else if (path.indexOf("admin") != -1) {
       this.admin = true;
+       if (path=="admin-work"){
+        buttons[5].style.background = "#1471eb";
+      }
     }
   }
 };
