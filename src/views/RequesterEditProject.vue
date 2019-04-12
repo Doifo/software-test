@@ -29,7 +29,8 @@ export default {
   name: "RequesterEditproject",
   data() {
     return {
-      step: 1
+      step: 1,
+      taskId: 62
     };
   },
   components: {
@@ -40,20 +41,24 @@ export default {
   },
   methods: {
     handleSubmitForm: function(form) {
+      console.log(this.step);
       if(form.formType=='baseInfo'){
         console.log(form.para);
         let para = new URLSearchParams();
         for(let key in form.para){
           para.append(key,form.para[key]);
         }
-        axios.post('/api/task/add',para).then(response=>{
-          alert("提交成功")
-        }).catch(response=>{
-          alert("error");
-        })
+        alert('该项目被分配到的taskId为'+this.taskId)
+        // axios.post('/api/task/add',para).then(response=>{
+        //   alert("提交成功");
+        //   //console.log(response.data);
+        //   this.taskId=response.data.taskId;
+        // }).catch(response=>{
+        //   alert("error");
+        // })
         this.step=2;
       }
-      else if(para.formType=='layout'){
+      else if(form.formType=='layout'){
         this.step=3;
       }
       else{

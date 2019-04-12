@@ -11,6 +11,7 @@ import RequesterEditProject from '@/views/RequesterEditProject.vue'
 import Homepage from '@/views/Homepage'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
+import RC from '@/components/requester/RequesterCreate'
 
 Vue.use(Router)
 
@@ -51,6 +52,9 @@ export default new Router({
       path:'/requester-edit-project',
       name:"RequesterEditProject",
       component:RequesterEditProject
+    },{
+      path:'/RC',
+      component:RC
     }
   ],
   mode:"history"

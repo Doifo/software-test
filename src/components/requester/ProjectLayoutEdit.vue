@@ -1,5 +1,5 @@
 <template>
-  <div style="width:75%;margin:0 auto;">
+  <div style="width:75%;margin:0 auto; border">
     <div>{{msg}}</div>
     <el-button @click="submitForm">下一步</el-button>
   </div>
@@ -15,11 +15,11 @@ export default {
   },
   methods: {
     submitForm: function() {
-        let para={
+        let form={
             formType:'layout',
-            msg:this.msg,
+            para:{msg:this.msg},
         }
-        this.$emit('submitForm',para);
+        this.$emit('submitForm',form);
     }
   }
 };
