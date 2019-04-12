@@ -5,6 +5,7 @@ import WorkerStatistic from '@/views/WorkerStatistic.vue'
 import WorkerTask from '@/views/WorkerTask.vue'
 import WorkerInformation from '@/views/WorkerInformation.vue'
 import WorkerQualification from '@/views/WorkerQualification.vue'
+
 import RequesterInformation from '@/views/RequesterInformation.vue'
 import RequesterEditProject from '@/views/RequesterEditProject.vue'
 import Homepage from '@/views/Homepage'
@@ -49,7 +50,7 @@ export default new Router({
     },{
       path:'/requester-edit-project',
       name:"RequesterEditProject",
-      component:RequesterEditProject,
+      component:RequesterEditProject
     }
   ],
   mode:"history"
