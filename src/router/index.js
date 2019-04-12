@@ -12,6 +12,8 @@ import Homepage from '@/views/Homepage'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import RC from '@/components/requester/RequesterCreate'
+import AdminWork from '@/views/AdminWork'
+import AdminInformation from '@/views/AdminInformation.vue'
 
 Vue.use(Router)
 
@@ -21,6 +23,16 @@ export default new Router({
       name: 'WorkerStatistic',
       component: WorkerStatistic
     },{
+      path:'/admin-work',
+      name:'AdminWork',
+      component:AdminWork
+
+    },{
+      path:'/admin-information',
+      name:'AdminInformation',
+      component:AdminInformation
+    },
+    {
       path:'/worker-task',
       name:'WorkerTask',
       component: WorkerTask
