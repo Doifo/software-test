@@ -1,6 +1,6 @@
 <template>
   <div>
-    <worker-header></worker-header>
+    <RequesterHomepageTopbar></RequesterHomepageTopbar>
     <el-row>
       <el-col :span="2" :offset="3">
         <p style="color:#1471eb;font-size:20px;margin-top:50px;">编辑项目</p>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import WorkerHeader from "@/components/WorkerHeader"
+import RequesterHomepageTopbar from '@/components/navi/RequesterHomepageTopbar.vue';
 import ProjectBaseInfoEdit from "@/components/requester/ProjectBaseInfoEdit"
 import ProjectLayoutEdit from "@/components/requester/ProjectLayoutEdit"
 import ProjectPreview from "@/components/requester/ProjectPreview"
@@ -34,7 +34,7 @@ export default {
     };
   },
   components: {
-    WorkerHeader,
+    RequesterHomepageTopbar,
     ProjectBaseInfoEdit,
     ProjectLayoutEdit,
     ProjectPreview
@@ -43,6 +43,7 @@ export default {
     handleSubmitForm: function(form) {
       console.log(this.step);
       if(form.formType=='baseInfo'){
+        console.log(form.para);
         let para = new URLSearchParams();
         for(let key in form.para){
           para.append(key,form.para[key]);

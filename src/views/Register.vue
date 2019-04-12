@@ -119,7 +119,6 @@ export default {
         }
       ],
       status: "",
-
       username: "",
       email: "",
       password: "",
