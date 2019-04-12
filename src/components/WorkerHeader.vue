@@ -11,9 +11,9 @@
             <span v-show="worker">
               <router-link to="/worker-information" style="text-decoration:none;"> <el-dropdown-item>个人中心</el-dropdown-item></router-link> 
             </span>
-            <span>
+            <span v-show="requester">
               <router-link to="/requester-information" style="text-decoration:none;"> <el-dropdown-item>个人中心</el-dropdown-item></router-link> 
-            </span v-show="requester">
+            </span>
             <el-dropdown-item>退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
