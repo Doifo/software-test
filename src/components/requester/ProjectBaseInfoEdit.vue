@@ -18,9 +18,9 @@
            >
            </el-input>
         </el-form-item>
-        <el-form-item label="类型：">
+        <!-- <el-form-item label="类型：">
           <span style="color:#606266">{{project_type}}</span>
-        </el-form-item>
+        </el-form-item> -->
         <p class="line">设置调查</p>
         <el-form-item label="每份奖励">
         <el-input-number v-model="reward" :precision="2"  type="number"
@@ -217,7 +217,7 @@ export default {
           date = date + month[str[1]] + "-" + str[2] + ' ' + str[4];
           return date;
         }
-      console.log(this.limi_value);
+      //console.log(this.limi_value);
       let form = {
         formType: 'baseInfo',
         para: {
@@ -225,7 +225,7 @@ export default {
           description: this.desc,
           reward: this.reward,
           status:0,
-          type:this.projectType,
+          // type:this.projectType,
           restrictions:'你妈的',
           time_limitation:this.time_limitation,
           start_time: dateToString(this.limi_value[0]),

@@ -11,7 +11,8 @@ import RequesterEditProject from '@/views/RequesterEditProject.vue'
 import Homepage from '@/views/Homepage'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
-import RC from '@/components/requester/RequesterCreate'
+import PT from '@/components/requester/ProjectTemplatesChoose'
+import Q1 from '@/components/requester/layout/QuestionVer1'
 
 import AdminTask from '@/views/AdminTask'
 
