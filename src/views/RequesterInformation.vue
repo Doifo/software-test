@@ -4,14 +4,14 @@
     <div style="width:70%;margin:0 auto; margin-top:50px;">
       <div style="background:#fffaf7;border:1px solid #ccc;padding-left:20px;">
         <p>
-          <span style="font-weight:bold;">Sunny</span>
+          <span style="font-weight:bold;">{{userInfor.username}}</span>
           <span
             style="background:#db4946;color:white;font-weight:bold;margin-left:20px;border-radius:2px;"
           >LV.1</span>
         </p>
         <p style="font-size:13px;">
-          共用金额：
-          <span style="color:#db4946">￥50</span>
+          账户余额：
+          <span style="color:#db4946">￥ {{userInfor.balance}}</span>
         </p>
       </div>
 

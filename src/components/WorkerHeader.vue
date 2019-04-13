@@ -27,7 +27,6 @@
 
     <el-row class="worker-nav">
       <el-col :span="7" :offset="2">
-        
         <span v-show="worker">
           <router-link to="/worker-task">
             <button class="nav-button">任务</button>
@@ -45,6 +44,11 @@
           </router-link>
           <router-link to="/">
             <button class="nav-button">管理</button>
+          </router-link>
+        </span>
+        <span v-show="admin">
+          <router-link to="/admin-task">
+            <button class="nav-button">任务</button>
           </router-link>
         </span>
       </el-col>

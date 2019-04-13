@@ -13,6 +13,10 @@ import Login from '@/views/Login'
 import Register from '@/views/Register'
 import RC from '@/components/requester/RequesterCreate'
 
+import AdminTask from '@/views/AdminTask'
+
+import AdminTaskDetail from '@/views/AdminTaskDetail'
+
 Vue.use(Router)
 
 export default new Router({
@@ -55,6 +59,12 @@ export default new Router({
     },{
       path:'/RC',
       component:RC
+    },{
+      path:'/admin-task',
+      component:AdminTask
+    },{
+      path:'/admin-task-detail/:id',
+      component:AdminTaskDetail
     }
   ],
   mode:"history"
