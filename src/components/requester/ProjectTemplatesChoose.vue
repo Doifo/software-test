@@ -1,0 +1,395 @@
+<template>
+  <div class="RequesterCreate">
+    <!-- <RequesterHomepageTopbar></RequesterHomepageTopbar> -->
+    <!--主体部分-->
+    <div style="width:75%;margin:0 auto;font-size:18px;">
+      <p style="color:#1873EB; text-align:center">
+        <b>选择可自定义的模板-启动新项目</b>
+      </p>
+      <el-tabs
+        v-model="activeName"
+        tab-position="left"
+        @tab-click="handleClick"
+        style="margin-top: 10px;"
+      >
+        <!--物体检测-->
+        <el-tab-pane label="物体检测" name="ver1-tmp1" style="min-height:500px;">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>图片标记说明（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>根据图片中的内容为图片选出合适的标签</p>
+              </div>
+            </div>
+
+            <question-ver1 :template="templates['tmp1']"></question-ver1>
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
+
+        <!--物体识别-->
+        <el-tab-pane label="物体识别" name="ver1-tmp2">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>物体识别（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>请为图片选择正确的标签</p>
+              </div>
+            </div>
+            <!--主体-->
+            <!-- <div class="preview_content">
+              <template>
+                <div>
+                  <el-form :model="question_answer" ref="question_answer">
+                    <el-col :span="3">
+                      <p></p>
+                    </el-col>
+                    <el-col :span="18">
+                      <el-form-item
+                        :rules="{
+                                required: true, message: '选项不能为空', trigger: 'blur'
+                                }"
+                      >
+                        <el-input placeholder="请在此处编辑你的问题描述"></el-input>
+                        <div style="margin-top: 30px;">
+                          <el-upload class="upload-demo" ref="upload" action="/api/upload">
+                            <el-button size="small" type="primary">点击上传</el-button>
+                            <div slot="tip" class="el-upload__tip">批量导入图片的url,请上传utf-8编码的txt文件</div>
+                          </el-upload>
+                        </div>
+                      </el-form-item>
+                    </el-col>
+
+                    <el-col :span="3"></el-col>
+                  </el-form>
+                </div>
+              </template>
+            </div>-->
+            <question-ver1 :template="templates['tmp2']"></question-ver1>
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
+
+        <!--情绪检测-->
+        <el-tab-pane label="情绪检测" name="tmp3">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>情绪检测（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>分析文字中蕴含的感情</p>
+              </div>
+            </div>
+            <!--主体-->
+            <div class="preview_content">
+              <template>
+                <div>
+                  <el-form :model="question_answer" ref="question_answer">
+                    <el-col :span="12">
+                      <el-form-item label="这段文字蕴含的感情是什么？">
+                        <el-input
+                          type="textarea"
+                          placeholder="请输入文档地址"
+                          v-model="question_content"
+                          style="width:90%"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <!--选项-->
+                    <el-col :span="12">
+                      <p style="margin-top:0px;">选项：</p>
+                      <el-form-item
+                        v-for="(domain, index) in question_answer.domains"
+                        :label="'选项' + index"
+                        :key="domain.key"
+                        :prop="'domains.' + index + '.value'"
+                        :rules="{
+                                required: true, message: '选项不能为空', trigger: 'blur'
+                                }"
+                      >
+                        <el-input v-model="domain.value" style="width:60%"></el-input>&nbsp;
+                        <el-button>删除</el-button>
+                      </el-form-item>
+
+                      <el-form-item>
+                        <el-button>新增选项</el-button>
+                        <el-button>重置</el-button>
+                      </el-form-item>
+                    </el-col>
+                  </el-form>
+                </div>
+              </template>
+            </div>
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
+
+        <!--情感分析-->
+        <el-tab-pane label="情感分析" name="tmp4">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>情感分析（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>分析文字表达的情感倾向是积极、消极还是中立</p>
+              </div>
+            </div>
+            <!--主体-->
+            <div class="preview_content">
+              <template>
+                <div>
+                  <el-row style="margin:20px 40px;">
+                    <ElCol :span="16">
+                      <div class="questions">
+                        <div style="height:20px;"></div>
+                        <p style="font-size:15px;">这句话的感情倾向是什么？</p>
+                        <div style="height:10px;"></div>
+                        <el-input
+                          type="textarea"
+                          :rows="1"
+                          placeholder="请输入内容"
+                          v-model="question_content"
+                          style="width:80%"
+                        ></el-input>
+                      </div>
+                    </ElCol>
+                    <el-col :span="8">
+                      <div class="options" style="padding-top:20px;">
+                        <p>选项：</p>
+                        <el-radio-group v-model="question_answer" style="padding-left:15px;">
+                          <el-radio :label="1">积极</el-radio>
+                          <br>
+                          <el-radio :label="2">消极</el-radio>
+                          <br>
+                          <el-radio :label="3">中立</el-radio>
+                        </el-radio-group>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </div>
+              </template>
+            </div>
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
+
+        <!--文件分类-->
+        <el-tab-pane label="文件分类" name="tmp5">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>文件分类（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>辨别文件内容的类别（医学、生物、艺术，etc.）</p>
+              </div>
+            </div>
+            <!--主体-->
+            <div class="preview_content">
+              <template>
+                <div>
+                  <el-form :model="question_answer" ref="question_answer">
+                    <el-col :span="12">
+                      <el-form-item label="请为文档选择正确的类别">
+                        <el-input
+                          type="textarea"
+                          placeholder="请输入文档地址"
+                          v-model="question_content"
+                          style="width:90%"
+                        ></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <!--选项-->
+                    <el-col :span="12">
+                      <p style="margin-top:0px;">选项：</p>
+                      <el-form-item
+                        v-for="(domain, index) in question_answer.domains"
+                        :label="'选项' + index"
+                        :key="domain.key"
+                        :prop="'domains.' + index + '.value'"
+                        :rules="{
+                                required: true, message: '选项不能为空', trigger: 'blur'
+                                }"
+                      >
+                        <el-input v-model="domain.value" style="width:60%"></el-input>&nbsp;
+                        <el-button>删除</el-button>
+                      </el-form-item>
+
+                      <el-form-item>
+                        <el-button>新增选项</el-button>
+                        <el-button>重置</el-button>
+                      </el-form-item>
+                    </el-col>
+                  </el-form>
+                </div>
+              </template>
+            </div>
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
+        <!--<el-tab-pane label="语义分析" name="sixth">配置管理</el-tab-pane>-->
+      </el-tabs>
+
+      <div style="float:right;margin-bottom: 40px;">
+        <el-button type="primary" @click="submitForm">下一步</el-button>
+      </div>
+    </div>
+    <!--主体部分end-->
+  </div>
+</template>
+
+<script>
+// import RequesterHomepageTopbar from '@/components/RequesterNavi/RequesterHomepageTopbar.vue';
+import QuestionVer1 from "@/components/requester/layout/QuestionVer1";
+export default {
+  components: {
+    QuestionVer1
+  },
+  data() {
+    return {
+      templates: {
+        tmp1: {
+          desc: "此图中是否含有人脸",
+          opts: [
+            { content: "是", isEdit: false },
+            { content: "否", isEdit: false }
+          ],
+          url:
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555094734309&di=07cbcb8b48caf576f0a15a3a82eb5a6e&imgtype=0&src=http%3A%2F%2Fwx3.sinaimg.cn%2Fmw690%2F96b2b684gy1fdoq0sis5mj20go0godhw.jpg"
+        },
+        tmp2: {
+          desc: "请判断此图中的人的职业",
+          opts: [
+            { content: "学生", isEdit: false },
+            { content: "教官", isEdit: false },
+            { content: "历史老师", isEdit: false },
+            { content: "军人", isEdit: false }
+          ],
+          url:
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555094734309&di=07cbcb8b48caf576f0a15a3a82eb5a6e&imgtype=0&src=http%3A%2F%2Fwx3.sinaimg.cn%2Fmw690%2F96b2b684gy1fdoq0sis5mj20go0godhw.jpg"
+        }
+      },
+      activeName: "ver1-tmp1",
+      ifReminder: false,
+      question_answer: {
+        domains: [
+          {
+            value: ""
+          },
+          {
+            value: ""
+          },
+          {
+            value: ""
+          }
+        ]
+      },
+      question_content: ""
+    };
+  },
+  methods: {
+    handleClick(tab, event) {
+      this.ifReminder = false;
+      console.log(tab, event);
+    },
+    showReminder() {
+      this.ifReminder = !this.ifReminder;
+    },
+    submitForm: function() {
+      alert("OK");
+      let fst = 0;
+      let lst = this.activeName.indexOf("-");
+      let qtype = this.activeName.substring(fst, lst);
+      fst = lst + 1;
+      let qtmpIndex = this.activeName.substring(fst);
+      let form = {
+        formType: "projectTemplate",
+        para: {
+          qtype: qtype,
+          qtmp: this.templates[qtmpIndex]
+        }
+      };
+      this.$emit("submitForm", form);
+    },
+    newProject() {
+      this.$router.push({
+        name: "RequesterEditProject",
+        params: {
+          type: this.activeName
+        }
+      });
+    }
+  }
+};
+</script>
+
+<style>
+p,
+ul {
+  color: #606266;
+}
+.RequesterCreate .el-button--primary {
+  color: #fff;
+}
+.RequesterCreate .el-tabs__nav-scroll {
+  border: 1px solid #dcdfe6;
+  /* min-height: 480px; */
+  /* margin-right: 20px; */
+
+  padding-right: 40px;
+}
+.RequesterCreate .el-tabs__active-bar {
+  background-color: #fff;
+}
+.RequesterCreate .el-tabs__nav-wrap::after {
+  background-color: #fff;
+}
+.preview_box {
+  border: 1px solid #dcdfe6;
+  min-height: 480px;
+  padding: 0 30px;
+  margin-bottom: 20px;
+}
+.reminder {
+  padding: 30px 0;
+}
+.reminder_title {
+  height: 50px;
+  background-color: #5a9ef7;
+}
+.reminder_title p {
+  color: #fff;
+  margin-left: 15px;
+  font-size: 16px;
+  padding-top: 15px;
+}
+.reminder-content {
+  font-size: 15px;
+  min-height: 80px;
+  border: 1px solid #5a9ef7;
+  padding-left: 15px;
+}
+.preview_content {
+  min-height: 300px;
+  padding: 10px 40px 40px 40px;
+}
+.el-radio {
+  padding-bottom: 20px;
+}
+</style>
