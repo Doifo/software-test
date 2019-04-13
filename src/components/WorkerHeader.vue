@@ -50,6 +50,9 @@
           <router-link to="/admin-task">
             <button class="nav-button">任务</button>
           </router-link>
+          <router-link to="/admin-work">
+            <button class="nav-button">任务</button>
+          </router-link>
         </span>
       </el-col>
 

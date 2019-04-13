@@ -16,6 +16,7 @@ import RC from '@/components/requester/RequesterCreate'
 import AdminTask from '@/views/AdminTask'
 
 import AdminTaskDetail from '@/views/AdminTaskDetail'
+import AdminWork from '@/views/AdminWork'
 
 Vue.use(Router)
 
@@ -65,6 +66,9 @@ export default new Router({
     },{
       path:'/admin-task-detail/:id',
       component:AdminTaskDetail
+    },{
+      path:'/admin-work',
+      component:AdminWork
     }
   ],
   mode:"history"
