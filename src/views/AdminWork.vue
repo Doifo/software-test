@@ -11,7 +11,7 @@
 
 <script>
 import WorkerHeader from "@/components/WorkerHeader"
-import WorkerAll from '@/components/WorkerAll'
+//import WorkerAll from '@/components/WorkerAll'
 
 export default {
   name: 'WorkerTask',

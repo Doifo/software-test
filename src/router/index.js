@@ -14,6 +14,11 @@ import Register from '@/views/Register'
 import PT from '@/components/requester/ProjectTemplatesChoose'
 import Q1 from '@/components/requester/layout/QuestionVer1'
 
+import AdminTask from '@/views/AdminTask'
+
+import AdminTaskDetail from '@/views/AdminTaskDetail'
+import AdminWork from '@/views/AdminWork'
+
 Vue.use(Router)
 
 export default new Router({
@@ -54,11 +59,17 @@ export default new Router({
       name:"RequesterEditProject",
       component:RequesterEditProject
     },{
-      path:'/PT',
-      component:PT
+      path:'/RC',
+      component:RC
     },{
-      path:'/Q1',
-      component:Q1
+      path:'/admin-task',
+      component:AdminTask
+    },{
+      path:'/admin-task-detail/:id',
+      component:AdminTaskDetail
+    },{
+      path:'/admin-work',
+      component:AdminWork
     }
   ],
   mode:"history"
