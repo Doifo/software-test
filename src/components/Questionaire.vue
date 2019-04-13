@@ -36,14 +36,12 @@
 </template>
 
 <script>
-import QuestionVer1Editor from "@/components/Questionaire/QuestionVer1Editor";
-import QuestionVer1 from "@/components/Questionaire/QuestionVer1";
+import QuestionVer1 from "@/components/QuestionVer1";
 import axios from "axios";
 
 export default {
   components: {
     QuestionVer1,
-    QuestionVer2
   },
   data() {
     return {

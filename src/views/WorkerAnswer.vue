@@ -11,7 +11,7 @@
 
 <script>
 import WorkerHeader from "@/components/WorkerHeader";
-import Questionaire from '@/components/Questionaire/Questionaire'
+import Questionaire from '@/components/Questionaire'
 
 export default {
     name: '',

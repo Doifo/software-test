@@ -18,6 +18,7 @@ import AdminTask from '@/views/AdminTask'
 
 import AdminTaskDetail from '@/views/AdminTaskDetail'
 import AdminWork from '@/views/AdminWork'
+import WorkerAnswer from '@/views/WorkerAnswer'
 
 Vue.use(Router)
 
@@ -70,6 +71,9 @@ export default new Router({
     },{
       path:'/admin-work',
       component:AdminWork
+    },{
+      path:'/worker-answer',
+      component:WorkerAnswer
     }
   ],
   mode:"history"

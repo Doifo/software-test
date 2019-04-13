@@ -21,7 +21,7 @@ export default {
   },
   components:{
       'worker-header':WorkerHeader,
-      'worker-all':WorkerAll,    
+         
   }
 }
 </script>
