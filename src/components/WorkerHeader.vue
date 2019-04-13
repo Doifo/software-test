@@ -19,11 +19,6 @@
                 <el-dropdown-item>个人中心</el-dropdown-item>
               </router-link>
             </span>
-            <span v-show="admin">
-              <router-link to="/admin-information" style="text-decoration:none;">
-                <el-dropdown-item>个人中心</el-dropdown-item>
-              </router-link>
-            </span>
             <span @click="logout"><el-dropdown-item>退出</el-dropdown-item></span>
           </el-dropdown-menu>
         </el-dropdown>
@@ -32,7 +27,6 @@
 
     <el-row class="worker-nav">
       <el-col :span="7" :offset="2">
-        
         <span v-show="worker">
           <router-link to="/worker-task">
             <button class="nav-button">任务</button>
@@ -53,8 +47,8 @@
           </router-link>
         </span>
         <span v-show="admin">
-          <router-link to="/admin-work">
-            <button class="nav-button">工人</button>
+          <router-link to="/admin-task">
+            <button class="nav-button">任务</button>
           </router-link>
         </span>
       </el-col>
@@ -96,6 +90,7 @@ export default {
     let buttons = document.getElementsByClassName("nav-button");
     if (path.indexOf("worker") != -1) {
       this.worker = true;
+
       if (path == "/worker-task") {
         buttons[0].style.background = "#1471eb";
       } else if (path == "/worker-statistic") {
@@ -105,14 +100,12 @@ export default {
       }
     } else if (path.indexOf("requester") != -1) {
       this.requester = true;
+
       if (path == "/requester-edit-project") {
         buttons[3].style.background = "#1471eb";
       }
     } else if (path.indexOf("admin") != -1) {
       this.admin = true;
-       if (path=="admin-work"){
-        buttons[5].style.background = "#1471eb";
-      }
     }
   }
 };
@@ -123,12 +116,14 @@ export default {
 .el-dropdown-link {
   cursor: pointer;
 }
+
 .header-title {
   padding-left: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 20px;
 }
+
 .user-button {
   display: flex;
   flex-direction: row-reverse;
@@ -137,11 +132,13 @@ export default {
   padding-top: 10px;
   padding-bottom: 10px;
 }
+
 .worker-nav {
   background-color: #1c2541;
   display: flex;
   align-items: center;
 }
+
 .nav-button {
   background: transparent;
   border: none;
@@ -150,9 +147,11 @@ export default {
   padding: 15px;
   cursor: pointer;
 }
+
 .nav-button:hover {
   background-color: #1471eb;
 }
+
 .search-button {
   border-radius: 5px;
   border: 1px solid #000;
@@ -162,12 +161,14 @@ export default {
   padding-bottom: 7px;
   background: #eff0f1;
 }
+
 .input {
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 35px;
 }
+
 .search-input {
   border: none;
   height: 100%;
@@ -175,6 +176,7 @@ export default {
   width: 80%;
   padding-left: 20px;
 }
+
 .search-icon {
   background: #1471eb;
   height: 100%;
@@ -183,8 +185,9 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .search-icon img {
   width: auto;
   height: 60%;
 }
-</style>
+</style>  
