@@ -40,6 +40,7 @@
       <el-row></el-row>
       <span slot="footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确认通过</el-button>
         <router-link v-bind:to="'/admin-task-detail/' + task.id" target="_blank">
           <el-button type="primary" @click="dialogVisible = false;">查看问卷详情</el-button>
         </router-link>
