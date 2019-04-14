@@ -60,9 +60,6 @@ export default new Router({
       name:"RequesterEditProject",
       component:RequesterEditProject
     },{
-      path:'/RC',
-      component:RC
-    },{
       path:'/admin-task',
       component:AdminTask
     },{
