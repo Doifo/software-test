@@ -3,7 +3,7 @@
     <worker-header></worker-header>
     <div style="padding-left:50px;padding-right:50px">
       <p style="color:#1471eb;border-left:2px solid #1471eb;padding-left:10px;">worker管理</p>    
-              <worker-all></worker-all>      
+              <admin-worker-all></admin-worker-all>      
     </div>
     
   </div>
@@ -11,17 +11,17 @@
 
 <script>
 import WorkerHeader from "@/components/WorkerHeader"
-import WorkerAll from '@/components/WorkerAll'
+import WorkerListForAdmin from '@/components/WorkerListForAdmin'
 
 export default {
-  name: 'WorkerTask',
+  name: 'AdminWork',
   data () {
     return {   
     }
   },
   components:{
       'worker-header':WorkerHeader,
-      'worker-all':WorkerAll,    
+      'admin-worker-all':WorkerListForAdmin,    
   }
 }
 </script>
