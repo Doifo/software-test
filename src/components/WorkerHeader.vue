@@ -51,7 +51,7 @@
             <button class="nav-button">任务</button>
           </router-link>
           <router-link to="/admin-work">
-            <button class="nav-button">任务</button>
+            <button class="nav-button">工人</button>
           </router-link>
         </span>
       </el-col>
@@ -93,7 +93,6 @@ export default {
     let buttons = document.getElementsByClassName("nav-button");
     if (path.indexOf("worker") != -1) {
       this.worker = true;
-
       if (path == "/worker-task") {
         buttons[0].style.background = "#1471eb";
       } else if (path == "/worker-statistic") {
@@ -101,14 +100,20 @@ export default {
       } else if (path == "/worker-qualification") {
         buttons[2].style.background = "#1471eb";
       }
-    } else if (path.indexOf("requester") != -1) {
-      this.requester = true;
+    } 
 
+    else if (path.indexOf("requester") != -1) {
+      this.requester = true;
       if (path == "/requester-edit-project") {
         buttons[3].style.background = "#1471eb";
       }
-    } else if (path.indexOf("admin") != -1) {
+    } 
+    
+    else if (path.indexOf("admin") != -1) {
       this.admin = true;
+       if (path == "/admin-work") {
+        buttons[3].style.background = "#1471eb";
+      }
     }
   }
 };
