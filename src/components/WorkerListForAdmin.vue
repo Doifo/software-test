@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="worker-content-header">
-      <el-col :span="3">id</el-col>
+      <el-col :span="3">ID</el-col>
       <el-col :span="3">工人姓名</el-col>
       <el-col :span="3">邮箱</el-col>
       <el-col :span="3">
