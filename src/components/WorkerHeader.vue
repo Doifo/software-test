@@ -3,7 +3,7 @@
     <el-row type="flex" justify="space-between">
       <el-col class="header-title">众测平台</el-col>
       <el-col class="user-button">
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" v-show="!admin">
           <span class="el-dropdown-link">
             {{username}}
             <i class="el-icon-arrow-down el-icon--right"></i>
@@ -19,14 +19,12 @@
                 <el-dropdown-item>个人中心</el-dropdown-item>
               </router-link>
             </span>
-            <span v-show="admin">
-              <router-link to="/admin-information" style="text-decoration:none;">
-                <el-dropdown-item>个人中心</el-dropdown-item>
-              </router-link>
-            </span>
             <span @click="logout"><el-dropdown-item>退出</el-dropdown-item></span>
           </el-dropdown-menu>
         </el-dropdown>
+        <el-button v-show="admin" @click="logout" type="text">
+          退出登录
+        </el-button>
       </el-col>
     </el-row>
 
