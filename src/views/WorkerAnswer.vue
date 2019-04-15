@@ -17,7 +17,7 @@ export default {
     name: '',
     data () {
         return {
-        
+            taskId:this.$route.params.id
         }
     },
     components: {

@@ -69,7 +69,7 @@ export default new Router({
       path:'/admin-work',
       component:AdminWork
     },{
-      path:'/worker-answer',
+      path:'/worker-answer/:id',
       component:WorkerAnswer
     }
   ],
