@@ -5,18 +5,18 @@
     <div style="width:70%;margin:0 auto; margin-top:50px;">
       <div style="background:#fffaf7;border:1px solid #ccc;padding-left:20px;">
         <p>
-          <span style="font-weight:bold;">Sunny</span>
+          <span style="font-weight:bold;">{{userInfor.username}}</span>
           <span
             style="background:#db4946;color:white;font-weight:bold;margin-left:20px;border-radius:2px;"
-          >LV.1</span>
+          >LV.{{userInfor.level}}</span>
         </p>
         <p style="font-size:13px;">
           工人ID：
-          <span>A2345</span>
+          <span>{{userInfor.id}}</span>
         </p>
         <p style="font-size:13px;">
-          共赚金额：
-          <span style="color:#db4946">￥50</span>
+          账户余额：
+          <span style="color:#db4946">￥{{userInfor.balance}}</span>
         </p>
       </div>
 
@@ -119,16 +119,7 @@
         </el-tab-pane>
 
         <el-tab-pane label="我的任务" name="second">
-          <p>
-            时间：
-            <el-date-picker
-              size="small"
-              type="daterange"
-              range-separator="至"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
-            ></el-date-picker>
-          </p>
+          
 
           <div style="min-height:300px;">
             <el-table

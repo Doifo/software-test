@@ -78,17 +78,12 @@
                 v-show="requester"
                 @click="reqRegister"
               >注册</el-button>
-              <el-button
-                style="width:300px;display:inline-block;margin-left:0"
-                type="primary"
-                v-show="admin"
-                @click="adminRegister"
-              >注册</el-button>
+              
               <el-button
                 style="width:300px;display:inline-block;margin-left:0"
                 type="primary"
                 disabled
-                v-show="!(worker || requester|| admin)"
+                v-show="!(worker || requester)"
               >注册</el-button>
             </div>
           </el-col>
@@ -99,7 +94,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
@@ -113,10 +108,7 @@ export default {
           value: "requester",
           label: "requester"
         },
-        {
-          value: "admin",
-          label: "admin"
-        }
+      
       ],
       status: "",
       username: "",
@@ -140,13 +132,6 @@ export default {
         return false;
       }
     },
-    admin() {
-      if (this.status == "admin") {
-        return true;
-      } else {
-        return false;
-      }
-    }
   },
   methods: {
     inputLegal() {
@@ -158,9 +143,9 @@ export default {
         this.$message.error("请输入密码");
       } else if (this.re_password == "") {
         this.$message.error("请确认密码");
-      } else if(this.password != this.re_password){
+      } else if (this.password != this.re_password) {
         this.$message.error("两次密码不一致");
-      }else {
+      } else {
         return true;
       }
       return false;
@@ -238,7 +223,7 @@ export default {
           console.log(error);
         });
     },
-    adminRegister() {}
+    
   },
   components: {}
 };

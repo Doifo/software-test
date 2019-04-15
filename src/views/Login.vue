@@ -77,7 +77,7 @@
               </p>
 
               <p style="text-align:center">
-                <el-button style="width:300px;" type="primary" v-show="admin">登录</el-button>
+                <el-button style="width:300px;" type="primary" v-show="admin" @click="loginAdmin">登录</el-button>
               </p>
               <p style="text-align:center">
                 <el-button
@@ -261,6 +261,67 @@ export default {
           })
           .catch(function(error) {
             console.log(error);
+          });
+      }
+    },
+    loginAdmin: function(){
+      let that = this;
+      //this.button_disabled = true;
+      this.role = "ROLE_ADMIN";
+      if (this.email == "") {
+        this.$message({
+          message: "请输入用户名",
+          type: "warning"
+        });
+      } else if (this.pwd == "") {
+        this.$message("请输入密码");
+      } else {
+        let param = new URLSearchParams();
+        let self = this;
+        param.append("username", this.email);
+        param.append("password", this.pwd);
+        param.append("role", this.role);
+        axios({
+          method: "post",
+          url: "/api/login",
+          data: param
+        })
+          .then(function(response) {
+            //console.log(response);
+            if (response.data.code[0] == "2") {
+              let token = response.data.X_Auth_Token;
+              that.$store.commit("UserLogin", token);
+              that.wrong_pwd = "";
+              //console.log(that.$store.state.token);
+              axios.defaults.headers.common["X_Auth_Token"] =
+                that.$store.state.token;
+              axios
+                .get("/api/requester/find-myself")
+                .then(function(response) {
+                  //console.log(response);
+                  let username = response.data.requester.username;
+                  let user_information = {
+                    username: ""
+                  };
+                  user_information.username = username;
+                  that.$store.commit("UserInfo", user_information);
+                  that.$router.replace("/requester-information");
+                  //that.button_disabled = false;
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            } else if (response.data.code[0] == "4") {
+              that.$message.error("用户名或密码错误");
+              //that.button_disabled = false;
+            } else if (response.data.code[0] == "5") {
+              that.$message.error("服务器错误");
+              //that.button_disabled = false;
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+            //token_pointer.button_disabled = false;
           });
       }
     },
