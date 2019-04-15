@@ -3,9 +3,9 @@
     <worker-header></worker-header>
     <div class="container">
       <el-row class="task-title">
-        <el-col :span="5" :offset="1">请求者</el-col>
+        <el-col :span="5" :offset="1">相关领域</el-col>
         <el-col :span="5" :offset="1">标题</el-col>
-        <el-col :span="5" :offset="1">类型</el-col>
+        <el-col :span="5" :offset="1">时间</el-col>
         <el-col :span="5" :offset="1">操作</el-col>
       </el-row>
       <task-for-admin v-for="task in showedTasks" :key="task.id" :task="task"></task-for-admin>
@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       tasks: [],
-      currentPage:1,
-      pageSize:5,
+      currentPage: 1,
+      pageSize: 5
     };
   },
   components: {
@@ -42,26 +42,45 @@ export default {
     TaskForAdmin
   },
   mounted() {
+    // axios
+    //   .get("/api/task/find-all")
+    //   .then(response => {
+    //     //console.log(response.data);
+    //     this.tasks = response.data.tasks;
+    //   })
+    //   .catch(response => {});
+
     axios
-      .get("/api/task/find-all")
+      .get("/api/admin/find-unreviewed-task")
       .then(response => {
-        //console.log(response.data);
+        console.log("task:", response);
         this.tasks = response.data.tasks;
       })
-      .catch(response => {});
+      .catch(response => {
+        console.log("error:", response);
+      });
+
+    // axios
+    //   .get("/api/worker/find-all")
+    //   .then(response => {
+    //     console.log("task:", response);
+    //   })
+    //   .catch(response => {
+    //     console.log("error:", response);
+    //   });
   },
-  methods:{
-      changePage(page){
-          //console.log(page);
-          this.currentPage = page;
-      }
+  methods: {
+    changePage(page) {
+      //console.log(page);
+      this.currentPage = page;
+    }
   },
-  computed:{
-      showedTasks(){
-          let begin = this.pageSize*(this.currentPage-1);
-          let end = this.pageSize*this.currentPage;
-          return this.tasks.slice(begin,end);
-      }
+  computed: {
+    showedTasks() {
+      let begin = this.pageSize * (this.currentPage - 1);
+      let end = this.pageSize * this.currentPage;
+      return this.tasks.slice(begin, end);
+    }
   }
 };
 </script>

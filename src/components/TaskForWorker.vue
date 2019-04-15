@@ -4,7 +4,7 @@
       <el-row style="width:100%;padding-left:30px">
         <el-col :span="6">
           <!-- <i class="el-icon-circle-plus"></i>上海某公司 -->
-          {{taskInfo.institution_name}}
+          {{taskInfo.area || "无"}}
         </el-col>
         <el-col :span="6">{{taskInfo.name}}</el-col>
         <el-col :span="3">666</el-col>

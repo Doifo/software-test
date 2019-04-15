@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row class="task-content-header">
-      <el-col :span="6">请求者</el-col>
+      <el-col :span="6">相关领域</el-col>
       <el-col :span="6">标题</el-col>
       <el-col :span="3">
         数量
