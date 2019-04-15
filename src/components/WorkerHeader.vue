@@ -19,6 +19,11 @@
                 <el-dropdown-item>个人中心</el-dropdown-item>
               </router-link>
             </span>
+            <span v-show="admin">
+              <router-link to="/admin-information" style="text-decoration:none;">
+                <el-dropdown-item>个人中心</el-dropdown-item>
+              </router-link>
+            </span>
             <span @click="logout"><el-dropdown-item>退出</el-dropdown-item></span>
           </el-dropdown-menu>
         </el-dropdown>
@@ -51,7 +56,7 @@
             <button class="nav-button">任务</button>
           </router-link>
           <router-link to="/admin-work">
-            <button class="nav-button">任务</button>
+            <button class="nav-button">工人</button>
           </router-link>
         </span>
       </el-col>
@@ -109,6 +114,12 @@ export default {
       }
     } else if (path.indexOf("admin") != -1) {
       this.admin = true;
+
+      if(path == "/admin-task"){
+        buttons[5].style.background = "#1471eb";
+      }else if(path == "/admin-work"){
+        buttons[6].style.background = "#1471eb";
+      }
     }
   }
 };
