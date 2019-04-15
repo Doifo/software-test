@@ -60,7 +60,7 @@ export default {
     task: Object
   },
   mounted() {
-    //console.log(this.task);
+    //console.log("hello");
     if (this.task.name.length >= 10) {
       this.taskName = this.task.name.slice(0, 10) + " ...";
     } else {
@@ -85,11 +85,14 @@ export default {
         }).then(response => {
           console.log("review:",response);
           this.$message.success("审核通过");
+          this.$router.go(0);
         }).catch(response => {
           console.log("error:",response);
         });
         
-      }).catch();
+      }).catch(() => {
+        
+      });
     }
   }
 };
