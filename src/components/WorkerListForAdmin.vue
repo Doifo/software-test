@@ -1,26 +1,27 @@
 <template>
   <div>
     <el-row class="worker-content-header">
-      <el-col :span="6">工人姓名</el-col>
-      <el-col :span="6">邮箱</el-col>
+      <el-col :span="3">id</el-col>
+      <el-col :span="3">工人姓名</el-col>
+      <el-col :span="3">邮箱</el-col>
       <el-col :span="3">
         等级
-        <i class="el-icon-caret-bottom"></i>
+        <i ></i>
       </el-col>
       <el-col :span="3">
         经验值
-        <i class="el-icon-caret-bottom"></i>
+        <i></i>
       </el-col>
       <el-col :span="3">
         账户余额
-        <i class="el-icon-caret-bottom"></i>
+        <i></i>
       </el-col>
-      <el-col :span="3">操作</el-col>
+      <el-col :span="6">操作</el-col>
     </el-row>
     <el-collapse style="min-height:250px;border-bottom:none;">
-      <worker-for-admin v-for="(item) in showedList" :key="item.id" :workerInfo="item"></worker-for-admin>
+      <worker-for-admin v-for="(item) in workerList" :key="item.id" :workerInfo="item"></worker-for-admin>
     </el-collapse>
-    <div class="pages">
+    <!-- <div class="pages">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -29,7 +30,7 @@
         :current-page.sync="curPage"
         @current-change="handleCurrentChange"
       ></el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -42,19 +43,67 @@ export default {
   name: "WorkerListForAdmin",
   computed: {
     ...mapState({
-      allWorkerList: state => state.Admin.allWorkerList
+      allWorkerList: state => state.admin.allWorkerList
     }),
     showedList(){
       let fst=this.pageSize*(this.curPage-1);
       let lst=this.pageSize*this.curPage;
-      let tem=this.allTaskList.slice(fst,lst);
+      console.log(allWorkerList)
+      let tem=this.allWorkerList.slice(fst,lst);
       return tem;
     }
   },
   data() {
     return {
       curPage:1,
-      pageSize: 4
+      pageSize: 4,
+      workerList:[{
+        id:"1",
+        name: "Xiaoming",
+        level: "5",
+        eMail: "123456789@qq.com",
+        major:"软件工程",
+        education: "本科",
+        workArea: "******",
+        age: "20",
+        value:"15",
+        balance:"78",
+      },{
+        id:"2",
+        name: "Xiaoming",
+        level: "1",
+        eMail: "5435@qq.com",
+        major:"软件工程",
+        education: "本科",
+        workArea: "******",
+        age: "18",
+        value:"15",
+        balance:"110",
+      },{
+        id:"3",
+        name: "Alice",
+        level: "9",
+        eMail: "12346789@qq.com",
+        major:"软件工程",
+        education: "本科",
+        workArea: "******",
+        age: "13",
+        value:"18",
+        balance:"89",
+      },
+      {
+        id:"4",
+        name: "Ben",
+        level: "10",
+        eMail: "1234569@qq.com",
+        major:"软件工程",
+        education: "本科",
+        workArea: "******",
+        age: "17",
+        value:"13",
+        balance:"86",
+      },
+      ],
     };
   },
   methods:{
@@ -64,7 +113,11 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch("Worker/initAllWorkerList");
+    //this.$store.dispatch("Admin/initAllWorkerList");
+    axios.get("/api/worker/find-myself")
+    .then(response => {
+      console.log("response:",response);
+    })
   },
   components: {
     WorkerForAdmin 
