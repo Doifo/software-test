@@ -8,8 +8,8 @@
         <el-col :span="3">{{workerInfo.level}}</el-col>
         <el-col :span="3">{{workerInfo.balance}}</el-col>
         <el-col :span="6">
-          <el-button v-bind:class="{back:ensureone}" type="warning" @click.stop="warningone">警告</el-button>
-          <el-button v-bind:class="{back:ensuretwo}" type="warning" @click.stop="warningtwo">封禁</el-button>
+          <el-button v-bind:class="{back:ensureone}" type="warning" @click.stop="warning">警告</el-button>
+          <el-button v-bind:class="{back:ensuretwo}" type="warning" @click.stop="ban" >封禁</el-button>
         </el-col>
       </el-row>
     </template>
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: "WorkerForAdmin",
   props:{
-    workerInfo: Object,
+    workerInfo: Object,  
   },
   data() {
     return {
@@ -39,19 +39,31 @@ export default {
     };
   },
   methods:{
-    warningone(){
+    warning(){
       alert("您正在对该工人进行警告！")
       this.ensureone = true;
       console.log(this.ensureone)
     },
-    warningtwo(){
+    ban(){
       alert("您正在对该工人进行封禁！")
       this.ensuretwo = true;
       console.log(this.ensuretwo)
+      let param = new URLSearchParams();
+      param.append("id",this.workerInfo.id)
+      console.log(this.workerInfo.id)
+      axios({
+        method:"delete",
+        url:"/api/worker/delete",
+        data:param
+      }).then(response=>{
+        console.log("response:",response)
+      }).catch(response=>{
+        console.log("error:",response)
+      })
     }
   },
   mounted:function(){
- 
+     
   }
 };
 </script>
