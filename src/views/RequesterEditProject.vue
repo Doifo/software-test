@@ -17,7 +17,7 @@
     </el-row>
     <project-templates-choose @submitForm="handleSubmitForm" v-show="step==0"></project-templates-choose>
     <project-base-info-edit @submitForm="handleSubmitForm" v-show="step==1"></project-base-info-edit>
-    <project-layout-edit :qtype="qtype" :qtmp="qtmp" @submitForm="handleSubmitForm" v-show="step==2"></project-layout-edit>
+    <project-layout-edit :qtype="qtype" :qtmp="qtmp" :taskId="taskId" @submitForm="handleSubmitForm" v-show="step==2"></project-layout-edit>
     <project-preview @submitForm="handleSubmitForm" v-show="step==3"></project-preview>
   </div>
 </template>
@@ -34,8 +34,8 @@ export default {
   name: "RequesterEditproject",
   data() {
     return {
-      step: 2,
-      taskId: 62,
+      step: 0,
+      taskId: 0,
       baseInfo:{},
       qtype:"ver1",
       qtmp:{},
@@ -56,7 +56,7 @@ export default {
         this.qtmp=form.para.qtmp;
         console.log(this.qtype);
         console.log(this.qtmp);
-        this.step=1;
+        this.step=2;
       }
       else if(form.formType=='baseInfo'){
         for(let key in form.para){
@@ -68,18 +68,19 @@ export default {
         for(let key in form.para){
           para.append(key,form.para[key]);
         }
-        alert('该项目被分配到的taskId为'+this.taskId)
+        para.append('type',this.qtype);
         // axios.post('/api/task/add',para).then(response=>{
         //   alert("提交成功");
         //   //console.log(response.data);
         //   this.taskId=response.data.taskId;
+        //   alert('该项目被分配到的taskId为'+this.taskId)
         // }).catch(response=>{
         //   alert("error");
         // })
         this.step=2;
       }
       else if(form.formType=='layout'){
-        this.step=3;
+        // this.step=3;
       }
       else{
         alert('保存')

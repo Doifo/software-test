@@ -12,7 +12,8 @@ import Homepage from '@/views/Homepage'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import PT from '@/components/requester/ProjectTemplatesChoose'
-import Q1 from '@/components/requester/layout/QuestionVer1'
+import Q1 from '@/components/QuestionVer1'
+import QList from '@/components/QuestionList'
 
 import AdminTask from '@/views/AdminTask'
 
@@ -60,9 +61,6 @@ export default new Router({
       name:"RequesterEditProject",
       component:RequesterEditProject
     },{
-      path:'/RC',
-      component:RC
-    },{
       path:'/admin-task',
       component:AdminTask
     },{
@@ -74,6 +72,9 @@ export default new Router({
     },{
       path:'/worker-answer',
       component:WorkerAnswer
+    },{
+      path:'/QList',
+      component:QList
     }
   ],
   mode:"history"
