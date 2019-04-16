@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style>
     <el-row>
       <el-col :span="12">
         <el-row>
@@ -8,8 +8,8 @@
           </el-col>
         </el-row>
         <el-row style="margin-top: 20px">
-          <div style="height: 300px; overflow: hidden">
-              <img style="width: 400px" :src="qtmp.url">
+          <div>
+            <el-input type="textarea" v-model="qtmp.text" readonly autosize></el-input>
           </div>
         </el-row>
       </el-col>
@@ -18,16 +18,12 @@
         <el-radio-group v-model="opt" style="width: 100%">
           <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:12px">
             <el-col :span="9" :offset="3" style="text-align:left">
-              <el-radio :label="index" style="font-size:20pt">
+              <el-input v-model="item.content" v-if="item.isEdit"></el-input>
+              <el-radio :label="index" v-else style="font-size:20pt">
                 <span style="font-size:16pt">{{item.content}}</span>
               </el-radio>
             </el-col>
           </el-row>
-          <!-- <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:20px">
-            <el-col :span="9" :offset="3" style="text-align:left">
-              <el-radio :label="index">{{item.content}}</el-radio>
-            </el-col>
-          </el-row> -->
         </el-radio-group>
       </el-col>
     </el-row>
@@ -35,15 +31,18 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   props: {
-    qtmp:Object,
-    // url:String,
-    // desc:String,
-    // opts:Array,
+    qtmp: Object,
+    taskId: Number
   },
   data() {
     return {
+      msg: "child",
+      isEditDesc: false,
+      //text: "?????????????????????????????????????????",
       // desc: "请在此处编辑你的问题描述",
       // opts: [
       //   { content: "选项111111111", isEdit: false },
@@ -51,11 +50,21 @@ export default {
       //   { content: "选项3", isEdit: false },
       //   { content: "选项4", isEdit: false }
       // ],
-      opt: 0
+      opt: 0,
     };
   },
   methods: {
+
+  },
+  mounted: function() {
+    // console.log(this.qtmp);
   }
 };
 </script>
+
+<style scoped>
+.el-button {
+  font-size: 16pt;
+}
+</style>
 

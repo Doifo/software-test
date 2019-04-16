@@ -86,7 +86,7 @@ export default {
     axios
       .get("/api/task/read-resource", {
         params: {
-          taskId: "1"
+          taskId: "75"
         }
       })
       .then(response => {
