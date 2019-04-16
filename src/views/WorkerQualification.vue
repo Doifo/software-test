@@ -81,8 +81,7 @@
 
 
 <script>
-  //import axios from 'axios'
-  //import WorkerHomepageTopbar from '@/components/WorkerNavi/WorkerHomepageTopbar.vue'
+  import axios from 'axios'
   import WorkerHeader from '@/components/WorkerHeader.vue'
 
   export default {
@@ -108,7 +107,6 @@
         },
         page: 1,
         help_page_menu: "0.0",
-        //url_crowdsourcing: require("../../../static/crowdTestingTag.png"),
         input_search: '',
         input_advice: '',
         task: {},
@@ -119,55 +117,6 @@
     
       }
     },
-   /* created()
-    {
-      function dateToString(datetime){
-        let date = datetime.slice(0,10);
-        let time = datetime.slice(11,19)
-        return date + ' ' + time;
-      }
-      let task_id = this.$route.query.task_id;
-      let that=this;
-      let param = new URLSearchParams();
-      param.append('id',task_id);
-      axios.get('/api/task/find-by-id',
-        {params:{'id': task_id}})
-        .then(function (response) {
-          let task = response.data.task;
-          task.start_time = dateToString(task.start_time);
-          task.end_time = dateToString(task.end_time);
-          that.task = task;
-          that.$forceUpdate();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      axios.get('/api/question/see-all-question',
-        {params:{'taskId': task_id}})
-        .then(function (response) {
-          let questions = response.data.Questions;
-          if(questions.length >= 5){
-            that.questions = questions.slice(0,5);
-            console.log(that.questions);
-          }
-          else{
-            that.questions = questions;
-          }
-          for (let i = 0; i < that.questions.length; i++) {
-            that.question_index[that.questions[i].question.id] = i + 1;
-            let an_answer = {
-              type: that.questions[i].question.type,
-              radio: '',
-              checkList: [],
-              open_answer: '',
-            }
-            that.answer.push(an_answer);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }*/
 
   }
 </script>

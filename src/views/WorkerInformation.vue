@@ -119,37 +119,8 @@
         </el-tab-pane>
 
         <el-tab-pane label="我的任务" name="second">
-          
-
-          <div style="min-height:300px;">
-            <el-table
-              :data="tableData"
-              style="width: 100%;"
-              type="flex"
-              :header-cell-style="{background:'#eff0f1'}"
-            >
-              <el-table-column prop="time" label="请求者"></el-table-column>
-              <el-table-column prop="time" label="项目名称"></el-table-column>
-              <el-table-column prop="time" label="奖励"></el-table-column>
-              <el-table-column prop="time" label="参与时间"></el-table-column>
-              <el-table-column prop="time" label="操作"></el-table-column>
-            </el-table>
-          </div>
-
-          <div
-            class="pages"
-            style="display:flex;flex-direction:row;justify-content:center;margin-bottom:100px;"
-          >
-            <el-pagination
-              background
-              :page-sizes="[10,20, 40]"
-              :page-size="10"
-              layout="sizes, prev, pager, next"
-              :total="10"
-              style="display:inline-block"
-            ></el-pagination>
-          </div>
-        </el-tab-pane>
+          <worker-my-task></worker-my-task>
+        </el-tab-pane>  
       </el-tabs>
     </div>
   </div>
@@ -158,11 +129,13 @@
 <script>
 //import axios from 'axios'
 import WorkerHeader from "@/components/WorkerHeader.vue";
+import WorkerMyTask from '@/components/WorkerMyTask.vue'
 import axios from 'axios'
 
 export default {
   components: {
-    "worker-header": WorkerHeader
+    "worker-header": WorkerHeader,
+    "worker-my-task":WorkerMyTask,
   },
   methods: {
     loadInfor: function() {
@@ -170,24 +143,7 @@ export default {
         method: "get",
         url: "/api/worker/find-myself"
       }).then(response => {
-        console.log(response.data.message)
-        this.userInfor.id = response.data.worker.id;
-        this.userInfor.username = response.data.worker.username;
-        this.userInfor.name = response.data.worker.name;
-        this.userInfor.teleNumber = response.data.worker.teleNumber;
-        this.userInfor.eMail = response.data.worker.eMail;
-        this.userInfor.balance = response.data.worker.balance;
-        this.userInfor.withdrawnMethod = response.data.worker.withdrawnMethod;
-        this.userInfor.gender = response.data.worker.gender;
-        this.userInfor.age = response.data.worker.age;
-        this.userInfor.email = response.data.worker.email;
-        this.userInfor.address = response.data.worker.address;
-        this.userInfor.xp = response.data.worker.xp;
-        this.userInfor.level = response.data.worker.level;
-        this.userInfor.school = response.data.worker.school;
-        this.userInfor.education = response.data.worker.education;
-        this.userInfor.major = response.data.worker.major;
-        this.userInfor.workArea = response.data.worker.workArea;
+        this.userInfor = response.data.worker;
       });
     },
     uploadInfor: function() {
@@ -224,7 +180,6 @@ export default {
       this.$options.methods.uploadInfor.call(this);
       //this.$options.methods.loadInfor.call(this);
     },
-
   },
   data() {
     return {
@@ -261,36 +216,11 @@ export default {
       questions: [],
       answer: [],
       question_index: [],
-      tableData: [
-        {
-          date: "**软件公司",
-          name: "产品评价分类",
-          address: "审核中",
-          time: "2019-2-1"
-        },
-        {
-          date: "**软件公司",
-          name: "产品评价分类",
-          address: "审核中",
-          time: "2019-2-1"
-        },
-        {
-          date: "**软件公司",
-          name: "产品评价分类",
-          address: "审核中",
-          time: "2019-2-1"
-        },
-        {
-          date: "**软件公司",
-          name: "产品评价分类",
-          address: "审核中",
-          time: "2019-2-1"
-        }
-      ]
     };
   },
   mounted(){
     this.$options.methods.loadInfor.call(this);
+    
   }
   
 };

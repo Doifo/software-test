@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "TaskForAdmin",
@@ -68,31 +68,44 @@ export default {
     }
   },
   methods: {
-    confirm(){
+    confirm() {
       this.dialogVisible = false;
-      this.$confirm("任务将通过审核，是否确认？","确认通过",{
-        confirmButtonText:'确定',
-        cancelButtonText:'取消',
-        type:'warning'
-      }).then(() =>{
-        console.log(this.task.id)
-         let param = new URLSearchParams();
-         param.append("id",this.task.id);
-        axios({
-          method:"put",
-          url:"/api/admin/review-task",
-          data:param
-        }).then(response => {
-          console.log("review:",response);
-          this.$message.success("审核通过");
-          this.$router.go(0);
-        }).catch(response => {
-          console.log("error:",response);
-        });
-        
-      }).catch(() => {
-        
-      });
+      this.$confirm("任务将通过审核，是否确认？", "确认通过", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          console.log(this.task.id);
+          let param = new URLSearchParams();
+          param.append("id", this.task.id);
+          axios({
+            method: "put",
+            url: "/api/admin/review-task",
+            data: param
+          })
+            .then(response => {
+              console.log("review:", response);
+              this.$message.success("审核通过");
+              this.$router.go(0);
+            })
+            .catch(response => {
+              console.log("error:", response);
+            });
+
+          // let param = new URLSearchParams();
+          // param.append("id",this.worker.id)
+          // axios({
+          //   method:"delete",
+          //   url:"/api/worker/delete",
+          //   data:param
+          // }).then(response => {
+          //   console.log("response:",response)
+          // }).catch(response =>{
+          //   console.log("erroe:",response)
+          // });
+        })
+        .catch(() => {});
     }
   }
 };

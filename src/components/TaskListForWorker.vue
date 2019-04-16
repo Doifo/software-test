@@ -3,18 +3,9 @@
     <el-row class="task-content-header">
       <el-col :span="6">相关领域</el-col>
       <el-col :span="6">标题</el-col>
-      <el-col :span="3">
-        数量
-        <i class="el-icon-caret-bottom"></i>
-      </el-col>
-      <el-col :span="3">
-        奖励
-        <i class="el-icon-caret-bottom"></i>
-      </el-col>
-      <el-col :span="3">
-        创建时间
-        <i class="el-icon-caret-bottom"></i>
-      </el-col>
+      <el-col :span="3">时间</el-col>
+      <el-col :span="3">奖励</el-col>
+      <el-col :span="3">机构名称</el-col>
       <el-col :span="3">操作</el-col>
     </el-row>
     <el-collapse style="min-height:250px;border-bottom:none;">
@@ -44,22 +35,22 @@ export default {
     ...mapState({
       allTaskList: state => state.Worker.allTaskList
     }),
-    showedList(){
-      let fst=this.pageSize*(this.curPage-1);
-      let lst=this.pageSize*this.curPage;
-      let tem=this.allTaskList.slice(fst,lst);
+    showedList() {
+      let fst = this.pageSize * (this.curPage - 1);
+      let lst = this.pageSize * this.curPage;
+      let tem = this.allTaskList.slice(fst, lst);
       return tem;
     }
   },
   data() {
     return {
-      curPage:1,
+      curPage: 1,
       pageSize: 4
     };
   },
-  methods:{
-    handleCurrentChange(val){
-      this.curPage=val;
+  methods: {
+    handleCurrentChange(val) {
+      this.curPage = val;
       alert(val);
     }
   },

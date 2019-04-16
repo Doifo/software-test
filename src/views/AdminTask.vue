@@ -53,7 +53,7 @@ export default {
     axios
       .get("/api/admin/find-unreviewed-task")
       .then(response => {
-        console.log("task:", response);
+        //console.log("task:", response);
         this.tasks = response.data.tasks;
       })
       .catch(response => {
