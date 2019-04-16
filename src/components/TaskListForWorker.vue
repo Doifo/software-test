@@ -45,8 +45,8 @@ export default {
   data() {
     return {
       curPage: 1,
-      pageSize: 4
-    };
+      pageSize: 10
+    }
   },
   methods: {
     handleCurrentChange(val) {
