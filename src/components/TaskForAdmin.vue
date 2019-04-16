@@ -1,18 +1,14 @@
 <template>
   <div>
     <el-row class="task-item">
-      <el-col :span="5" :offset="1">{{task.institution_name}}</el-col>
+      <el-col :span="5" :offset="1">{{task.area}}</el-col>
       <el-col :span="5" :offset="1">{{taskName}}</el-col>
-      <el-col :span="5" :offset="1">{{task.type}}</el-col>
+      <el-col :span="5" :offset="1">{{task.time_limitation}} 天</el-col>
       <el-col :span="5" :offset="1">
         <el-button @click="dialogVisible = true" size="small">查看详情</el-button>
       </el-col>
     </el-row>
     <el-dialog title="详细信息" :visible.sync="dialogVisible" width="50%">
-      <el-row>
-        <span class="dialog-span">请求者：</span>
-        {{task.institution_name}}
-      </el-row>
       <el-row>
         <span class="dialog-span">任务标题：</span>
         {{task.name}}
@@ -40,6 +36,7 @@
       <el-row></el-row>
       <span slot="footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="confirm">确认通过</el-button>
         <router-link v-bind:to="'/admin-task-detail/' + task.id" target="_blank">
           <el-button type="primary" @click="dialogVisible = false;">查看问卷详情</el-button>
         </router-link>
@@ -49,6 +46,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "TaskForAdmin",
   data() {
@@ -61,14 +60,41 @@ export default {
     task: Object
   },
   mounted() {
-    //console.log(this.task);
+    //console.log("hello");
     if (this.task.name.length >= 10) {
       this.taskName = this.task.name.slice(0, 10) + " ...";
     } else {
       this.taskName = this.task.name.slice(0, 10);
     }
   },
-  methods: {}
+  methods: {
+    confirm(){
+      this.dialogVisible = false;
+      this.$confirm("任务将通过审核，是否确认？","确认通过",{
+        confirmButtonText:'确定',
+        cancelButtonText:'取消',
+        type:'warning'
+      }).then(() =>{
+        console.log(this.task.id)
+         let param = new URLSearchParams();
+         param.append("id",this.task.id);
+        axios({
+          method:"put",
+          url:"/api/admin/review-task",
+          data:param
+        }).then(response => {
+          console.log("review:",response);
+          this.$message.success("审核通过");
+          this.$router.go(0);
+        }).catch(response => {
+          console.log("error:",response);
+        });
+        
+      }).catch(() => {
+        
+      });
+    }
+  }
 };
 </script>
 

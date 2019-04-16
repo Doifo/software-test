@@ -18,7 +18,6 @@
         <el-tab-pane label="已参与任务" name="second">
           <worker-task-participated></worker-task-participated>
         </el-tab-pane>
-        <el-tab-pane label="考试练习" name="third"></el-tab-pane>
       </el-tabs>
     </div>
   </div>

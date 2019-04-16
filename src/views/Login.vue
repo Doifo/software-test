@@ -50,10 +50,10 @@
               </el-select>
             </el-form-item>
             <el-form-item label="用户名">
-              <el-input v-model="email" placeholder="请输入注册邮箱" ></el-input>
+              <el-input v-model="email" placeholder="请输入注册邮箱"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-              <el-input show-password v-model="pwd" placeholder="请输入密码" ></el-input>
+              <el-input show-password v-model="pwd" placeholder="请输入密码"></el-input>
             </el-form-item>
           </el-form>
           <el-col>
@@ -77,7 +77,7 @@
               </p>
 
               <p style="text-align:center">
-                <el-button style="width:300px;" type="primary" v-show="admin">登录</el-button>
+                <el-button style="width:300px;" type="primary" v-show="admin" @click="loginAdmin">登录</el-button>
               </p>
               <p style="text-align:center">
                 <el-button
@@ -98,7 +98,6 @@
 <script>
 import axios from "axios";
 
-let self = this;
 export default {
   data() {
     return {
@@ -146,7 +145,7 @@ export default {
     },
     loginRequester: function() {
       let that = this;
-      //this.button_disabled = true;
+
       this.role = "ROLE_REQUESTER";
       if (this.email == "") {
         this.$message({
@@ -157,7 +156,7 @@ export default {
         this.$message("请输入密码");
       } else {
         let param = new URLSearchParams();
-        let self = this;
+
         param.append("username", this.email);
         param.append("password", this.pwd);
         param.append("role", this.role);
@@ -186,28 +185,24 @@ export default {
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
                   that.$router.replace("/requester-information");
-                  //that.button_disabled = false;
                 })
                 .catch(function(error) {
                   console.log(error);
                 });
             } else if (response.data.code[0] == "4") {
               that.$message.error("用户名或密码错误");
-              //that.button_disabled = false;
             } else if (response.data.code[0] == "5") {
               that.$message.error("服务器错误");
-              //that.button_disabled = false;
             }
           })
           .catch(function(error) {
             console.log(error);
-            //token_pointer.button_disabled = false;
           });
       }
     },
     loginWorker: function() {
       let that = this;
-      //this.button_disabled = true;
+
       this.role = "ROLE_WORKER";
       if (this.email == "") {
         this.$message({
@@ -246,7 +241,6 @@ export default {
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
                   that.$router.replace("/worker-information");
-                  //that.button_disabled = false;
                 })
                 .catch(function(error) {
                   console.log(error);
@@ -256,7 +250,49 @@ export default {
               t; //hat.button_disabled = false;
             } else if (response.data.code[0] == "5") {
               that.$message.error("服务器错误");
-              //that.button_disabled = false;
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }
+    },
+    loginAdmin: function() {
+      let that = this;
+
+      this.role = "ROLE_ADMIN";
+      if (this.email == "") {
+        this.$message({
+          message: "请输入用户名",
+          type: "warning"
+        });
+      } else if (this.pwd == "") {
+        this.$message("请输入密码");
+      } else {
+        let param = new URLSearchParams();
+
+        param.append("username", this.email);
+        param.append("password", this.pwd);
+        param.append("role", this.role);
+        axios({
+          method: "post",
+          url: "/api/login",
+          data: param
+        })
+          .then(function(response) {
+            //console.log(response);
+            if (response.data.code[0] == "2") {
+              let token = response.data.X_Auth_Token;
+              that.$store.commit("UserLogin", token);
+              that.wrong_pwd = "";
+              //console.log(that.$store.state.token);
+              axios.defaults.headers.common["X_Auth_Token"] =
+                that.$store.state.token;
+              that.$router.replace("/admin-task");
+            } else if (response.data.code[0] == "4") {
+              that.$message.error("用户名或密码错误");
+            } else if (response.data.code[0] == "5") {
+              that.$message.error("服务器错误");
             }
           })
           .catch(function(error) {

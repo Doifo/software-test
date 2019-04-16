@@ -3,7 +3,7 @@
     <el-row type="flex" justify="space-between">
       <el-col class="header-title">众测平台</el-col>
       <el-col class="user-button">
-        <el-dropdown trigger="click">
+        <el-dropdown trigger="click" v-show="!admin">
           <span class="el-dropdown-link">
             {{username}}
             <i class="el-icon-arrow-down el-icon--right"></i>
@@ -22,6 +22,9 @@
             <span @click="logout"><el-dropdown-item>退出</el-dropdown-item></span>
           </el-dropdown-menu>
         </el-dropdown>
+        <el-button v-show="admin" @click="logout" type="text">
+          退出登录
+        </el-button>
       </el-col>
     </el-row>
 
@@ -51,7 +54,7 @@
             <button class="nav-button">任务</button>
           </router-link>
           <router-link to="/admin-work">
-            <button class="nav-button">任务</button>
+            <button class="nav-button">工人</button>
           </router-link>
         </span>
       </el-col>
@@ -93,7 +96,6 @@ export default {
     let buttons = document.getElementsByClassName("nav-button");
     if (path.indexOf("worker") != -1) {
       this.worker = true;
-
       if (path == "/worker-task") {
         buttons[0].style.background = "#1471eb";
       } else if (path == "/worker-statistic") {
@@ -101,14 +103,22 @@ export default {
       } else if (path == "/worker-qualification") {
         buttons[2].style.background = "#1471eb";
       }
-    } else if (path.indexOf("requester") != -1) {
-      this.requester = true;
+    } 
 
+    else if (path.indexOf("requester") != -1) {
+      this.requester = true;
       if (path == "/requester-edit-project") {
         buttons[3].style.background = "#1471eb";
       }
-    } else if (path.indexOf("admin") != -1) {
+    } 
+    
+    else if (path.indexOf("admin") != -1) {
       this.admin = true;
+      if (path == "/admin-work") {
+        buttons[6].style.background = "#1471eb";
+      }else if(path == "/admin-task"){
+        buttons[5].style.background = "#1471eb";
+      }
     }
   }
 };

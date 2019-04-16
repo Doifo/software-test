@@ -12,8 +12,7 @@ import Homepage from '@/views/Homepage'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import PT from '@/components/requester/ProjectTemplatesChoose'
-import Q1 from '@/components/QuestionVer1'
-import QList from '@/components/QuestionList'
+import Q1 from '@/components/requester/layout/QuestionVer1'
 
 import AdminTask from '@/views/AdminTask'
 
@@ -70,11 +69,8 @@ export default new Router({
       path:'/admin-work',
       component:AdminWork
     },{
-      path:'/worker-answer',
+      path:'/worker-answer/:id',
       component:WorkerAnswer
-    },{
-      path:'/QList',
-      component:QList
     }
   ],
   mode:"history"
