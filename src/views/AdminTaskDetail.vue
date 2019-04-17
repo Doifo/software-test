@@ -27,7 +27,7 @@ export default {
       option: ""
     };
   },
-  props:{
+  components:{
     QuestionListPreview
   },
   mounted() {
