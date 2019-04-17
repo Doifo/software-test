@@ -16,7 +16,7 @@
           <task-list-for-worker></task-list-for-worker>
         </el-tab-pane>
         <el-tab-pane label="已参与任务" name="second">
-          <worker-task-participated></worker-task-participated>
+          <worker-my-task></worker-my-task>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import WorkerMyTask from '@/components/WorkerMyTask'
 import WorkerHeader from "@/components/WorkerHeader";
 import WorkerTaskParticipated from "@/components/WorkerTaskParticipated";
 import TaskListForWorker from "@/components/TaskListForWorker";
@@ -45,7 +46,8 @@ export default {
   components: {
     WorkerHeader,
     WorkerTaskParticipated,
-    TaskListForWorker
+    TaskListForWorker,
+    WorkerMyTask
   },
   mounted: function() {
     this.$store.dispatch("Worker/initAllTaskList");
