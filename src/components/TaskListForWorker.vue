@@ -3,9 +3,18 @@
     <el-row class="task-content-header">
       <el-col :span="6">相关领域</el-col>
       <el-col :span="6">标题</el-col>
-      <el-col :span="3">时间</el-col>
-      <el-col :span="3">奖励</el-col>
-      <el-col :span="3">机构名称</el-col>
+      <el-col :span="3">
+        数量
+        <i class="el-icon-caret-bottom"></i>
+      </el-col>
+      <el-col :span="3">
+        奖励
+        <i class="el-icon-caret-bottom"></i>
+      </el-col>
+      <el-col :span="3">
+        创建时间
+        <i class="el-icon-caret-bottom"></i>
+      </el-col>
       <el-col :span="3">操作</el-col>
     </el-row>
     <el-collapse style="min-height:250px;border-bottom:none;">
@@ -21,6 +30,7 @@
         @current-change="handleCurrentChange"
       ></el-pagination>
     </div>
+    <!-- <el-button @click="test">测试</el-button> -->
   </div>
 </template>
 
@@ -33,25 +43,30 @@ export default {
   name: "TaskListForWorker",
   computed: {
     ...mapState({
-      allTaskList: state => state.Worker.allTaskList
+    allTaskList: state => state.Worker.allTaskList
     }),
     showedList() {
-      let fst = this.pageSize * (this.curPage - 1);
-      let lst = this.pageSize * this.curPage;
-      let tem = this.allTaskList.slice(fst, lst);
+      let fst=this.pageSize*(this.curPage-1);
+      let lst=this.pageSize*this.curPage;
+      let tem=this.allTaskList.slice(fst,lst);
       return tem;
+      //return this.allTaskList;
     }
   },
   data() {
     return {
+      //allTaskList: [],
       curPage: 1,
       pageSize: 10
-    }
+    };
   },
   methods: {
     handleCurrentChange(val) {
       this.curPage = val;
       alert(val);
+    },
+    test() {
+      console.log(this.allTaskList);
     }
   },
   mounted() {
