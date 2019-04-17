@@ -11,7 +11,7 @@
         <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
         <el-col :span="3">{{taskInfo.start_time}}</el-col>
         <el-col :span="3">
-          <el-button type="warning" @click="gotoAnswer">接受任务</el-button>
+          <el-button type="warning" @click.stop="confirmAdd">接受任务</el-button>
         </el-col>
       </el-row>
     </template>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "TaskForWorker",
   props:{
@@ -50,6 +52,34 @@ export default {
     };
   },
   methods:{
+    confirmAdd() {
+      this.$confirm("确定接受任务吗？", "接受任务", {
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          console.log("confirm")
+          let param = new URLSearchParams();
+          param.append("taskId", this.taskInfo.id);
+          axios({
+            method: "post",
+            url: "/api/personal-task/add",
+            data: param
+          })
+            .then(response => {
+              console.log("response:", response);
+              this.$message.success("接受成功");
+            })
+            .catch(response => {
+              console.log("error:", response);
+            });
+          
+        })
+        .catch(() => {
+          console.log("cancel")
+        });
+    },
     gotoAnswer(){
       console.log(this.taskInfo)
       this.$router.push({
@@ -61,7 +91,7 @@ export default {
     }
   },
   mounted:function(){
-    console.log(this.taskInfo);
+    
   }
 };
 </script>

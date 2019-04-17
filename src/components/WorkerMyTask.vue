@@ -13,8 +13,8 @@
         <el-table-column prop="task.area" label="相关领域"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <router-link v-bind:to="'/worker-answer/'+scope.row.task.id">
-              <el-button size="small" type="text">继续任务</el-button>
+            <router-link v-bind:to="'/QList?tid='+scope.row.task.id">
+              <el-button size="small" type="text" >继续任务</el-button>
             </router-link>
           </template>
         </el-table-column>
@@ -32,7 +32,17 @@ export default {
       myTask: []
     };
   },
-  methods: {},
+  methods: {
+    gotoAnswer(){
+      console.log(this.taskInfo)
+      this.$router.push({
+        path:'/QList',
+        query:{
+          tid:this.taskInfo.id
+        }
+      })
+    }
+  },
   mounted() {
     axios({
       method: "get",

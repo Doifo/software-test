@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import WorkerStatistic from '@/views/WorkerStatistic.vue'
 import WorkerTask from '@/views/WorkerTask.vue'
 import WorkerInformation from '@/views/WorkerInformation.vue'
 import WorkerQualification from '@/views/WorkerQualification.vue'
-
 import RequesterInformation from '@/views/RequesterInformation.vue'
 import RequesterEditProject from '@/views/RequesterEditProject.vue'
 import Homepage from '@/views/Homepage'
@@ -18,7 +16,6 @@ import QList from '@/components/QuestionList'
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
 import AdminWork from '@/views/AdminWork'
-import WorkerAnswer from '@/views/WorkerAnswer'
 
 Vue.use(Router)
 
@@ -68,9 +65,6 @@ export default new Router({
     },{
       path:'/admin-work',
       component:AdminWork
-    },{
-      path:'/worker-answer/:id',
-      component:WorkerAnswer
     },{
       path:'/QList',
       component:QList

@@ -26,7 +26,6 @@
 <script>
 import WorkerMyTask from '@/components/WorkerMyTask'
 import WorkerHeader from "@/components/WorkerHeader";
-import WorkerTaskParticipated from "@/components/WorkerTaskParticipated";
 import TaskListForWorker from "@/components/TaskListForWorker";
 import axios from "axios";
 import { mapState } from "vuex";
@@ -45,7 +44,6 @@ export default {
   },
   components: {
     WorkerHeader,
-    WorkerTaskParticipated,
     TaskListForWorker,
     WorkerMyTask
   },

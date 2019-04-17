@@ -45,7 +45,7 @@
           <router-link to="/requester-edit-project">
             <button class="nav-button">创建</button>
           </router-link>
-          <router-link to="/">
+          <router-link to="/" v-show="false">
             <button class="nav-button">管理</button>
           </router-link>
         </span>

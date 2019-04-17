@@ -42,13 +42,6 @@ export default {
     TaskForAdmin
   },
   mounted() {
-    // axios
-    //   .get("/api/task/find-all")
-    //   .then(response => {
-    //     //console.log(response.data);
-    //     this.tasks = response.data.tasks;
-    //   })
-    //   .catch(response => {});
 
     axios
       .get("/api/admin/find-unreviewed-task")
@@ -60,14 +53,6 @@ export default {
         console.log("error:", response);
       });
 
-    // axios
-    //   .get("/api/worker/find-all")
-    //   .then(response => {
-    //     console.log("task:", response);
-    //   })
-    //   .catch(response => {
-    //     console.log("error:", response);
-    //   });
   },
   methods: {
     changePage(page) {

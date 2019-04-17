@@ -1,18 +1,19 @@
 <template>
   <div id="admin-task-detail">
-    <h2 style="text-align:center">任务详情</h2>
+    <!-- <h2 style="text-align:center">任务详情</h2>
     <p class="title">问题描述</p>
     <p>{{taskDetail.desc}}</p>
     <p class="title">选项</p>
     <el-row v-for="opt in taskDetail.opts" :key="opt.content">{{opt.content}}</el-row>
     <p class="title">图片</p>
-    <img v-for="url in taskDetail.urls" :key="url.url" :src="url.url" class="task-pic">
+    <img v-for="url in taskDetail.urls" :key="url.url" :src="url.url" class="task-pic"> -->
+    <question-list-preview :tid="taskId"></question-list-preview>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
+import QuestionListPreview from '@/components/requester/QuestionListPreview'
 export default {
   name: "AdminTaskDetail",
   data() {
@@ -25,6 +26,9 @@ export default {
       },
       option: ""
     };
+  },
+  props:{
+    QuestionListPreview
   },
   mounted() {
     axios
