@@ -74,11 +74,14 @@
             <el-form-item label="年龄">
               <el-input v-model="userInfor.age"></el-input>
             </el-form-item>
-            <el-form-item label="研究领域">
-              <el-input v-model="userInfor.reaserch_field"></el-input>
+            <el-form-item label="电话号码">
+              <el-input v-model="userInfor.teleNumber"></el-input>
             </el-form-item>
             <el-form-item label="机构名称">
               <el-input v-model="userInfor.institutionName"></el-input>
+            </el-form-item>
+            <el-form-item label="研究领域">
+              <el-input v-model="userInfor.research_field"></el-input>
             </el-form-item>
             <el-form-item label="联系地址">
               <el-input v-model="userInfor.address"></el-input>
@@ -171,20 +174,8 @@ export default {
       }).then(response => {
         console.log("load succeed")
         console.log(response)
-        this.userInfor.username = response.data.requester.username;
-        this.userInfor.name = response.data.requester.name;
-        this.userInfor.gender = response.data.requester.gender;
-        this.userInfor.age = response.data.requester.age;
-        this.userInfor.teleNumber = response.data.requester.teleNumber;
-        this.userInfor.email = response.data.requester.email;
-        this.userInfor.eMail = response.data.requester.eMail;
-        this.userInfor.address = response.data.requester.address;
-        this.userInfor.requesterId = response.data.requester.requesterId;
-        this.userInfor.balance = response.data.requester.balance;
-        this.userInfor.reaserch_field = response.data.requester.research_field;
-        this.userInfor.institutionName =
-          response.data.requester.institutionName;
-        this.userInfor.payMethod = response.data.requester.payMethod;
+        this.userInfor = response.data.requester;
+        this.change = false;
       });
     },
     uploadInfor: function() {
@@ -199,6 +190,7 @@ export default {
       param.append("payMethod", this.userInfor.payMethod);
       param.append("gender", this.userInfor.gender);
       param.append("age", this.userInfor.age);
+      console.log("params:",JSON.stringify(param))
 
       axios({
         method: "put",
@@ -209,15 +201,13 @@ export default {
         this.$options.methods.loadInfor.call(this);
       });
     },
-    cancelChange: function() {
-      this.change = false;
+    cancelChange(){
       this.$options.methods.loadInfor.call(this);
     },
     changeInfor: function() {
       this.change = true;
     },
     changeEnsure: function() {
-      this.change = false;
       this.$options.methods.uploadInfor.call(this);
     }
   },

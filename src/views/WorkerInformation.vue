@@ -48,14 +48,6 @@
               <span class="text-span">{{userInfor.gender}}</span>
             </p>
             <p>
-              <span class="label-span">学校：</span>
-              <span class="text-span">{{userInfor.school}}</span>
-            </p>
-            <p>
-              <span class="label-span">联系地址：</span>
-              <span class="text-span">{{userInfor.address}}</span>
-            </p>
-            <p>
               <span class="label-span">年龄：</span>
               <span class="text-span">{{userInfor.age}}</span>
             </p>
@@ -94,9 +86,6 @@
             <el-form-item label="职业">
               <el-input v-model="userInfor.major"></el-input>
             </el-form-item>
-            <el-form-item label="学校">
-              <el-input v-model="userInfor.school"></el-input>
-            </el-form-item>
             <el-form-item label="年龄">
               <el-input v-model="userInfor.age"></el-input>
             </el-form-item>
@@ -105,9 +94,6 @@
             </el-form-item>
             <el-form-item label="工作地址">
               <el-input v-model="userInfor.workArea"></el-input>
-            </el-form-item>
-            <el-form-item label="联系地址">
-              <el-input v-model="userInfor.address"></el-input>
             </el-form-item>
             
             <p style="text-align:center">
@@ -144,6 +130,7 @@ export default {
         url: "/api/worker/find-myself"
       }).then(response => {
         this.userInfor = response.data.worker;
+        this.change = false;
       });
     },
     uploadInfor: function() {
@@ -169,16 +156,13 @@ export default {
       });
     },
     cancelChange: function() {
-      this.change = false;
       this.$options.methods.loadInfor.call(this);
     },
     changeInfor: function() {
       this.change = true;
     },
     changeEnsure: function() {
-      this.change = false;
       this.$options.methods.uploadInfor.call(this);
-      //this.$options.methods.loadInfor.call(this);
     },
   },
   data() {
