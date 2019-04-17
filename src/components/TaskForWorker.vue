@@ -11,7 +11,7 @@
         <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
         <el-col :span="3">{{taskInfo.start_time}}</el-col>
         <el-col :span="3">
-          <el-button type="warning" @click.stop>接受任务</el-button>
+          <el-button type="warning" @click="gotoAnswer">接受任务</el-button>
         </el-col>
       </el-row>
     </template>
@@ -48,6 +48,17 @@ export default {
       //   qualification: "天才"
       // }
     };
+  },
+  methods:{
+    gotoAnswer(){
+      console.log(this.taskInfo)
+      this.$router.push({
+        path:'/QList',
+        query:{
+          tid:this.taskInfo.id
+        }
+      })
+    }
   },
   mounted:function(){
     console.log(this.taskInfo);

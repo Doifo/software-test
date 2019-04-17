@@ -118,6 +118,13 @@ export default {
       // console.log(this.rectCollection);
       this.drawAll();
       console.log(this.rectCollection);
+    },
+    getAns(){
+      let tem={
+        index:this.qtmp.index,
+        ans:this.rectCollection
+      }
+      return tem;
     }
   },
   mounted: function() {

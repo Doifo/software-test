@@ -30,6 +30,7 @@
         @current-change="handleCurrentChange"
       ></el-pagination>
     </div>
+    <!-- <el-button @click="test">测试</el-button> -->
   </div>
 </template>
 
@@ -42,25 +43,30 @@ export default {
   name: "TaskListForWorker",
   computed: {
     ...mapState({
-      allTaskList: state => state.Worker.allTaskList
+    allTaskList: state => state.Worker.allTaskList
     }),
-    showedList(){
+    showedList() {
       let fst=this.pageSize*(this.curPage-1);
       let lst=this.pageSize*this.curPage;
       let tem=this.allTaskList.slice(fst,lst);
       return tem;
+      //return this.allTaskList;
     }
   },
   data() {
     return {
-      curPage:1,
+      //allTaskList: [],
+      curPage: 1,
       pageSize: 10
     };
   },
-  methods:{
-    handleCurrentChange(val){
-      this.curPage=val;
+  methods: {
+    handleCurrentChange(val) {
+      this.curPage = val;
       alert(val);
+    },
+    test() {
+      console.log(this.allTaskList);
     }
   },
   mounted() {

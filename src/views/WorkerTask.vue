@@ -25,7 +25,6 @@
 
 <script>
 import WorkerHeader from "@/components/WorkerHeader";
-import WorkerAllTask from "@/components/WorkerAllTask";
 import WorkerTaskParticipated from "@/components/WorkerTaskParticipated";
 import TaskListForWorker from "@/components/TaskListForWorker";
 import axios from "axios";
@@ -45,7 +44,6 @@ export default {
   },
   components: {
     WorkerHeader,
-    WorkerAllTask,
     WorkerTaskParticipated,
     TaskListForWorker
   },

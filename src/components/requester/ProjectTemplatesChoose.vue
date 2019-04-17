@@ -50,7 +50,7 @@
         </el-tab-pane>
 
         <!--物体检测-->
-        <el-tab-pane label="物体识别" name="ver2-tmp3">
+        <el-tab-pane label="物体检测" name="ver2-tmp3">
           <div class="preview_box">
             <div class="reminder">
               <div class="reminder_title" @click="showReminder">
@@ -189,7 +189,7 @@ export default {
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555094734309&di=07cbcb8b48caf576f0a15a3a82eb5a6e&imgtype=0&src=http%3A%2F%2Fwx3.sinaimg.cn%2Fmw690%2F96b2b684gy1fdoq0sis5mj20go0godhw.jpg"
         },
         tmp3: {
-          desc: "请在此处编辑你的问题描述",
+          desc: "请用矩形框出对应的物体",
           opts: [
             { content: "猫", isEdit: false, color: "#FFF200" },
             { content: "狗", isEdit: false, color: "#FF0000" },
@@ -200,7 +200,7 @@ export default {
             "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg"
         },
         tmp4: {
-          desc: "请在此处编辑你的问题描述",
+          desc: "请画出对应物体的边缘",
           opts: [
             { content: "猫", isEdit: false, color: "#FFF200" },
             { content: "狗", isEdit: false, color: "#FF0000" },

@@ -54,7 +54,13 @@ export default {
     };
   },
   methods: {
-
+    getAns(){
+      let tem={
+        index:this.qtmp.index,
+        ans:this.opt
+      }
+      return tem;
+    }
   },
   mounted: function() {
     // console.log(this.qtmp);

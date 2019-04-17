@@ -21,11 +21,11 @@ export default {
   props: {
     qtype: String,
     qtmp:Object,
-    //taskId:Number
+    taskId:Number
   },
   data() {
     return {
-      taskId:75,
+      //taskId:75,
       msg:'parent',
       // qtype:'ver4',
       // qtmp: {
