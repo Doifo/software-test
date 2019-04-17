@@ -26,6 +26,27 @@
             ref="myCanvas"
           ></canvas>
         </div>
+        <el-upload
+          class="upload-demo"
+          ref="upload"
+          action
+          :http-request="myUpload"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :on-success="submitSuccess"
+          :before-remove="beforeRemove"
+          :multiple="false"
+          :limit="1"
+          :on-exceed="handleExceed"
+          :file-list="fileList"
+          :auto-upload="false"
+        >
+          <div
+            class="el_upload_tip"
+            style="font-size:14pt; margin-top:20px"
+          >批量导入图片的url,请上传utf-8编码的txt文件</div>
+          <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
+        </el-upload>
       </el-col>
       <el-col :span="12">
         <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
@@ -86,32 +107,37 @@
         </el-radio-group>
       </el-col>
     </el-row>
-    <div>画多边形</div>
-    <el-button @click="closePoly">闭合</el-button>
-    <el-button @click="test"></el-button>
   </div>
 </template>
 
 
 <script>
+import axios from "axios";
+
+
 export default {
+  props:{
+    qtmp:Object,
+    taskId:Number
+  },
   data() {
     return {
-      qtmp:{
-        desc:'请在此处编辑你的问题描述',
-        opts:[ { content: '猫', isEdit: false, color:'#FFF200' },
-        { content: '狗', isEdit: false, color:'#FF0000'},
-        { content: '猪', isEdit: false, color:'#006AFF' },
-        { content: '人', isEdit: false, color:'#00FF48'}],
-        url:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg'
-      },
+      // qtmp:{
+      //   desc:'请在此处编辑你的问题描述',
+      //   opts:[ { content: '猫', isEdit: false, color:'#FFF200' },
+      //   { content: '狗', isEdit: false, color:'#FF0000'},
+      //   { content: '猪', isEdit: false, color:'#006AFF' },
+      //   { content: '人', isEdit: false, color:'#00FF48'}],
+      //   url:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg'
+      // },
       isEditDesc: false,
       opt: 0,
       startPos: { x: 0, y: 0 },
       endPos: { x: 0, y: 0 },
       points: [],
       pointsCollection:[],
-      isDrawing: false
+      isDrawing: false,
+      fileList: []
     };
   },
   methods: {
@@ -157,7 +183,7 @@ export default {
     },
     test(){
       console.log(this.pointsCollection);
-    }
+    },
     // cancel() {
     //   this.$refs.myCanvas.getContext("2d").clearRect(0, 0, 400, 400);
     //   this.startPoints.pop();
@@ -173,6 +199,46 @@ export default {
     //       .strokeRect(this.startPoints[i].x, this.startPoints[i].y, w, h);
     //   }
     // }
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(
+        `当前限制选择 3 个文件，本次选择了 ${
+          files.length
+        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+      );
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    submitUpload() {
+      this.$refs.upload.submit();
+    },
+    submitSuccess(response, file, fileList) {
+      alert("上传成功");
+      this.$refs.upload.clearFiles();
+    },
+    myUpload: function(params) {
+      //alert('OK');
+      let formData = new FormData();
+      formData.append("file", params.file);
+      formData.append("description", this.qtmp.desc);
+      formData.append("options", JSON.stringify(this.qtmp.opts));
+      formData.append("taskId", this.taskId);
+      axios
+        .post("/api/task/add-resource", formData)
+        .then(response => {
+          alert("上传成功");
+        })
+        .catch(response => {
+          alert("error");
+        });
+      console.log(this.qtmp.desc);
+    }
   },
   mounted: function() {
     for(let i=0; i<this.qtmp.opts.length; ++i){

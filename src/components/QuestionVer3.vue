@@ -23,9 +23,10 @@
         </div>
       </el-col>
       <el-col :span="8">
+        <div style="font-size:18pt; text-align:center">类别</div>
         <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
           <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:30px">
-            <el-col :span="9" :offset="3" style="text-align:left">
+            <el-col :span="9" :offset="9" style="text-align:left">
               <el-radio-button
                 :label="index"
                 style="font-size:20pt; padding:0; padding-top:5px; padding-left:3px; padding-right:3px"
@@ -85,6 +86,13 @@ export default {
     },
     test(){
       console.log(this.pointsCollection);
+    },
+    getAns(){
+      let tem={
+        index:this.qtmp.index,
+        ans:this.pointsCollection
+      }
+      return tem;
     }
     // cancel() {
     //   this.$refs.myCanvas.getContext("2d").clearRect(0, 0, 400, 400);

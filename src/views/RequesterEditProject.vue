@@ -15,10 +15,10 @@
         <p style="color:#1471eb;font-size:20px;margin-top:50px;">预览并完成</p>
       </el-col>
     </el-row>
-    <project-templates-choose @submitForm="handleSubmitForm" v-show="step==0"></project-templates-choose>
-    <project-base-info-edit @submitForm="handleSubmitForm" v-show="step==1"></project-base-info-edit>
-    <project-layout-edit :qtype="qtype" :qtmp="qtmp" :taskId="taskId" @submitForm="handleSubmitForm" v-show="step==2"></project-layout-edit>
-    <project-preview @submitForm="handleSubmitForm" v-show="step==3"></project-preview>
+    <project-templates-choose @submitForm="handleSubmitForm" v-if="step==0"></project-templates-choose>
+    <project-base-info-edit @submitForm="handleSubmitForm" v-if="step==1"></project-base-info-edit>
+    <project-layout-edit :qtype="qtype" :qtmp="qtmp" :taskId="taskId" @submitForm="handleSubmitForm" v-if="step==2"></project-layout-edit>
+    <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step==3"></project-preview>
   </div>
 </template>
 
@@ -56,7 +56,7 @@ export default {
         this.qtmp=form.para.qtmp;
         console.log(this.qtype);
         console.log(this.qtmp);
-        this.step=2;
+        this.step=1;
       }
       else if(form.formType=='baseInfo'){
         for(let key in form.para){
@@ -69,18 +69,18 @@ export default {
           para.append(key,form.para[key]);
         }
         para.append('type',this.qtype);
-        // axios.post('/api/task/add',para).then(response=>{
-        //   alert("提交成功");
-        //   //console.log(response.data);
-        //   this.taskId=response.data.taskId;
-        //   alert('该项目被分配到的taskId为'+this.taskId)
-        // }).catch(response=>{
-        //   alert("error");
-        // })
-        this.step=2;
+        axios.post('/api/task/add',para).then(response=>{
+          alert("提交成功");
+          //console.log(response.data);
+          this.taskId=response.data.taskId;
+          alert('该项目被分配到的taskId为'+this.taskId)
+          this.step=2;
+        }).catch(response=>{
+          alert("error");
+        })
       }
       else if(form.formType=='layout'){
-        // this.step=3;
+        this.step=3;
       }
       else{
         alert('保存')
