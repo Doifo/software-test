@@ -5,15 +5,12 @@
       <el-col :span="6">标题</el-col>
       <el-col :span="3">
         数量
-        <i class="el-icon-caret-bottom"></i>
       </el-col>
       <el-col :span="3">
         奖励
-        <i class="el-icon-caret-bottom"></i>
       </el-col>
       <el-col :span="3">
         创建时间
-        <i class="el-icon-caret-bottom"></i>
       </el-col>
       <el-col :span="3">操作</el-col>
     </el-row>

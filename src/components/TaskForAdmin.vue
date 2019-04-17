@@ -60,7 +60,6 @@ export default {
     task: Object
   },
   mounted() {
-    //console.log("hello");
     if (this.task.name.length >= 10) {
       this.taskName = this.task.name.slice(0, 10) + " ...";
     } else {
@@ -87,23 +86,12 @@ export default {
             .then(response => {
               console.log("review:", response);
               this.$message.success("审核通过");
-              this.$router.go(0);
+              
             })
             .catch(response => {
               console.log("error:", response);
             });
 
-          // let param = new URLSearchParams();
-          // param.append("id",this.worker.id)
-          // axios({
-          //   method:"delete",
-          //   url:"/api/worker/delete",
-          //   data:param
-          // }).then(response => {
-          //   console.log("response:",response)
-          // }).catch(response =>{
-          //   console.log("erroe:",response)
-          // });
         })
         .catch(() => {});
     }

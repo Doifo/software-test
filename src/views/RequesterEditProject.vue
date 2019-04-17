@@ -1,6 +1,7 @@
 <template>
   <div>
-    <RequesterHomepageTopbar></RequesterHomepageTopbar>
+    <!-- <RequesterHomepageTopbar></RequesterHomepageTopbar> -->
+    <worker-header></worker-header>
     <el-row>
       <el-col :span="2" :offset="3">
         <p style="color:#1471eb;font-size:20px;margin-top:50px;">模板选择</p>
@@ -23,7 +24,8 @@
 </template>
 
 <script>
-import RequesterHomepageTopbar from '@/components/navi/RequesterHomepageTopbar.vue';
+//import RequesterHomepageTopbar from '@/components/navi/RequesterHomepageTopbar.vue';
+import WorkerHeader from '@/components/WorkerHeader'
 import ProjectBaseInfoEdit from "@/components/requester/ProjectBaseInfoEdit"
 import ProjectLayoutEdit from "@/components/requester/ProjectLayoutEdit"
 import ProjectPreview from "@/components/requester/ProjectPreview"
@@ -42,11 +44,12 @@ export default {
     };
   },
   components: {
-    RequesterHomepageTopbar,
+    //RequesterHomepageTopbar,
     ProjectTemplatesChoose,
     ProjectBaseInfoEdit,
     ProjectLayoutEdit,
-    ProjectPreview
+    ProjectPreview,
+    WorkerHeader
   },
   methods: {
     handleSubmitForm: function(form) {

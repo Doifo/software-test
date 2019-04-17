@@ -75,7 +75,7 @@ export default {
   methods:{
     handleCurrentChange(val){
       this.curPage=val;
-      alert(val);
+      //alert(val);
     }
   },
   mounted() {

@@ -5,9 +5,9 @@
       <div style="background:#fffaf7;border:1px solid #ccc;padding-left:20px;">
         <p>
           <span style="font-weight:bold;">{{userInfor.username}}</span>
-          <span
+          <!-- <span
             style="background:#db4946;color:white;font-weight:bold;margin-left:20px;border-radius:2px;"
-          >LV.1</span>
+          >LV.1</span> -->
         </p>
         <p style="font-size:13px;">
           账户余额：
