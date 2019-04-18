@@ -72,6 +72,7 @@ export default {
           para.append(key,form.para[key]);
         }
         para.append('type',this.qtype);
+        
         axios.post('/api/task/add',para).then(response=>{
           alert("提交成功");
           //console.log(response.data);

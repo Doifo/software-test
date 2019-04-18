@@ -272,7 +272,7 @@ export default {
           reward: this.reward,
           status: 0,
           // type:this.projectType,
-          restrictions: "你妈的",
+          restrictions: "无限制",
           time_limitation: this.time_limitation,
           start_time: dateToString(this.limi_value[0]),
           end_time: dateToString(this.limi_value[1]),
