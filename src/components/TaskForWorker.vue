@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "TaskForWorker",
-  props:{
-    taskInfo: Object,
+  props: {
+    taskInfo: Object
   },
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
       // }
     };
   },
-  methods:{
+  methods: {
     confirmAdd() {
       this.$confirm("确定接受任务吗？", "接受任务", {
         confirmButtonText: "确认",
@@ -59,7 +59,7 @@ export default {
         type: "warning"
       })
         .then(() => {
-          console.log("confirm")
+          console.log("confirm");
           let param = new URLSearchParams();
           param.append("taskId", this.taskInfo.id);
           axios({
@@ -69,29 +69,31 @@ export default {
           })
             .then(response => {
               console.log("response:", response);
-              this.$message.success("接受成功");
+              this.$alert("接受任务成功", "接受", {
+                confirmButtonText: "确定",
+                callback: action => {
+                  this.$router.go(0)
+                }
+              });
             })
             .catch(response => {
               console.log("error:", response);
             });
-          
         })
         .catch(() => {
-          console.log("cancel")
+          console.log("cancel");
         });
     },
-    gotoAnswer(){
-      console.log(this.taskInfo)
+    gotoAnswer() {
+      console.log(this.taskInfo);
       this.$router.push({
-        path:'/QList',
-        query:{
-          tid:this.taskInfo.id
+        path: "/QList",
+        query: {
+          tid: this.taskInfo.id
         }
-      })
+      });
     }
   },
-  mounted:function(){
-    
-  }
+  mounted: function() {}
 };
 </script>

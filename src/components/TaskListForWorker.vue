@@ -43,9 +43,17 @@ export default {
     allTaskList: state => state.Worker.allTaskList
     }),
     showedList() {
+      let filtTask = [];
+      for(let task in this.allTaskList){
+        //console.log("show:",this.allTaskList[task])
+        if(this.myTasksId.indexOf(this.allTaskList[task].id) == -1){
+          filtTask.push(this.allTaskList[task]);
+        }
+      }
+
       let fst=this.pageSize*(this.curPage-1);
       let lst=this.pageSize*this.curPage;
-      let tem=this.allTaskList.slice(fst,lst);
+      let tem=filtTask.slice(fst,lst);
       return tem;
       //return this.allTaskList;
     }
@@ -65,6 +73,9 @@ export default {
     test() {
       console.log(this.allTaskList);
     }
+  },
+  props:{
+    myTasksId:Array,
   },
   mounted() {
     this.$store.dispatch("Worker/initAllTaskList");
