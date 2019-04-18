@@ -22,7 +22,7 @@
         background
         layout="prev, pager, next"
         :page-size="pageSize"
-        :total="allTaskList.length"
+        :total="filtTask.length"
         :current-page.sync="curPage"
         @current-change="handleCurrentChange"
       ></el-pagination>
@@ -42,10 +42,22 @@ export default {
     ...mapState({
     allTaskList: state => state.Worker.allTaskList
     }),
+    filtTask(){
+      let filtTask = [];
+      for(let task in this.allTaskList){
+        //console.log("show:",this.allTaskList[task])
+        if(this.myTasksId.indexOf(this.allTaskList[task].id) == -1){
+          filtTask.push(this.allTaskList[task]);
+        }
+      }
+      return filtTask;
+    },
     showedList() {
+      
+
       let fst=this.pageSize*(this.curPage-1);
       let lst=this.pageSize*this.curPage;
-      let tem=this.allTaskList.slice(fst,lst);
+      let tem=this.filtTask.slice(fst,lst);
       return tem;
       //return this.allTaskList;
     }
@@ -65,6 +77,9 @@ export default {
     test() {
       console.log(this.allTaskList);
     }
+  },
+  props:{
+    myTasksId:Array,
   },
   mounted() {
     this.$store.dispatch("Worker/initAllTaskList");

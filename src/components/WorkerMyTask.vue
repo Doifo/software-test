@@ -2,7 +2,7 @@
   <div>
     <div style="min-height:300px;">
       <el-table
-        :data="myTask"
+        :data="myTasks"
         style="width: 100%;"
         type="flex"
         :header-cell-style="{background:'#eff0f1'}"
@@ -29,7 +29,7 @@ export default {
   name: "WorkerMyTask",
   data() {
     return {
-      myTask: []
+      myTasks: []
     };
   },
   methods: {
@@ -50,7 +50,12 @@ export default {
     })
       .then(response => {
         console.log("response:", response);
-        this.myTask = response.data.tasks;
+        this.myTasks = response.data.tasks;
+        let tasksId = [];
+        for(let task in this.myTasks){
+          tasksId.push(this.myTasks[task].task.id);
+        }
+        this.$emit("getMyTasks",tasksId);
       })
       .catch(response => {
         console.log("error:", response);

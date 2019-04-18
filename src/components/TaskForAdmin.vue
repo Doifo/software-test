@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="!passed">
     <el-row class="task-item">
       <el-col :span="5" :offset="1">{{task.area}}</el-col>
       <el-col :span="5" :offset="1">{{taskName}}</el-col>
@@ -53,7 +53,8 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      taskName: ""
+      taskName: "",
+      passed:false,
     };
   },
   props: {
@@ -86,7 +87,7 @@ export default {
             .then(response => {
               console.log("review:", response);
               this.$message.success("审核通过");
-              
+              this.passed = true;
             })
             .catch(response => {
               console.log("error:", response);
