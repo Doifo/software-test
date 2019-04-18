@@ -7,7 +7,7 @@
           <span style="font-weight:bold;">{{userInfor.username}}</span>
           <!-- <span
             style="background:#db4946;color:white;font-weight:bold;margin-left:20px;border-radius:2px;"
-          >LV.1</span> -->
+          >LV.1</span>-->
         </p>
         <p style="font-size:13px;">
           账户余额：
@@ -26,7 +26,7 @@
               <span class="label-span">电话号码：</span>
               <span class="text-span">{{userInfor.teleNumber}}</span>
             </p>
-            
+
             <p>
               <span class="label-span">研究领域：</span>
               <span class="text-span">{{userInfor.research_field}}</span>
@@ -126,6 +126,28 @@
             <el-table-column prop="time" label="发票状态"></el-table-column>
           </el-table>
         </el-tab-pane>
+
+        <el-tab-pane label="我的任务" name="forth">
+          <div class="container">
+            <el-row class="task-title">
+              <el-col :span="5" :offset="1">相关领域</el-col>
+              <el-col :span="5" :offset="1">标题</el-col>
+              <el-col :span="5" :offset="1">时间</el-col>
+              <el-col :span="5" :offset="1">操作</el-col>
+            </el-row>
+            <task-for-requester v-for="task in showedTasks" :key="task.id" :task="task"></task-for-requester>
+          </div>
+          <p style="text-align:center;">
+            <el-pagination
+              background
+              @current-change="changePage"
+              :current-page="currentPage"
+              :page-size="pageSize"
+              layout="prev, pager, next"
+              :total="myTaskList.length"
+            ></el-pagination>
+          </p>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -134,9 +156,16 @@
 <script>
 import WorkerHeader from "@/components/WorkerHeader";
 import axios from "axios";
+import TaskForRequester from "@/components/TaskForRequester";
 
 export default {
-  name: "RequesterInformation",
+  computed:{
+    showedTasks() {
+      let begin = this.pageSize * (this.currentPage - 1);
+      let end = this.pageSize * this.currentPage;
+      return this.myTaskList.slice(begin, end);
+    }
+  },
   data() {
     return {
       sizeForm: {
@@ -160,11 +189,15 @@ export default {
         requesterId: ""
       },
       genders: ["男", "女"],
-      payMethods: ["支付宝", "微信支付"]
+      payMethods: ["支付宝", "微信支付"],
+      myTaskList:[],
+      currentPage:1,
+      pageSize:5
     };
   },
   components: {
-    "worker-header": WorkerHeader
+    "worker-header": WorkerHeader,
+    TaskForRequester
   },
   methods: {
     loadInfor: function() {
@@ -172,8 +205,8 @@ export default {
         method: "get",
         url: "/api/requester/find-myself"
       }).then(response => {
-        console.log("load succeed")
-        console.log(response)
+        console.log("load succeed");
+        console.log(response);
         this.userInfor = response.data.requester;
         this.change = false;
       });
@@ -190,7 +223,7 @@ export default {
       param.append("payMethod", this.userInfor.payMethod);
       param.append("gender", this.userInfor.gender);
       param.append("age", this.userInfor.age);
-      console.log("params:",JSON.stringify(param))
+      console.log("params:", JSON.stringify(param));
 
       axios({
         method: "put",
@@ -201,7 +234,7 @@ export default {
         this.$options.methods.loadInfor.call(this);
       });
     },
-    cancelChange(){
+    cancelChange() {
       this.$options.methods.loadInfor.call(this);
     },
     changeInfor: function() {
@@ -209,10 +242,18 @@ export default {
     },
     changeEnsure: function() {
       this.$options.methods.uploadInfor.call(this);
+    },
+    changePage(page) {
+      //console.log(page);
+      this.currentPage = page;
     }
   },
   mounted: function() {
     this.$options.methods.loadInfor.call(this);
+    axios.get('/api/task/find-my-task').then(response=>{
+      console.log(response.data);
+      this.myTaskList=response.data.tasks;
+    })
   }
 };
 </script>
