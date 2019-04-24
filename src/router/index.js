@@ -16,11 +16,15 @@ import QList from '@/components/QuestionList'
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
 import AdminWork from '@/views/AdminWork'
+import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
+    path:'/hello-world',
+    component:HelloWorld,
+  },{
       path: '/worker-statistic',
       name: 'WorkerStatistic',
       component: WorkerStatistic
