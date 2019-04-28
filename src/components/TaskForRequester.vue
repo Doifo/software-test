@@ -36,7 +36,9 @@
       <el-row></el-row>
       <span slot="footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="getAns">查看答案</el-button>
+        <router-link v-bind:to="'/requester-answer/'  + task.id + '/' +task.type" target="_blank">
+          <el-button type="primary" @click="getAns">查看答案</el-button>
+        </router-link>
         <router-link v-bind:to="'/admin-task-detail/' + task.id" target="_blank">
           <el-button type="primary" @click="dialogVisible = false;">查看详情</el-button>
         </router-link>
@@ -54,7 +56,7 @@ export default {
     return {
       dialogVisible: false,
       taskName: "",
-      ans:{}
+      ans: {}
     };
   },
   props: {
@@ -66,12 +68,17 @@ export default {
     } else {
       this.taskName = this.task.name.slice(0, 10);
     }
+    
   },
   methods: {
-    getAns(){
-      axios.get('/api/answer/find-by-task-id',{params:{taskId:this.task.id}}).then(response=>{
-        console.log(response.data.Answers);
-      })
+    getAns() {
+      axios
+        .get("/api/answer/find-by-task-id", {
+          params: { taskId: this.task.id }
+        })
+        .then(response => {
+          console.log(response.data.Answers);
+        });
       //console.log(this.task);
     }
   }
