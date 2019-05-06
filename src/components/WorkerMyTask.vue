@@ -7,16 +7,22 @@
         type="flex"
         :header-cell-style="{background:'#eff0f1'}"
       >
-        <el-table-column prop="task.institution_name" label="请求者"></el-table-column>
-        <el-table-column prop="task.name" label="标题"></el-table-column>
-        <el-table-column prop="task.time_limitation" label="时间限制"></el-table-column>
-        <el-table-column prop="task.area" label="相关领域"></el-table-column>
+        <el-table-column prop="username" label="请求者"></el-table-column>
+        <el-table-column prop="title" label="标题"></el-table-column>
+        <el-table-column prop="task_type" label="类型"></el-table-column>
+        <el-table-column label="数量">
+          <template slot-scope='scope'>
+            {{scope.row.end-scope.row.begin+1}}
+          </template>
+        </el-table-column>
+        <el-table-column prop="created_time" label="创建时间"></el-table-column>
+        <el-table-column prop="deadline" label="结束时间"></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope" >
-            <router-link v-bind:to="'/QList?tid='+scope.row.task.id">
-              <el-button size="small" type="text" v-show="scope.row.finished == '0'">继续任务</el-button>
+          <template slot-scope="scope">
+            <router-link v-bind:to="'/QList?tid='+scope.row.id">
+              <el-button size="small" type="text" v-show="scope.row.is_finished == '0'">继续任务</el-button>
             </router-link>
-            <span v-show="scope.row.finished != '0'" style="color:green;font-size:12px">已完成</span>
+            <span v-show="scope.row.is_finished != '0'" style="color:green;font-size:12px">已完成</span>
           </template>
         </el-table-column>
       </el-table>
@@ -30,33 +36,32 @@ export default {
   name: "WorkerMyTask",
   data() {
     return {
-      myTasks: []
+      myTasks: [],
+      theTasks: []
     };
   },
-  methods: {
-    gotoAnswer(){
-      console.log(this.taskInfo)
-      this.$router.push({
-        path:'/QList',
-        query:{
-          tid:this.taskInfo.id
-        }
-      })
-    }
-  },
+  methods: {},
   mounted() {
     axios({
       method: "get",
-      url: "/api/personal-task/find-my-task"
+      url: "/api/sub-task/find-my-sub-task"
     })
       .then(response => {
-        console.log("response:", response);
-        this.myTasks = response.data.tasks;
-        let tasksId = [];
-        for(let task in this.myTasks){
-          tasksId.push(this.myTasks[task].task.id);
-        }
-        this.$emit("getMyTasks",tasksId);
+        this.myTasks = response.data.Subtasks;
+        console.log("my-sub-task:", this.myTasks);
+
+        // for (let myTask of this.myTasks) {
+        //   let param = new URLSearchParams();
+        //   console.log(myTask.taskId)
+        //   param.append('id', 103);
+        //   axios({
+        //     method: "get",
+        //     url: "/api/task/find-by-id",
+        //     data: param,
+        //   }).then(response => {
+        //     console.log(response);
+        //   });
+        // }
       })
       .catch(response => {
         console.log("error:", response);
