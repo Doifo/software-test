@@ -49,7 +49,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="用户名">
+            <el-form-item label="邮箱">
               <el-input v-model="email" placeholder="请输入注册邮箱"></el-input>
             </el-form-item>
             <el-form-item label="密码">
@@ -113,7 +113,7 @@ export default {
       signup: require("../../static/signup.png"),
       form: {},
       username: "",
-      password: ""
+      password: "",
     };
   },
   computed: {

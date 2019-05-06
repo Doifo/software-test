@@ -16,11 +16,17 @@ import QList from '@/components/QuestionList'
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
 import AdminWork from '@/views/AdminWork'
+import RequesterAnswer from '@/views/RequesterAnswer'
+
+import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
+    path:'/hello-world',
+    component:HelloWorld,
+  },{
       path: '/worker-statistic',
       name: 'WorkerStatistic',
       component: WorkerStatistic
@@ -68,6 +74,9 @@ export default new Router({
     },{
       path:'/QList',
       component:QList
+    },{
+      path:'/requester-answer/:id/:type',
+      component:RequesterAnswer
     }
   ],
   mode:"history"
