@@ -12,10 +12,11 @@
         <el-table-column prop="task.time_limitation" label="时间限制"></el-table-column>
         <el-table-column prop="task.area" label="相关领域"></el-table-column>
         <el-table-column label="操作">
-          <template slot-scope="scope">
+          <template slot-scope="scope" >
             <router-link v-bind:to="'/QList?tid='+scope.row.task.id">
-              <el-button size="small" type="text" >继续任务</el-button>
+              <el-button size="small" type="text" v-show="scope.row.finished == '0'">继续任务</el-button>
             </router-link>
+            <span v-show="scope.row.finished != '0'" style="color:green;font-size:12px">已完成</span>
           </template>
         </el-table-column>
       </el-table>

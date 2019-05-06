@@ -53,36 +53,57 @@ export default {
   },
   methods: {
     confirmAdd() {
-      this.$confirm("确定接受任务吗？", "接受任务", {
-        confirmButtonText: "确认",
+      this.$prompt("请选择要接受的题目数量", "选择题数", {
+        confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning"
+        inputPattern: /^[1-9]\d*$/,
+        inputErrorMessage: "输入不合法"
       })
-        .then(() => {
-          console.log("confirm");
-          let param = new URLSearchParams();
-          param.append("taskId", this.taskInfo.id);
-          axios({
-            method: "post",
-            url: "/api/personal-task/add",
-            data: param
-          })
-            .then(response => {
-              console.log("response:", response);
-              this.$alert("接受任务成功", "接受", {
-                confirmButtonText: "确定",
-                callback: action => {
-                  this.$router.go(0)
-                }
-              });
-            })
-            .catch(response => {
-              console.log("error:", response);
+        .then(num => {
+          console.log("taskInfo:", num.value);
+          if (num.value > this.taskInfo.numberOfQuestions) {
+            this.$alert("超出题目数量", "警告", {
+              confirmButtonText: "重新选择",
+              callback: action => {
+                this.confirmAdd();
+              }
             });
+          } else {
+            this.$confirm("确定接受任务吗？", "接受任务", {
+              confirmButtonText: "确认",
+              cancelButtonText: "取消",
+              type: "warning"
+            })
+              .then(() => {
+                let param = new URLSearchParams();
+                param.append("task_id", this.taskInfo.id);
+                param.append("number_wanted", num.value);
+                param.append("created_time","2019-05-05 00:00:00");
+                param.append('deadline','2019-06-10 00:00:00');
+                axios({
+                  method: "post",
+                  url: "/api/sub-task/add",
+                  data: param
+                })
+                  .then(response => {
+                    console.log("response:", response);
+                    this.$alert("接受任务成功", "接受", {
+                      confirmButtonText: "确定",
+                      callback: action => {
+                        this.$router.go(0);
+                      }
+                    });
+                  })
+                  .catch(response => {
+                    console.log("error:", response);
+                  });
+              })
+              .catch(() => {
+                console.log("cancel");
+              });
+          }
         })
-        .catch(() => {
-          console.log("cancel");
-        });
+        .catch(() => {});
     },
     gotoAnswer() {
       console.log(this.taskInfo);
