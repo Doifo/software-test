@@ -281,7 +281,9 @@ export default {
           area: this.area,
           usage: this.usage,
           min_age: this.min_age,
-          max_age: this.max_age
+          max_age: this.max_age,
+          allNumber: 300,
+          population: 3
         }
       };
       this.$emit("submitForm", form);
