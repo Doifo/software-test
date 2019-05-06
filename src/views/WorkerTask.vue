@@ -13,10 +13,10 @@
       <p style="color:#1471eb;border-left:2px solid #1471eb;padding-left:10px;">众包任务</p>
       <el-tabs value="first" type="card">
         <el-tab-pane label="所有任务" name="first">
-          <task-list-for-worker :myTasksId="myTasksId"></task-list-for-worker>
+          <task-list-for-worker ></task-list-for-worker>
         </el-tab-pane>
         <el-tab-pane label="已参与任务" name="second">
-          <worker-my-task v-on:getMyTasks="showMyTasks"></worker-my-task>
+          <worker-my-task ></worker-my-task>
         </el-tab-pane>
       </el-tabs>
     </div>

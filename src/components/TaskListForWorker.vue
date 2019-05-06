@@ -15,14 +15,14 @@
       <el-col :span="3">操作</el-col>
     </el-row>
     <el-collapse style="min-height:250px;border-bottom:none;">
-      <task-for-worker v-for="(item) in showedList" :key="item.id" :taskInfo="item"></task-for-worker>
+      <task-for-worker v-for="item in showedList" :key="item.id" :taskInfo="item"></task-for-worker>
     </el-collapse>
     <div class="pages">
       <el-pagination
         background
         layout="prev, pager, next"
         :page-size="pageSize"
-        :total="filtTask.length"
+        :total="allTaskList.length"
         :current-page.sync="curPage"
         @current-change="handleCurrentChange"
       ></el-pagination>
@@ -42,22 +42,12 @@ export default {
     ...mapState({
     allTaskList: state => state.Worker.allTaskList
     }),
-    filtTask(){
-      let filtTask = [];
-      for(let task in this.allTaskList){
-        //console.log("show:",this.allTaskList[task])
-        if(this.myTasksId.indexOf(this.allTaskList[task].id) == -1){
-          filtTask.push(this.allTaskList[task]);
-        }
-      }
-      return filtTask;
-    },
+    
     showedList() {
-      
-
       let fst=this.pageSize*(this.curPage-1);
       let lst=this.pageSize*this.curPage;
-      let tem=this.filtTask.slice(fst,lst);
+      let tem=this.allTaskList.slice(fst,lst);
+      
       return tem;
       //return this.allTaskList;
     }
@@ -79,7 +69,7 @@ export default {
     }
   },
   props:{
-    myTasksId:Array,
+    
   },
   mounted() {
     this.$store.dispatch("Worker/initAllTaskList");
