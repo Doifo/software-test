@@ -36,7 +36,7 @@ import axios from "axios";
 export default {
   props: {
     qtmp: Object,
-    taskId: Number
+    prevAns:Object
   },
   data() {
     return {
@@ -50,19 +50,27 @@ export default {
       //   { content: "选项3", isEdit: false },
       //   { content: "选项4", isEdit: false }
       // ],
-      opt: 0,
+      opt: 0
     };
   },
   methods: {
-    getAns(){
-      let tem={
-        index:this.qtmp.index,
-        ans:this.opt
-      }
+    getAns() {
+      let tem = {
+        index: this.qtmp.index,
+        ans: this.opt
+      };
       return tem;
+    },
+    prevAnsRender() {
+      if (this.prevAns != undefined) {
+        this.opt = this.prevAns.ans;
+        //this.drawAll();
+        //this.pointsCollection = [];
+      }
     }
   },
   mounted: function() {
+    this.prevAnsRender();
     // console.log(this.qtmp);
   }
 };

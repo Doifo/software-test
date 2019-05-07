@@ -13,6 +13,7 @@ import PT from '@/components/requester/ProjectTemplatesChoose'
 //import Q1 from '@/components/QuestionVer1'
 import Q1 from '@/components/QuestionVer1'
 import QList from '@/components/QuestionList'
+import WQList from '@/components/WokerQuestionList'
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
 import AdminWork from '@/views/AdminWork'
@@ -74,6 +75,9 @@ export default new Router({
     },{
       path:'/QList',
       component:QList
+    },{
+      path:'/WQList',
+      component:WQList
     },{
       path:'/requester-answer/:id/:type',
       component:RequesterAnswer

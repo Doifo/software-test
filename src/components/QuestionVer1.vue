@@ -38,6 +38,7 @@
 export default {
   props: {
     qtmp:Object,
+    prevAns:Object
     // url:String,
     // desc:String,
     // opts:Array,
@@ -61,7 +62,18 @@ export default {
         ans:this.opt
       }
       return tem;
+    },
+    prevAnsRender() {
+      if (this.prevAns != undefined) {
+        this.opt = this.prevAns.ans;
+        //this.drawAll();
+        //this.pointsCollection = [];
+      }
     }
+  },
+  mounted: function() {
+    this.prevAnsRender();
+    // console.log(this.qtmp);
   }
 };
 </script>

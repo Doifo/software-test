@@ -47,6 +47,7 @@
 export default {
   props:{
     qtmp:Object,
+    prevAns:Object
   },
   data() {
     return {
@@ -93,7 +94,7 @@ export default {
         ans:this.pointsCollection
       }
       return tem;
-    }
+    },
     // cancel() {
     //   this.$refs.myCanvas.getContext("2d").clearRect(0, 0, 400, 400);
     //   this.startPoints.pop();
@@ -109,8 +110,16 @@ export default {
     //       .strokeRect(this.startPoints[i].x, this.startPoints[i].y, w, h);
     //   }
     // }
+    prevAnsRender() {
+      if (this.prevAns!=undefined) {
+        this.pointsCollection = this.prevAns.ans;
+        this.drawAll();
+        this.pointsCollection = [];
+      }
+    }
   },
   mounted: function() {
+    this.prevAnsRender();
     for(let i=0; i<this.qtmp.opts.length; ++i){
       let tem=[];
       this.pointsCollection.push(tem);
