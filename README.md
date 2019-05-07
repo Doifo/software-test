@@ -1,4 +1,4 @@
-# soft-test
+# software-test
 
 > A Vue.js project
 
