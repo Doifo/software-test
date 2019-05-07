@@ -19,7 +19,7 @@
         <el-table-column prop="deadline" label="结束时间"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <router-link v-bind:to="'/QList?tid='+scope.row.id">
+            <router-link v-bind:to="'/WQList?stid='+scope.row.id">
               <el-button size="small" type="text" v-show="scope.row.is_finished == '0'">继续任务</el-button>
             </router-link>
             <span v-show="scope.row.is_finished != '0'" style="color:green;font-size:12px">已完成</span>
