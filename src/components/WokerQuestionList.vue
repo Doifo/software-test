@@ -101,11 +101,11 @@ export default {
                   "endAt",
                   parseInt(this.taskInfo.now_begin) + parseInt(num.value - 1)
                 );
+                console.log(this.taskInfo.taskId,dateStr,JSON.stringify(this.ansList),this.taskInfo.id,this.taskInfo.now_begin,parseInt(this.taskInfo.now_begin) + parseInt(num.value - 1))
                 axios
                   .post("/api/answer/update", para)
                   .then(response => {
                     alert("提交成功");
-                    //console.log(response.data);
                     console.log(response.data);
                   })
                   .catch(response => {

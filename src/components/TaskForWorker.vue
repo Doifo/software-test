@@ -7,7 +7,7 @@
           {{taskInfo.area || "无"}}
         </el-col>
         <el-col :span="6">{{taskInfo.name}}</el-col>
-        <el-col :span="3">666</el-col>
+        <el-col :span="3">{{minNumber}}</el-col>
         <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
         <el-col :span="3">{{taskInfo.start_time}}</el-col>
         <el-col :span="3">
@@ -17,12 +17,11 @@
     </template>
     <div style="padding-left:30px;">
       <el-row style="margin-top:20px;">
-        <el-col :span="6">分配时间：{{taskInfo.time_limitation}}分钟</el-col>
-        <el-col :span="6">过期时间：{{taskInfo.end_time}}</el-col>
-        <el-col :span="6">资格要求：等级大于2</el-col>
-        <el-col :span="6">你的等级：1</el-col>
+        <el-col :span="8">分配时间：{{taskInfo.time_limitation}}分钟</el-col>
+        <el-col :span="8">过期时间：{{taskInfo.end_time}}</el-col>
+        <el-col :span="8">资格要求：{{taskInfo.restrictions}}</el-col>
       </el-row>
-      <p>描述：</p>
+      <p>描述：{{taskInfo.description}}</p>
     </div>
   </el-collapse-item>
 </template>
@@ -49,6 +48,7 @@ export default {
       //   allocateTime: 60,
       //   qualification: "天才"
       // }
+      minNumber:0
     };
   },
   methods: {
@@ -61,7 +61,8 @@ export default {
       })
         .then(num => {
           console.log("taskInfo:", num.value);
-          if (num.value > this.taskInfo.numberOfQuestions) {
+
+          if (num.value > this.minNumber) {
             this.$alert("超出题目数量", "警告", {
               confirmButtonText: "重新选择",
               callback: action => {
@@ -76,17 +77,14 @@ export default {
             })
               .then(() => {
                 let param = new URLSearchParams();
-                param.append("task_id", this.taskInfo.id);
                 param.append("number_wanted", num.value);
-                param.append("created_time","2019-05-05 00:00:00");
-                param.append('deadline','2019-06-10 00:00:00');
-                axios({
-                  method: "post",
-                  url: "/api/sub-task/add",
-                  data: param
-                })
+                param.append("task_id", this.taskInfo.id);
+                param.append("created_time", this.taskInfo.start_time);
+                param.append("deadline", this.taskInfo.end_time);
+                
+                axios
+                  .post("/api/sub-task/add", param)
                   .then(response => {
-                    console.log("response:", response);
                     this.$alert("接受任务成功", "接受", {
                       confirmButtonText: "确定",
                       callback: action => {
@@ -115,6 +113,19 @@ export default {
       });
     }
   },
-  mounted: function() {}
+  mounted: function() {
+    console.log("one task", this.taskInfo);
+    let minNumber = 65525;
+    let restQuestion = JSON.parse(this.taskInfo.rest_of_question)
+    for(let key in restQuestion){
+      for(let item of restQuestion[key]){
+        if(minNumber > item.end - item.begin + 1){
+          minNumber = item.end - item.begin + 1
+        }
+      }
+    }
+    console.log(minNumber)
+    this.minNumber = minNumber
+  }
 };
 </script>

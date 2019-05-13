@@ -69,6 +69,7 @@ export default {
       })
       .then(response => {
         this.answers = response.data.Answers;
+        console.log('answer:',this.answers)
       });
     axios
       .get("/api/task/read-resource", { params: { taskId: this.id } })
