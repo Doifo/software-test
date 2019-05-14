@@ -18,7 +18,7 @@ export default {
   name: "AdminTaskDetail",
   data() {
     return {
-      taskId: this.$route.params.id,
+      taskId: parseInt(this.$route.params.id),
       taskDetail: {
         urls: [],
         opts: [],
@@ -31,19 +31,19 @@ export default {
     QuestionListPreview
   },
   mounted() {
-    axios
-      .get("/api/task/read-resource", {
-        params: {
-          taskId: 1
-        }
-      })
-      .then(response => {
-        this.taskDetail = response.data;
-        console.log(this.taskDetail);
-      })
-      .catch(response => {
-        alert("error");
-      });
+    // axios
+    //   .get("/api/task/read-resource", {
+    //     params: {
+    //       taskId: 1
+    //     }
+    //   })
+    //   .then(response => {
+    //     this.taskDetail = response.data;
+    //     console.log(this.taskDetail);
+    //   })
+    //   .catch(response => {
+    //     alert("error");
+    //   });
   }
 };
 </script>

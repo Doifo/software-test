@@ -114,7 +114,7 @@ export default {
     }
   },
   mounted: function() {
-    console.log("one task", this.taskInfo);
+    console.log("one task answer", this.taskInfo.answer);
     let minNumber = 65525;
     let restQuestion = JSON.parse(this.taskInfo.rest_of_question)
     for(let key in restQuestion){

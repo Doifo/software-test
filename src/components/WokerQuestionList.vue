@@ -69,7 +69,10 @@ export default {
       })
         .then(num => {
           console.log("taskInfo:", num.value);
-          if (parseInt(num.value) > parseInt(this.taskInfo.end) - parseInt(this.taskInfo.now_begin)+1) {
+          if (
+            parseInt(num.value) >
+            parseInt(this.taskInfo.end) - parseInt(this.taskInfo.now_begin) + 1
+          ) {
             this.$alert("超出题目数量", "警告", {
               confirmButtonText: "重新选择",
               callback: action => {
@@ -101,7 +104,14 @@ export default {
                   "endAt",
                   parseInt(this.taskInfo.now_begin) + parseInt(num.value - 1)
                 );
-                console.log(this.taskInfo.taskId,dateStr,JSON.stringify(this.ansList),this.taskInfo.id,this.taskInfo.now_begin,parseInt(this.taskInfo.now_begin) + parseInt(num.value - 1))
+                console.log(
+                  this.taskInfo.taskId,
+                  dateStr,
+                  JSON.stringify(this.ansList),
+                  this.taskInfo.id,
+                  this.taskInfo.now_begin,
+                  parseInt(this.taskInfo.now_begin) + parseInt(num.value - 1)
+                );
                 axios
                   .post("/api/answer/update", para)
                   .then(response => {
@@ -183,7 +193,7 @@ export default {
             .get("/api/sub-task/read-subtask-resource", {
               params: { subtaskId: stid }
             })
-            .then(response => {              
+            .then(response => {
               let res = response.data;
               let urls = res.urls;
               let opts = res.opts;
@@ -214,11 +224,11 @@ export default {
                     let tmp = {};
                     tmp.baseTmp = baseTmp;
                     tmp.qtype = checkType;
-                    tmp.prevAnsList=[];
-                    let ansList=JSON.parse(response.data.answers);
+                    tmp.prevAnsList = [];
+                    let ansList = JSON.parse(response.data.answers);
                     //console.log(ansList);
                     //alert(ansList.length);
-                    for(let k=0; k<ansList.length; ++k){
+                    for (let k = 0; k < ansList.length; ++k) {
                       tmp.prevAnsList.push(ansList[k][i]);
                     }
                     this.tmpList.push(tmp);
