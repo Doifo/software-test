@@ -29,7 +29,7 @@
 
             <p>
               <span class="label-span">研究领域：</span>
-              <span class="text-span">{{userInfor.research_field}}</span>
+              <span class="text-span">{{userInfor.researchField}}</span>
             </p>
             <p>
               <span class="label-span">机构名称：</span>
@@ -81,7 +81,7 @@
               <el-input v-model="userInfor.institutionName"></el-input>
             </el-form-item>
             <el-form-item label="研究领域">
-              <el-input v-model="userInfor.research_field"></el-input>
+              <el-input v-model="userInfor.researchField"></el-input>
             </el-form-item>
             <el-form-item label="联系地址">
               <el-input v-model="userInfor.address"></el-input>
@@ -95,25 +95,6 @@
               <el-button type="primary" @click="cancelChange">取消修改</el-button>
               <el-button type="primary" @click="changeEnsure">确认修改</el-button>
             </p>
-          </el-form>
-        </el-tab-pane>
-
-        <el-tab-pane label="充值" name="second">
-          <el-form ref="form" label-width="80px" :model="sizeForm">
-            <el-form-item label="选择金额">
-              <el-radio-group v-model="sizeForm.chooseMoney">
-                <el-radio border label="￥50"></el-radio>
-                <el-radio border label="￥100"></el-radio>
-                <el-radio border label="￥500"></el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item label="输入金额">
-              <el-input v-model="sizeForm.money" style="width:150px;" placeholder="￥"></el-input>
-            </el-form-item>
-
-            <el-form-item>
-              <el-button type="primary" @click.prevent>充值</el-button>
-            </el-form-item>
           </el-form>
         </el-tab-pane>
 
@@ -177,7 +158,7 @@ export default {
         username: "",
         name: "",
         teleNumber: "",
-        reaserch_field: "",
+        researchField: "",
         institutionName: "",
         address: "",
         payMethod: "",
@@ -217,7 +198,7 @@ export default {
       param.append("username", this.userInfor.username);
       param.append("name", this.userInfor.name);
       param.append("eMail", this.userInfor.eMail);
-      param.append("research_field", this.userInfor.research_field);
+      param.append("researchField", this.userInfor.researchField);
       param.append("institutionName", this.userInfor.institutionName);
       param.append("address", this.userInfor.address);
       param.append("payMethod", this.userInfor.payMethod);

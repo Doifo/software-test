@@ -1,5 +1,5 @@
 <template>
-  <el-collapse-item>
+  <el-collapse-item v-show="minNumber != 0">
     <template slot="title">
       <el-row style="width:100%;padding-left:30px">
         <el-col :span="6">
@@ -9,7 +9,7 @@
         <el-col :span="6">{{taskInfo.name}}</el-col>
         <el-col :span="3">{{minNumber}}</el-col>
         <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
-        <el-col :span="3">{{taskInfo.start_time}}</el-col>
+        <el-col :span="3">{{taskInfo.startTime}}</el-col>
         <el-col :span="3">
           <el-button type="warning" @click.stop="confirmAdd">接受任务</el-button>
         </el-col>
@@ -17,8 +17,8 @@
     </template>
     <div style="padding-left:30px;">
       <el-row style="margin-top:20px;">
-        <el-col :span="8">分配时间：{{taskInfo.time_limitation}}分钟</el-col>
-        <el-col :span="8">过期时间：{{taskInfo.end_time}}</el-col>
+        <el-col :span="8">分配时间：{{taskInfo.timeLimitation}}分钟</el-col>
+        <el-col :span="8">过期时间：{{taskInfo.endTime}}</el-col>
         <el-col :span="8">资格要求：{{taskInfo.restrictions}}</el-col>
       </el-row>
       <p>描述：{{taskInfo.description}}</p>
@@ -48,7 +48,7 @@ export default {
       //   allocateTime: 60,
       //   qualification: "天才"
       // }
-      minNumber:0
+      minNumber: 0
     };
   },
   methods: {
@@ -60,8 +60,6 @@ export default {
         inputErrorMessage: "输入不合法"
       })
         .then(num => {
-          console.log("taskInfo:", num.value);
-
           if (num.value > this.minNumber) {
             this.$alert("超出题目数量", "警告", {
               confirmButtonText: "重新选择",
@@ -77,11 +75,11 @@ export default {
             })
               .then(() => {
                 let param = new URLSearchParams();
-                param.append("number_wanted", num.value);
-                param.append("task_id", this.taskInfo.id);
-                param.append("created_time", this.taskInfo.start_time);
-                param.append("deadline", this.taskInfo.end_time);
-                
+                param.append("numberWanted", num.value);
+                param.append("taskId", this.taskInfo.id);
+                param.append("createdTime", this.taskInfo.startTime);
+                param.append("deadline", this.taskInfo.endTime);
+
                 axios
                   .post("/api/sub-task/add", param)
                   .then(response => {
@@ -102,30 +100,21 @@ export default {
           }
         })
         .catch(() => {});
-    },
-    gotoAnswer() {
-      console.log(this.taskInfo);
-      this.$router.push({
-        path: "/QList",
-        query: {
-          tid: this.taskInfo.id
-        }
-      });
     }
   },
-  mounted: function() {
-    console.log("one task answer", this.taskInfo.answer);
+  mounted() {
+    console.log(this.taskInfo);
     let minNumber = 65525;
-    let restQuestion = JSON.parse(this.taskInfo.rest_of_question)
-    for(let key in restQuestion){
-      for(let item of restQuestion[key]){
-        if(minNumber > item.end - item.begin + 1){
-          minNumber = item.end - item.begin + 1
+    let restQuestion = JSON.parse(this.taskInfo.restOfQuestion);
+    for (let key in restQuestion) {
+      for (let item of restQuestion[key]) {
+        if (minNumber > item.end - item.begin + 1) {
+          minNumber = item.end - item.begin + 1;
         }
       }
     }
-    console.log(minNumber)
-    this.minNumber = minNumber
+    if(minNumber == 65525) minNumber = 0;
+    this.minNumber = minNumber;
   }
 };
 </script>

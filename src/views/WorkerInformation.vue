@@ -189,17 +189,7 @@ export default {
       },
       genders: ["男", "女"],
 
-      activeName: ["1"],
-      user: {},
-      page: 1,
-      help_page_menu: "0.0",
-      input_search: "",
-      input_advice: "",
-      task: {},
-      accepted: 0,
-      questions: [],
-      answer: [],
-      question_index: [],
+      
     };
   },
   mounted(){

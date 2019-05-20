@@ -22,11 +22,9 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div>
-          <router-link to="/login">
-            <el-button>登录</el-button>
-          </router-link>
-        </div>
+        <router-link to="/login">
+          <el-button>登录</el-button>
+        </router-link>
       </el-col>
     </el-row>
 
@@ -391,7 +389,7 @@ export default {
       param.append("password", this.formData.password);
       param.append("name", this.formData.name);
       param.append("teleNumber", this.formData.teleNumber);
-      param.append("research_field", this.formData.requesterReg.research_field);
+      param.append("researchField", this.formData.requesterReg.researchField);
       param.append(
         "institutionName",
         this.formData.requesterReg.institutionName
@@ -429,13 +427,11 @@ export default {
 
 <style>
 .picture {
-  padding: 120px;
-  padding-left: 170px;
-  transform: scale(1.5);
+  margin-top: 100px;
 }
 
 .picture img {
-  width: 90%;
+  width: 400px;
   height: auto;
 }
 </style>
