@@ -30,6 +30,14 @@
         {{task.min_age}} 至 {{task.max_age}}岁
       </el-row>
       <el-row>
+        <span class="dialog-span">题目数量：</span>
+        {{task.number_of_questions}}
+      </el-row>
+      <el-row>
+        <span class="dialog-span">每题奖励：</span>
+        {{task.reward}}
+      </el-row>
+      <el-row>
         <span class="dialog-span">任务描述：</span>
         {{task.description}}
       </el-row>

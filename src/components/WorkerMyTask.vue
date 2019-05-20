@@ -11,7 +11,7 @@
         <el-table-column prop="title" label="标题"></el-table-column>
         <el-table-column label="数量">
           <template slot-scope='scope'>
-            {{scope.row.end-scope.row.begin+1}}
+            {{scope.row.end-scope.row.now_begin+1}}
           </template>
         </el-table-column>
         <el-table-column prop="created_time" label="创建时间"></el-table-column>
