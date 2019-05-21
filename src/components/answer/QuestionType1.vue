@@ -28,7 +28,7 @@ export default {
       .then(response => {
         this.task = response.data;
         this.url = response.data.urls[this.answer.index - 1].url;
-        console.log(this.task)
+        // console.log(this.task)
         this.ans = this.task.opts[this.answer.ans].content;
       });
   }

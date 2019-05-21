@@ -1,5 +1,5 @@
 <template>
-  <div style="">
+  <div style>
     <el-row>
       <el-col :span="12">
         <el-row>
@@ -8,8 +8,22 @@
             <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">{{qtmp.desc}}</div>
           </el-col>
           <el-col :span="4">
-            <el-button type="primary" size="mini" @click="editDesc" v-if="isEditDesc" style="padding:8px" plain>确认</el-button>
-            <el-button type="primary" size="mini" @click="editDesc" v-else style="padding:8px" plain>编辑</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="editDesc"
+              v-if="isEditDesc"
+              style="padding:8px"
+              plain
+            >确认</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="editDesc"
+              v-else
+              style="padding:8px"
+              plain
+            >编辑</el-button>
           </el-col>
         </el-row>
         <el-row style="margin-top: 20px">
@@ -20,7 +34,7 @@
             <el-upload
               class="upload-demo"
               ref="upload"
-              action=""
+              action
               :http-request="myUpload"
               :on-preview="handlePreview"
               :on-remove="handleRemove"
@@ -32,10 +46,16 @@
               :file-list="fileList"
               :auto-upload="false"
             >
-              <div class="el_upload_tip" style="font-size:14pt; margin-top:20px">批量导入图片的url,请上传utf-8编码的txt文件</div>
+              <div
+                class="el_upload_tip"
+                style="font-size:14pt; margin-top:20px"
+              >批量导入图片的url,请上传utf-8编码的txt文件</div>
               <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
+            <a href="/static/label.txt" download="template.txt">
+              <el-button size="mini" style="color:#1471eb;margin-left:130px;margin-top:10px">模板下载</el-button>
+            </a>
           </div>
         </el-row>
       </el-col>
@@ -55,7 +75,7 @@
                 size="mini"
                 @click="editOpt(index)"
                 style="padding: 2px"
-                plain=""
+                plain
                 v-if="item.isEdit"
               >确认</el-button>
               <el-button
@@ -63,7 +83,7 @@
                 size="mini"
                 @click="editOpt(index)"
                 style="padding: 2px"
-                plain=""
+                plain
                 v-else
               >编辑</el-button>
             </el-col>
@@ -73,13 +93,19 @@
                 size="mini"
                 @click="deleteOpt(index)"
                 style="padding: 2px"
-                plain=""
+                plain
               >删除</el-button>
             </el-col>
           </el-row>
           <el-row>
             <el-col :offset="10">
-              <el-button type="primary" size="mini" @click="addOpt" style="padding: 3px; margin-top:20px" plain>添加</el-button>
+              <el-button
+                type="primary"
+                size="mini"
+                @click="addOpt"
+                style="padding: 3px; margin-top:20px"
+                plain
+              >添加</el-button>
             </el-col>
           </el-row>
         </el-radio-group>
@@ -95,12 +121,12 @@
         >编辑完成并保存</el-button>
         <el-button @click="test1">测试</el-button>
       </el-col>
-    </el-row> -->
+    </el-row>-->
   </div>
 </template>
 
 <script>
-import axios from "axios"
+import axios from "axios";
 
 export default {
   props: {
@@ -109,7 +135,7 @@ export default {
   },
   data() {
     return {
-      msg:'child',
+      msg: "child",
       isEditDesc: false,
       // desc: "请在此处编辑你的问题描述",
       // opts: [
@@ -160,18 +186,21 @@ export default {
       alert("上传成功");
       this.$refs.upload.clearFiles();
     },
-    myUpload:function(params){
+    myUpload: function(params) {
       //alert('OK');
-      let formData=new FormData();
-      formData.append('file',params.file);
-      formData.append('description',this.qtmp.desc);
-      formData.append('options',JSON.stringify(this.qtmp.opts));
-      formData.append('taskId',this.taskId);
-      axios.post('/api/task/add-resource',formData).then(response=>{
-        alert('上传成功');
-      }).catch(response=>{
-        alert('error');
-      });
+      let formData = new FormData();
+      formData.append("file", params.file);
+      formData.append("description", this.qtmp.desc);
+      formData.append("options", JSON.stringify(this.qtmp.opts));
+      formData.append("taskId", this.taskId);
+      axios
+        .post("/api/task/add-resource", formData)
+        .then(response => {
+          alert("上传成功");
+        })
+        .catch(response => {
+          alert("error");
+        });
       console.log(this.qtmp.desc);
     }
   },

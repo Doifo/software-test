@@ -2,12 +2,20 @@
   <div style="width:75%; margin:auto">
     <h1 style="text-align:center">{{taskInfo.name}}</h1>
     <div
-      v-for="(item,index) in tmpList"
+      v-for="(item,index) in showedQuestions"
       :key="index"
       style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px"
     >
       <component :is="qtype" :qtmp="item" :ref="index"></component>
     </div>
+    <p style="text-align:center"><el-pagination
+      background
+      layout="prev, pager, next"
+      :page-size="pageSize"
+      :total="tmpList.length"
+      :current-page.sync="curPage"
+      @current-change="handleCurrentChange"
+    ></el-pagination></p>
     <div style="text-align:right; margin-top:20px">
       <el-button type="primary" @click="submitAnswer">模拟提交</el-button>
     </div>
@@ -30,7 +38,9 @@ export default {
       qtype: "",
       tmpList: [],
       ansList: [],
-      taskInfo: {}
+      taskInfo: {},
+      pageSize:5,
+      curPage:1
     };
   },
   components: {
@@ -39,7 +49,20 @@ export default {
     QuestionVer3,
     QuestionVer4
   },
+  computed: {
+    showedQuestions() {
+      let fst=this.pageSize*(this.curPage-1);
+      let lst=this.pageSize*this.curPage;
+      let tem=this.tmpList.slice(fst,lst);
+      
+      return tem;
+    }
+  },
   methods: {
+    handleCurrentChange(val) {
+      this.curPage = val;
+      alert(val);
+    },
     dateToString(draftTimeV) {
       draftTimeV = draftTimeV + "";
       let date = "";
@@ -79,45 +102,45 @@ export default {
         });
     }
   },
-  mounted(){
+  mounted() {
     alert(this.tid);
-      axios
-        .get("/api/task/find-by-id", { params: { id: this.tid } })
-        .then(response => {
-          // console.log(response.data);
-          this.qtype = "question" + "-" + response.data.task.type;
-          this.taskInfo = response.data.task;
-          axios
-            .get("/api/task/read-resource", { params: { taskId: this.tid } })
-            .then(response => {
-              let res = response.data;
-              let urls = res.urls;
-              let opts = res.opts;
-              let desc = res.desc;
-              for (let i = 0; i < urls.length; ++i) {
-                let tmp = {};
-                if (this.qtype == "question-ver4") {
-                  tmp = {
-                    desc: desc,
-                    opts: opts,
-                    text: urls[i].text,
-                    index: urls[i].index
-                  };
-                } else {
-                  tmp = {
-                    desc: desc,
-                    opts: opts,
-                    url: urls[i].url,
-                    index: urls[i].index
-                  };
-                }
-                this.tmpList.push(tmp);
+    axios
+      .get("/api/task/find-by-id", { params: { id: this.tid } })
+      .then(response => {
+        // console.log(response.data);
+        this.qtype = "question" + "-" + response.data.task.type;
+        this.taskInfo = response.data.task;
+        axios
+          .get("/api/task/read-resource", { params: { taskId: this.tid } })
+          .then(response => {
+            let res = response.data;
+            let urls = res.urls;
+            let opts = res.opts;
+            let desc = res.desc;
+            for (let i = 0; i < urls.length; ++i) {
+              let tmp = {};
+              if (this.qtype == "question-ver4") {
+                tmp = {
+                  desc: desc,
+                  opts: opts,
+                  text: urls[i].text,
+                  index: urls[i].index
+                };
+              } else {
+                tmp = {
+                  desc: desc,
+                  opts: opts,
+                  url: urls[i].url,
+                  index: urls[i].index
+                };
               }
-            })
-            .catch(response => {
-              alert("error");
-            });
-        });
+              this.tmpList.push(tmp);
+            }
+          })
+          .catch(response => {
+            alert("error");
+          });
+      });
   }
 };
 </script>

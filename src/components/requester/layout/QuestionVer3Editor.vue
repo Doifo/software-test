@@ -47,6 +47,9 @@
           >批量导入图片的url,请上传utf-8编码的txt文件</div>
           <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
         </el-upload>
+        <a href="/static/label.txt" download="template.txt">
+              <el-button size="mini" style="color:#1471eb;margin-left:130px;margin-top:10px">模板下载</el-button>
+            </a>
       </el-col>
       <el-col :span="12">
         <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">

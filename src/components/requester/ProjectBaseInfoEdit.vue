@@ -108,6 +108,14 @@
           <i class="el-icon-info" slot="reference" style="padding-left:20px;color:#909399"></i>
         </el-popover>
       </el-form-item>
+      <el-form-item label="发布任务份数">
+        <el-input-number
+          v-model="population"
+          type="number"
+          :min="3"
+          style="min-width:80px;!important width:20%;margin-right:10px"
+        ></el-input-number>
+      </el-form-item>
       <el-form-item label="等级要求">
         <el-input-number
           v-model="level"
@@ -162,6 +170,7 @@ export default {
       pay_time: 0,
       area: "",
       usage: 0,
+      population:0,
       min_age: 0,
       max_age: 0, //form element end
       project_type: "",
@@ -273,17 +282,17 @@ export default {
           status: 0,
           // type:this.projectType,
           restrictions: "无限制",
-          time_limitation: this.time_limitation,
-          start_time: dateToString(this.limi_value[0]),
-          end_time: dateToString(this.limi_value[1]),
+          timeLimitation: this.timeLimitation,
+          startTime: dateToString(this.limi_value[0]),
+          endTime: dateToString(this.limi_value[1]),
           level: this.level,
-          pay_time: this.pay_time,
+          payTime: this.pay_time,
           area: this.area,
           usage: this.usage,
-          min_age: this.min_age,
-          max_age: this.max_age,
+          minAge: this.min_age,
+          maxAge: this.max_age,
           allNumber: 300,
-          population: 3
+          population: this.population
         }
       };
       this.$emit("submitForm", form);

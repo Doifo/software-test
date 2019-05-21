@@ -22,7 +22,7 @@ export default {
   methods: {},
   mounted(){
 
-    console.log(this.answer.ans);
+    //console.log(this.answer.ans);
     axios
       .get("/api/task/read-resource", { params: { taskId: this.taskId } })
       .then(response => {

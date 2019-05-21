@@ -12,10 +12,7 @@
     </ul>
     <h3>任务答案：</h3>
     <el-collapse>
-      <el-collapse-item
-        v-for="answer in answers"
-        :key="answer.id"
-      >
+      <el-collapse-item v-for="answer in answers" :key="answer.id">
         <template slot="title">
           <span class="title">Worker ID：{{answer.workerId}}</span>
         </template>
@@ -26,7 +23,7 @@
             v-for="oneanswer in JSON.parse(answer.answer)"
             :key="oneanswer.index "
           >
-            <el-collapse >
+            <el-collapse>
               <el-collapse-item v-bind:title="'第'+ oneanswer.index + '题'">
                 <component :is="type" :answer="oneanswer" :taskId="id"></component>
               </el-collapse-item>
@@ -51,8 +48,7 @@ export default {
       id: this.$route.params.id,
       type: "question-" + this.$route.params.type,
       answers: [],
-      task: {},
-      
+      task: {}
     };
   },
   components: {
@@ -69,6 +65,7 @@ export default {
       })
       .then(response => {
         this.answers = response.data.Answers;
+        //console.log('answer:',this.answers)
       });
     axios
       .get("/api/task/read-resource", { params: { taskId: this.id } })
@@ -81,7 +78,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3{
+h3 {
   background: #ccc;
   padding: 5px;
 }
@@ -108,7 +105,7 @@ h3{
   display: inline-block;
 }
 
-.title{
+.title {
   font-size: 16px;
   font-weight: bold;
   padding-left: 10px;

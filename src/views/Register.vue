@@ -22,17 +22,13 @@
         </div>
       </el-col>
       <el-col :span="4">
-        <div>
-          <router-link to="/login">
-            <el-button>登录</el-button>
-          </router-link>
-        </div>
+        <router-link to="/login">
+          <el-button>登录</el-button>
+        </router-link>
       </el-col>
     </el-row>
 
     <el-row>
-      
-
       <el-col :span="14" style="padding-top:50px;padding-right:30px;padding-left:90px">
         <template>
           <el-form label-width="80px" :model="formData" :rules="rules" ref="login">
@@ -102,7 +98,7 @@
               </el-form-item>
             </div>
             <div v-if="requester">
-              <el-form-item label="研究领域" prop="requesterReg.research_field">
+              <el-form-item label="专业领域" prop="requesterReg.research_field">
                 <el-input
                   v-model="formData.requesterReg.research_field"
                   placeholder="请输入您的研究方向"
@@ -200,7 +196,14 @@ export default {
             trigger: "blur"
           }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 6,
+            message: "密码长度不小于6位",
+            trigger: "blur"
+          }
+        ],
         re_password: [
           { required: true, message: "请重复密码", trigger: "blur" }
         ],
@@ -237,7 +240,7 @@ export default {
             { required: true, message: "请选择您的专业", trigger: "change" }
           ]
         },
-        requesterReg:{
+        requesterReg: {
           research_field: [
             { required: true, message: "请输入您的研究领域", trigger: "blur" }
           ],
@@ -246,7 +249,7 @@ export default {
           ],
           address: [
             { required: true, message: "请输入您的地址", trigger: "blur" }
-          ],
+          ]
         }
       },
       options: [
@@ -306,7 +309,7 @@ export default {
   },
   methods: {
     submitWorker(formName) {
-      this.$refs['login'].validate(valid => {
+      this.$refs["login"].validate(valid => {
         if (valid) {
           this.$options.methods.workerRegister.call(this);
         } else {
@@ -316,7 +319,7 @@ export default {
       });
     },
     submitRequester(formName) {
-      this.$refs['login'].validate(valid => {
+      this.$refs["login"].validate(valid => {
         if (valid) {
           this.$options.methods.reqRegister.call(this);
         } else {
@@ -386,7 +389,7 @@ export default {
       param.append("password", this.formData.password);
       param.append("name", this.formData.name);
       param.append("teleNumber", this.formData.teleNumber);
-      param.append("research_field", this.formData.requesterReg.research_field);
+      param.append("researchField", this.formData.requesterReg.researchField);
       param.append(
         "institutionName",
         this.formData.requesterReg.institutionName
@@ -424,13 +427,11 @@ export default {
 
 <style>
 .picture {
-  padding: 120px;
-  padding-left: 170px;
-  transform: scale(1.5);
+  margin-top: 100px;
 }
 
 .picture img {
-  width: 90%;
+  width: 400px;
   height: auto;
 }
 </style>

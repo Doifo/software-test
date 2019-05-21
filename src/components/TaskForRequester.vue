@@ -3,7 +3,7 @@
     <el-row class="task-item">
       <el-col :span="5" :offset="1">{{task.area}}</el-col>
       <el-col :span="5" :offset="1">{{taskName}}</el-col>
-      <el-col :span="5" :offset="1">{{task.time_limitation}} 天</el-col>
+      <el-col :span="5" :offset="1">{{task.timeLimitation}} 天</el-col>
       <el-col :span="5" :offset="1">
         <el-button @click="dialogVisible = true" size="small">查看详情</el-button>
       </el-col>
@@ -23,11 +23,11 @@
       </el-row>
       <el-row>
         <span class="dialog-span">时间范围：</span>
-        {{task.start_time}} 至 {{task.end_time}}
+        {{task.startTime}} 至 {{task.endTime}}
       </el-row>
       <el-row>
         <span class="dialog-span">年龄范围：</span>
-        {{task.min_age}} 至 {{task.max_age}}岁
+        {{task.minAge}} 至 {{task.maxAge}}岁
       </el-row>
       <el-row>
         <span class="dialog-span">任务描述：</span>

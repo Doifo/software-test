@@ -247,12 +247,12 @@ export default {
       this.ifReminder = !this.ifReminder;
     },
     submitForm: function() {
-      alert("OK");
       let fst = 0;
       let lst = this.activeName.indexOf("-");
       let qtype = this.activeName.substring(fst, lst);
       fst = lst + 1;
       let qtmpIndex = this.activeName.substring(fst);
+      console.log('activte:',this.activeName)
       let form = {
         formType: "projectTemplate",
         para: {

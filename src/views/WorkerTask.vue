@@ -2,15 +2,8 @@
   <div>
     <worker-header></worker-header>
     <div style="padding-left:50px;padding-right:50px">
-      <p style="margin-top:30px;margin-bottom:30px;">
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item>视觉判断</el-breadcrumb-item>
-          <el-breadcrumb-item>问卷调查</el-breadcrumb-item>
-          <el-breadcrumb-item>语言分析</el-breadcrumb-item>
-          <el-breadcrumb-item>其他</el-breadcrumb-item>
-        </el-breadcrumb>
-      </p>
-      <p style="color:#1471eb;border-left:2px solid #1471eb;padding-left:10px;">众包任务</p>
+      
+      <p style="color:#1471eb;border-left:2px solid #1471eb;padding-left:10px;margin-top:50px">众包任务</p>
       <el-tabs value="first" type="card">
         <el-tab-pane label="所有任务" name="first">
           <task-list-for-worker ></task-list-for-worker>

@@ -68,8 +68,8 @@ export default {
       let date = new Date();
       let dateStr = this.dateToString(date);
       let para = new URLSearchParams();
-      para.append("task_id", this.taskInfo.id);
-      para.append("answer_time", dateStr);
+      para.append("taskId", this.taskInfo.id);
+      para.append("answerTime", dateStr);
       para.append("answer", JSON.stringify(this.ansList));
       axios
         .post("/api/answer/add", para)

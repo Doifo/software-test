@@ -32,7 +32,7 @@ export default {
       .then(response => {
         this.task = response.data;
         this.url = response.data.urls[this.answer.index - 1].url;
-        console.log(this.answer);
+        //console.log(this.answer);
 
         let oGC = this.$refs.canvas.getContext("2d");
         this.answer.ans.forEach((points, index) => {
