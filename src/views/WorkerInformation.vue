@@ -6,9 +6,7 @@
       <div style="background:#fffaf7;border:1px solid #ccc;padding-left:20px;">
         <p>
           <span style="font-weight:bold;">{{userInfor.username}}</span>
-          <span
-            style="background:#db4946;color:white;font-weight:bold;margin-left:20px;border-radius:2px;"
-          >LV.{{userInfor.level}}</span>
+          
         </p>
         <p style="font-size:13px;">
           工人ID：
@@ -28,11 +26,19 @@
               <span class="text-span">{{userInfor.username}}</span>
             </p>
             <p>
+              <span class="label-span">姓名：</span>
+              <span class="text-span">{{userInfor.name}}</span>
+            </p>
+            <p>
+              <span class="label-span">提现方式：</span>
+              <span class="text-span">{{userInfor.withdrawnMethod}}</span>
+            </p>
+            <p>
               <span class="label-span">电话号码：</span>
               <span class="text-span">{{userInfor.teleNumber}}</span>
             </p>
             <p>
-              <span class="label-span">职业：</span>
+              <span class="label-span">专业：</span>
               <span class="text-span">{{userInfor.major}}</span>
             </p>
             <p>
@@ -40,8 +46,8 @@
               <span class="text-span">{{userInfor.education}}</span>
             </p>
             <p>
-              <span class="label-span">工作地址：</span>
-              <span class="text-span">{{userInfor.workArea}}</span>
+              <span class="label-span">擅长领域：</span>
+              <span class="text-span" v-for="area in areas" :key="area">{{area}}&nbsp;&nbsp;&nbsp;</span>
             </p>
             <p>
               <span class="label-span">性别：</span>
@@ -51,50 +57,42 @@
               <span class="label-span">年龄：</span>
               <span class="text-span">{{userInfor.age}}</span>
             </p>
+            <p>
+              <span class="label-span">所属机构：</span>
+              <span class="text-span">{{userInfor.institution}}</span>
+            </p>
             <hr style="border:none;background:#ccc;height:1.5px">
             <p>
               <span class="label-span">邮箱：</span>
               <span class="text-span">{{userInfor.email}}</span>
             </p>
-            <p>
-              <span class="label-span">等级：</span>
-              <span class="text-span">{{userInfor.level}}</span>
-            </p>
-            <p>
-              <span class="label-span">经验值：</span>
-              <span class="text-span">{{userInfor.xp}}</span>
-            </p>
-            <p>
-              <span class="label-span">账户余额：</span>
-              <span class="text-span">{{userInfor.balance}}</span>
-            </p>
             
-            <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:block;">修改</el-button>
+            <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
           </div>
           <el-form v-show="change" :label-position="'left'" label-width="80px">
             <el-form-item label="用户名">
               <el-input v-model="userInfor.username"></el-input>
+            </el-form-item>
+            <el-form-item label="电话号码">
+              <el-input v-model="userInfor.teleNumber"></el-input>
+            </el-form-item>
+            <el-form-item label="专业">
+              <el-input v-model="userInfor.major"></el-input>
             </el-form-item>
             <el-form-item label="性别">
               <el-select v-model="userInfor.gender">
                 <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="电话号码">
-              <el-input v-model="userInfor.teleNumber"></el-input>
-            </el-form-item>
-            <el-form-item label="职业">
-              <el-input v-model="userInfor.major"></el-input>
-            </el-form-item>
             <el-form-item label="年龄">
               <el-input v-model="userInfor.age"></el-input>
             </el-form-item>
-            <el-form-item label="教育水平">
+            <!-- <el-form-item label="教育水平">
               <el-input v-model="userInfor.education"></el-input>
-            </el-form-item>
-            <el-form-item label="工作地址">
+            </el-form-item> -->
+            <!-- <el-form-item label="工作地址">
               <el-input v-model="userInfor.workArea"></el-input>
-            </el-form-item>
+            </el-form-item> -->
             
             <p style="text-align:center">
               <el-button type="primary" @click="cancelChange">取消修改</el-button>
@@ -119,6 +117,7 @@ import WorkerMyTask from '@/components/WorkerMyTask.vue'
 import axios from 'axios'
 
 export default {
+  
   components: {
     "worker-header": WorkerHeader,
     "worker-my-task":WorkerMyTask,
@@ -130,6 +129,12 @@ export default {
         url: "/api/worker/find-myself"
       }).then(response => {
         this.userInfor = response.data.worker;
+        console.log(this.userInfor)
+        let areas = JSON.parse(this.userInfor.workArea);
+        for(let key in areas){
+          this.areas.push(areas[key])
+        }
+        //console.log(this.areas)
         this.change = false;
       });
     },
@@ -167,6 +172,7 @@ export default {
   },
   data() {
     return {
+      areas:[],
       change: false,
       userInfor: {
         id:"",

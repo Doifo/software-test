@@ -247,7 +247,7 @@ export default {
                 });
             } else if (response.data.code[0] == "4") {
               that.$message.error("用户名或密码错误");
-              t; //hat.button_disabled = false;
+              // that.button_disabled = false;
             } else if (response.data.code[0] == "5") {
               that.$message.error("服务器错误");
             }
@@ -324,7 +324,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .picture {
   padding: 120px;
   padding-left: 170px;

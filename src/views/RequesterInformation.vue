@@ -26,11 +26,6 @@
               <span class="label-span">电话号码：</span>
               <span class="text-span">{{userInfor.teleNumber}}</span>
             </p>
-
-            <p>
-              <span class="label-span">研究领域：</span>
-              <span class="text-span">{{userInfor.researchField}}</span>
-            </p>
             <p>
               <span class="label-span">机构名称：</span>
               <span class="text-span">{{userInfor.institutionName}}</span>
@@ -56,11 +51,7 @@
               <span class="label-span">邮箱：</span>
               <span class="text-span">{{userInfor.email}}</span>
             </p>
-            <p>
-              <span class="label-span">账户余额：</span>
-              <span class="text-span">{{userInfor.balance}}</span>
-            </p>
-            <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:block;">修改</el-button>
+            <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
           </div>
           <el-form v-show="change" :label-position="'left'" label-width="80px">
             <el-form-item label="用户名">
@@ -142,6 +133,7 @@ import TaskForRequester from "@/components/TaskForRequester";
 export default {
   computed:{
     showedTasks() {
+      if(!this.myTaskList) return this.myTaskList
       let begin = this.pageSize * (this.currentPage - 1);
       let end = this.pageSize * this.currentPage;
       return this.myTaskList.slice(begin, end);
@@ -187,7 +179,7 @@ export default {
         url: "/api/requester/find-myself"
       }).then(response => {
         console.log("load succeed");
-        console.log(response);
+        //console.log(response);
         this.userInfor = response.data.requester;
         this.change = false;
       });
@@ -232,8 +224,11 @@ export default {
   mounted: function() {
     this.$options.methods.loadInfor.call(this);
     axios.get('/api/task/find-my-task').then(response=>{
-      console.log(response.data);
-      this.myTaskList=response.data.tasks;
+      if(response.data.message == 'there is no task published by you'){
+        this.myTaskList = []
+      }else{
+        this.myTaskList=response.data.tasks;
+      }
     })
   }
 };
@@ -241,6 +236,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.container{
+  min-height: 300px;
+}
 .el-input {
   width: 500px;
 }

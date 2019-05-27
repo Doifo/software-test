@@ -114,6 +114,7 @@ export default {
                   .post("/api/answer/update", para)
                   .then(response => {
                     alert("提交成功");
+                    this.$router.push('/worker-task')
                     console.log(response.data);
                   })
                   .catch(response => {

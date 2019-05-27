@@ -17,10 +17,7 @@
         <span class="dialog-span">相关领域：</span>
         {{task.area}}
       </el-row>
-      <el-row>
-        <span class="dialog-span">任务类型：</span>
-        {{task.type}}
-      </el-row>
+      
       <el-row>
         <span class="dialog-span">时间范围：</span>
         {{task.startTime}} 至 {{task.endTime}}

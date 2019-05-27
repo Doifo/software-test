@@ -60,14 +60,14 @@
       </el-col>
 
       <el-col :span="7" class="input">
-        <input type="text" class="search-input" placeholder="搜索任务......">
+        <!-- <input type="text" class="search-input" placeholder="搜索任务......">
         <span class="search-icon">
           <img src="../assets/search.png" alt>
-        </span>
+        </span> -->
       </el-col>
 
       <el-col :span="8">
-        <button class="search-button">筛选</button>
+        <!-- <button class="search-button">筛选</button> -->
       </el-col>
     </el-row>
   </div>
