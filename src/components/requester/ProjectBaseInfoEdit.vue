@@ -286,14 +286,7 @@ export default {
       return date;
     },*/
     submitForm: function() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          //this.$options.methods.workerRegister.call(this);
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+      
       function dateToString(draftTimeV) {
         draftTimeV = draftTimeV + "";
         let date = "";
@@ -344,7 +337,15 @@ export default {
           usage:this.usage
         }
       };
-      this.$emit("submitForm", form);
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.$emit("submitForm", form);
+          //this.$options.methods.workerRegister.call(this);
+        } else {
+          console.log("error submit!!");
+          return 
+        }
+      });
     }
   }
 };
