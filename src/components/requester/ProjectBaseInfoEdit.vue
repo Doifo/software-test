@@ -1,14 +1,21 @@
 <template>
   <div style="width:75%;margin:0 auto;" class="RequesterEditProject">
-    <el-form label-width="140px" label-position="left" style="border:1px solid #ccc;">
-      <el-form-item label="项目名称：" style="margin-top:20px;">
-        <el-input placeholder="请输入标题" v-model="name" style="width:60%"></el-input>
+    <el-form
+    ref="form"
+      :model="form"
+      :rules="rules"
+      label-width="140px"
+      label-position="left"
+      style="border:1px solid #ccc;"
+    >
+      <el-form-item label="项目名称：" prop="name" style="margin-top:20px;">
+        <el-input placeholder="请输入标题" v-model="form.name" style="width:60%"></el-input>
       </el-form-item>
       <p class="line">描述项目</p>
-      <el-form-item label="描述：">
+      <el-form-item label="描述：" prop="desc">
         <el-input
           placeholder="请输入描述信息"
-          v-model="desc"
+          v-model="form.desc"
           style="width:60%"
           type="textarea"
           :autosize="{ minRows: 3, maxRows: 5}"
@@ -18,9 +25,9 @@
           <span style="color:#606266">{{project_type}}</span>
       </el-form-item>-->
       <p class="line">设置调查</p>
-      <el-form-item label="每份奖励">
+      <el-form-item label="每份奖励" prop="reward">
         <el-input-number
-          v-model="reward"
+          v-model="form.reward"
           :precision="2"
           type="number"
           :step="0.1"
@@ -37,9 +44,9 @@
           <i class="el-icon-info" slot="reference" style="padding-left:20px;color:#909399"></i>
         </el-popover>
       </el-form-item>
-      <el-form-item label="推荐完成时间">
+      <el-form-item label="推荐完成时间" prop="time_limitation">
         <el-input-number
-          v-model="time_limitation"
+          v-model="form.time_limitation"
           :precision="2"
           :min="0"
           type="number"
@@ -55,23 +62,29 @@
           <i class="el-icon-info" slot="reference" style="padding-left:20px;color:#909399"></i>
         </el-popover>
       </el-form-item>
-      <el-form-item label="项目有效期">
+      <el-form-item label="项目有效期" prop="limi_value">
         <!--限制：开始日期不能小于当前日期-->
         <div class="block">
           <!--{{limi_value}}-->
-          <el-date-picker
+          <!-- <el-date-picker
             v-model="limi_value"
             :picker-options="pickerOptions1"
             type="datetimerange"
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+          ></el-date-picker>-->
+          <el-date-picker
+            v-model="form.limi_value"
+            type="date"
+            :picker-options="pickerOptions1"
+            placeholder="选择结束时间"
           ></el-date-picker>
         </div>
       </el-form-item>
-      <el-form-item label="自动支付时间">
+      <el-form-item label="自动支付时间" prop="pay_time">
         <el-input-number
-          v-model="pay_time"
+          v-model="form.pay_time"
           :precision="2"
           type="number"
           style="min-width:80px;!important width:20%;margin-right:10px"
@@ -89,8 +102,8 @@
         </el-popover>
       </el-form-item>
       <p class="line">工人要求</p>
-      <el-form-item label="推荐领域">
-        <el-select v-model="area" filterable placeholder="请选择" style="width:40%;">
+      <el-form-item label="推荐领域" prop="area">
+        <el-select v-model="form.area" filterable placeholder="请选择" style="width:40%;">
           <el-option
             v-for="item in condition_options"
             :key="item.value"
@@ -108,19 +121,21 @@
           <i class="el-icon-info" slot="reference" style="padding-left:20px;color:#909399"></i>
         </el-popover>
       </el-form-item>
-      <el-form-item label="发布任务份数">
+      <el-form-item label="发布任务份数" prop="population">
         <el-input-number
-          v-model="population"
+          v-model="form.population"
           type="number"
           :min="3"
+          :max="10"
           style="min-width:80px;!important width:20%;margin-right:10px"
         ></el-input-number>
       </el-form-item>
-      <el-form-item label="等级要求">
+      <el-form-item label="等级要求" prop="level">
         <el-input-number
-          v-model="level"
+          v-model="form.level"
           type="number"
           :min="0"
+          :max="5"
           style="min-width:80px;!important width:20%;margin-right:10px"
         ></el-input-number>
         <el-popover
@@ -135,15 +150,15 @@
       </el-form-item>
       <el-form-item label="年龄要求">
         <el-input-number
-          v-model="min_age"
+          v-model="form.min_age"
           type="number"
           :min="0"
           style="min-width:30px;!important width:20%;margin-right:10px"
         ></el-input-number>
         <span style="margin-right:10px;">至</span>
         <el-input-number
-          v-model="max_age"
-          :min="0"
+          v-model="form.max_age"
+          :min="form.min_age"
           style="min-width:80px;!important width:20%;margin-right:10px"
         ></el-input-number>
       </el-form-item>
@@ -159,20 +174,33 @@ export default {
   name: "ProjectBaseInfoEdit",
   data() {
     return {
+      rules: {
+        name: [{ required: true, message: "请输入项目名称", trigger: "blur" }],
+        desc: [{ required: true, message: "请输入项目描述", trigger: "blur" }],
+        reward: [{ required: true, message: "请选择每份奖励", trigger: "blur" }],
+        time_limitation: [{ required: true, message: "请选择推荐时间", trigger: "blur" }],
+        limi_value: [{ required: true, message: "请选择项目有效时间", trigger: "blur" }],
+        pay_time: [{ required: true, message: "请选择自动支付时间", trigger: "blur" }],
+        area: [{ required: true, message: "请选择推荐领域", trigger: "change" }],
+        population:[{ required: true, message: "请选择任务数量", trigger: "blur" }],
+        level:[{ required: true, message: "请选择等级限制", trigger: "blur" }],
+      },
       //form element
-      name: "",
-      desc: "",
-      projectType: "",
-      reward: 0,
-      level: 0,
-      limi_value: 0,
-      time_limitation: 0,
-      pay_time: 0,
-      area: "",
-      usage: 0,
-      population:0,
-      min_age: 0,
-      max_age: 0, //form element end
+      form: {
+        name: "",
+        desc: "",
+        projectType: "",
+        reward: 0,
+        level: 0,
+        limi_value: "",
+        time_limitation: 0,
+        pay_time: 0,
+        area: "",
+        usage: "教育",
+        population: 0,
+        min_age: 0,
+        max_age: 0
+      }, //form element end
       project_type: "",
       condition_options: [
         {
@@ -227,6 +255,13 @@ export default {
       }
     };
   },
+  watch: {
+    min_age(val) {
+      if (this.max_age < val) {
+        this.max_age = val;
+      }
+    }
+  },
   methods: {
     /*dateToString: function(draftTimeV) {
       // console.log(draftTimeV);
@@ -251,6 +286,7 @@ export default {
       return date;
     },*/
     submitForm: function() {
+      
       function dateToString(draftTimeV) {
         draftTimeV = draftTimeV + "";
         let date = "";
@@ -272,30 +308,44 @@ export default {
         date = date + month[str[1]] + "-" + str[2] + " " + str[4];
         return date;
       }
-      //console.log(this.limi_value);
+      let day = new Date(Date.now());
+      let nowstartTime =
+        day.getFullYear() +
+        "-" +
+        (day.getMonth() + 1) +
+        "-" +
+        day.getDate() +
+        " 00:00:00";
       let form = {
         formType: "baseInfo",
         para: {
-          name: this.name,
-          description: this.desc,
-          reward: this.reward,
+          name: this.form.name,
+          description: this.form.desc,
+          reward: this.form.reward,
           status: 0,
           // type:this.projectType,
-          restrictions: "无限制",
-          timeLimitation: this.timeLimitation,
-          startTime: dateToString(this.limi_value[0]),
-          endTime: dateToString(this.limi_value[1]),
-          level: this.level,
-          payTime: this.pay_time,
-          area: this.area,
-          usage: this.usage,
-          minAge: this.min_age,
-          maxAge: this.max_age,
-          allNumber: 300,
-          population: this.population
+          restrictions: this.form.level,
+          startTime: nowstartTime,
+          endTime: dateToString(this.form.limi_value),
+          level: 0,
+          timeLimitation: this.form.time_limitation,
+          payTime: this.form.pay_time,
+          area: this.form.area,
+          minAge: this.form.min_age,
+          maxAge: this.form.max_age,
+          population: this.form.population,
+          usage:this.usage
         }
       };
-      this.$emit("submitForm", form);
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          this.$emit("submitForm", form);
+          //this.$options.methods.workerRegister.call(this);
+        } else {
+          console.log("error submit!!");
+          return 
+        }
+      });
     }
   }
 };

@@ -241,7 +241,7 @@ export default {
   methods: {
     handleClick(tab, event) {
       this.ifReminder = false;
-      console.log(tab, event);
+      //console.log(tab, event);
     },
     showReminder() {
       this.ifReminder = !this.ifReminder;
@@ -252,7 +252,7 @@ export default {
       let qtype = this.activeName.substring(fst, lst);
       fst = lst + 1;
       let qtmpIndex = this.activeName.substring(fst);
-      console.log('activte:',this.activeName)
+      //console.log('activte:',this.activeName)
       let form = {
         formType: "projectTemplate",
         para: {
@@ -262,14 +262,14 @@ export default {
       };
       this.$emit("submitForm", form);
     },
-    newProject() {
-      this.$router.push({
-        name: "RequesterEditProject",
-        params: {
-          type: this.activeName
-        }
-      });
-    }
+    // newProject() {
+    //   this.$router.push({
+    //     name: "RequesterEditProject",
+    //     params: {
+    //       type: this.activeName
+    //     }
+    //   });
+    // }
   }
 };
 </script>

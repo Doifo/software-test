@@ -64,9 +64,6 @@
                 type="password"
               ></el-input>
             </el-form-item>
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="formData.name" placeholder="请输入真实姓名" style="width:80%"></el-input>
-            </el-form-item>
             <el-form-item label="手机号码" prop="teleNumber">
               <el-input v-model="formData.teleNumber" placeholder="请输入您的手机号码" style="width:80%"></el-input>
             </el-form-item>
@@ -78,33 +75,62 @@
                 <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
               </el-select>
             </el-form-item>
+            <el-form-item label="姓名" prop="name">
+              <el-input v-model="formData.name" placeholder="请输入真实姓名" style="width:80%"></el-input>
+            </el-form-item>
+
+
             <div v-if="worker">
               <el-form-item label="学历" prop="workerReg.education">
                 <el-select v-model="formData.workerReg.education">
                   <el-option v-for="education in educations" :key="education" :value="education"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="工作地点" prop="workerReg.workArea">
-                <el-input
-                  v-model="formData.workerReg.workArea"
-                  placeholder="请输入您的工作地点"
-                  style="width:80%"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="专业" prop="workerReg.major">
-                <el-select v-model="formData.workerReg.major">
-                  <el-option v-for="major in majors" :key="major" :value="major"></el-option>
+              <el-form-item label="提现方式" prop="workerReg.withdrawnMethod">
+                <el-select v-model="formData.workerReg.withdrawnMethod">
+                  <el-option v-for="method in methods" :key="method" :value="method"></el-option>
                 </el-select>
               </el-form-item>
-            </div>
-            <div v-if="requester">
-              <el-form-item label="专业领域" prop="requesterReg.research_field">
+              <el-form-item label="专业" prop="workerReg.major">
                 <el-input
-                  v-model="formData.requesterReg.research_field"
-                  placeholder="请输入您的研究方向"
+                  v-model="formData.workerReg.major"
+                  placeholder="请输入您的专业"
                   style="width:80%"
                 ></el-input>
               </el-form-item>
+              <el-form-item label="所属机构" prop="workerReg.institution">
+                <el-input
+                  v-model="formData.workerReg.institution"
+                  placeholder="请输入您的所属机构"
+                  style="width:80%"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="擅长领域" prop="workerReg.workArea">
+                <el-select v-model="formData.workerReg.workArea[1]">
+                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                </el-select>
+                <el-select v-model="formData.workerReg.workArea[2]">
+                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                </el-select>
+                <el-select v-model="formData.workerReg.workArea[3]">
+                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                </el-select>
+              </el-form-item>
+              <!-- <el-select v-model="formData.workerReg.major2">
+                  <el-option
+                    v-for="major in filterMajor"
+                    :key="major"
+                    :value="major"
+                  ></el-option>
+                </el-select>
+                <el-select v-model="formData.workerReg.major3">
+                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                </el-select> -->
+            </div>
+
+
+            <div v-if="requester">
+              
               <el-form-item label="机构" prop="requesterReg.institutionName">
                 <el-input
                   v-model="formData.requesterReg.institutionName"
@@ -118,6 +144,11 @@
                   placeholder="请输入您的住址"
                   style="width:80%"
                 ></el-input>
+              </el-form-item>
+              <el-form-item label="支付方式" prop="requesterReg.payMethod">
+                <el-select v-model="formData.requesterReg.payMethod">
+                  <el-option v-for="method in methods" :key="method" :value="method"></el-option>
+                </el-select>
               </el-form-item>
             </div>
             <el-form-item>
@@ -173,12 +204,16 @@ export default {
 
         workerReg: {
           withdrawnMethod: "",
+          major: "",
           education: "",
-          workArea: "",
-          major: ""
+          institution:"",
+          workArea: {
+            1:"",
+            2:"",
+            3:""
+          },
         },
         requesterReg: {
-          research_field: "",
           institutionName: "",
           address: "",
           payMethod: ""
@@ -233,23 +268,29 @@ export default {
           education: [
             { required: true, message: "请选择您的学历", trigger: "change" }
           ],
-          workArea: [
-            { required: true, message: "请输入您的工作地点", trigger: "blur" }
-          ],
           major: [
-            { required: true, message: "请选择您的专业", trigger: "change" }
+            { required: true, message: "请输入您的专业", trigger: "blur" }
+          ],
+          // workArea: [
+          //   { required: true, message: "请选择您的擅长领域", trigger: "change" }
+          // ],
+          withdrawnMethod:[
+            { required: true, message: "请选择您的提现方式", trigger: "change" }
+          ],
+          institution:[
+            { required: true, message: "请输入您的所属机构", trigger: "blur" }
           ]
         },
         requesterReg: {
-          research_field: [
-            { required: true, message: "请输入您的研究领域", trigger: "blur" }
-          ],
           institutionName: [
             { required: true, message: "请输入您所在的机构", trigger: "blur" }
           ],
           address: [
             { required: true, message: "请输入您的地址", trigger: "blur" }
-          ]
+          ],
+          payMethod:[
+            { required: true, message: "请选择您的支付方式", trigger: "change" }
+          ],
         }
       },
       options: [
@@ -263,6 +304,7 @@ export default {
         }
       ],
       genders: ["男", "女"],
+      methods:["支付宝","微信"],
       educations: [
         "小学",
         "初中",
@@ -271,27 +313,32 @@ export default {
         "本科",
         "硕士",
         "博士",
-        "无"
       ],
       majors: [
-        "计算机/互联网/通信",
-        "生产/工艺/制造",
-        "医疗/护理/制药",
-        "金融/银行/投资/保险",
-        "商业/服务业/个人经营",
-        "文化/广告/传媒",
-        "娱乐/艺术/表演",
-        "律师/法务",
-        "教育/培训",
-        "公务员/行政/事业单位",
-        "模特",
-        "空姐",
-        "学生",
-        "其他"
+        "计算机",
+        "医药",
+        "教育",
+        "财经",
+        "政法",
+        "科研",
+        "公益",
+        "音乐",
+        "设计",
+        "行政",
+        "交通"
       ]
     };
   },
   computed: {
+    filterMajor() {
+      let index1 = this.majors.indexOf(this.formData.workerReg.workArea[1]);
+      let index2 = this.majors.indexOf(this.formData.workerReg.workArea[2]);
+      let index3 = this.majors.indexOf(this.formData.workerReg.workArea[3]);
+      if (index1 > -1) this.majors.splice(index1, 1);
+      if (index2 > -1) this.majors.splice(index2, 1);
+      if (index3 > -1) this.majors.splice(index3, 1);
+      return this.majors
+    },
     worker() {
       if (this.formData.status == "worker") {
         return true;
@@ -328,44 +375,40 @@ export default {
         }
       });
     },
-    // inputLegal() {
-    //   if (this.formData.username == "") {
-    //     this.$message.error("请输入用户名");
-    //   } else if (this.formData.email == "") {
-    //     this.$message.error("请输入邮箱");
-    //   } else if (this.formData.password == "") {
-    //     this.$message.error("请输入密码");
-    //   } else if (this.formData.re_password == "") {
-    //     this.$message.error("请确认密码");
-    //   } else if (this.formData.password != this.formData.re_password) {
-    //     this.$message.error("两次密码不一致");
-    //   } else {
-    //     return true;
-    //   }
-    //   return false;
-    // },
     workerRegister() {
-      //if (!this.$options.methods.inputLegal.call(this)) return;
-
+      if(this.formData.password != this.formData.re_password){
+        this.$message.error('两次密码不一致')
+        return
+      }
+      if(this.formData.workerReg.workArea[3] == "" && this.formData.workerReg.workArea[1] == "" && this.formData.workerReg.workArea[2] == ""){
+        this.$message.error('请至少选择一项擅长领域')
+        return
+      }
+      
+      //console.log(JSON.stringify(this.formData.workerReg.workArea))
+      
+      
       let param = new URLSearchParams();
-      param.append("username", this.formData.username);
       param.append("eMail", this.formData.email);
       param.append("password", this.formData.password);
+      param.append("username", this.formData.username);
       param.append("name", this.formData.name);
       param.append("teleNumber", this.formData.teleNumber);
       param.append("withdrawnMethod", this.formData.workerReg.withdrawnMethod);
       param.append("education", this.formData.workerReg.education);
-      param.append("workArea", this.formData.workerReg.workArea);
+      param.append("workArea", JSON.stringify(this.formData.workerReg.workArea));
       param.append("age", this.formData.age);
       param.append("gender", this.formData.gender);
       param.append("major", this.formData.workerReg.major);
+      param.append('institution',this.formData.workerReg.institution)
+      
       axios({
         method: "post",
         url: "/api/register-as-worker",
         data: param
       })
         .then(response => {
-          console.log(response);
+          //console.log(response);
           if (response.data.code[0] == "2") {
             this.$message("注册成功！");
             this.$router.replace("/login");
@@ -381,31 +424,33 @@ export default {
         });
     },
     reqRegister() {
-      //if (!this.$options.methods.inputLegal.call(this)) return;
+      if(this.formData.password != this.formData.re_password){
+        this.$message.error('两次密码不一致')
+        return
+      }
 
       let param = new URLSearchParams();
-      param.append("username", this.formData.username);
       param.append("eMail", this.formData.email);
       param.append("password", this.formData.password);
+      param.append("username", this.formData.username);
       param.append("name", this.formData.name);
       param.append("teleNumber", this.formData.teleNumber);
-      param.append("researchField", this.formData.requesterReg.researchField);
       param.append(
         "institutionName",
         this.formData.requesterReg.institutionName
       );
       param.append("address", this.formData.requesterReg.address);
-      param.append("payMethod", "");
+      param.append("payMethod", this.formData.requesterReg.payMethod);
       param.append("gender", this.formData.gender);
       param.append("age", this.formData.age);
-      console.log(param);
+      //console.log(param);
       axios({
         method: "post",
         url: "/api/register-as-requester",
         data: param
       })
         .then(response => {
-          console.log(response);
+          //console.log(response);
           if (response.data.code[0] == "2") {
             this.$message("注册成功！");
             this.$router.replace("/login");
@@ -425,13 +470,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .picture {
-  margin-top: 100px;
+  width: 400px;
 }
 
 .picture img {
-  width: 400px;
+  width: 100%;
   height: auto;
 }
 </style>

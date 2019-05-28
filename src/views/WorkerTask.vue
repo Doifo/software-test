@@ -44,6 +44,7 @@ export default {
   },
   mounted: function() {
     this.$store.dispatch("Worker/initAllTaskList");
+    
     // axios.get('/api/task/find-all').then(response=>{
     //   console.log(response.data);
     //   this.allTaskList=response.data.tasks;

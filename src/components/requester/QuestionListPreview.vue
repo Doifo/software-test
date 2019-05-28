@@ -61,7 +61,7 @@ export default {
   methods: {
     handleCurrentChange(val) {
       this.curPage = val;
-      alert(val);
+      //alert(val);
     },
     dateToString(draftTimeV) {
       draftTimeV = draftTimeV + "";
@@ -89,13 +89,13 @@ export default {
         let tem = this.$refs[i][0].getAns();
         this.ansList.push(tem);
       }
-      console.log(this.ansList);
+      //console.log(this.ansList);
     },
     test() {
       axios
         .get("/api/answer/find-my-answer")
         .then(response => {
-          console.log(response.data);
+          //console.log(response.data);
         })
         .catch(response => {
           alert("error");
@@ -103,7 +103,7 @@ export default {
     }
   },
   mounted() {
-    alert(this.tid);
+    //alert(this.tid);
     axios
       .get("/api/task/find-by-id", { params: { id: this.tid } })
       .then(response => {

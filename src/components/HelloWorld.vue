@@ -11,6 +11,12 @@ export default {
   },
   methods: {},
   mounted(){
+    let a ={
+      1:"ss",
+      2:"aa"
+    }
+
+    console.log(JSON.stringify(a))
   }
 };
 </script>
