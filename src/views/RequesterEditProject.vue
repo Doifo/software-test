@@ -30,6 +30,12 @@
     ></project-layout-edit>
 
     <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step==3"></project-preview>
+
+    <div v-if="step==4" style="padding-left:160px;">
+        <p>请点击下面的链接完成问卷</p>
+        <p><a href="https://www.baidu.com/">调查问卷</a></p>
+        <el-button type="primary" @click="submitAnswer">模拟提交</el-button>
+    </div>
   </div>
 </template>
 
@@ -62,6 +68,9 @@ export default {
     WorkerHeader
   },
   methods: {
+    submitAnswer() {
+      this.$router.replace("/requester-information")
+    },
     cancel() {
       console.log("ss");
       this.$router.go(0);
@@ -71,8 +80,8 @@ export default {
         this.baseInfo["type"] = form.para.qtype;
         this.qtype = form.para.qtype;
         this.qtmp = form.para.qtmp;
-        // console.log(this.qtype);
-        // console.log(this.qtmp);
+        console.log(this.qtype,"qtype");
+        console.log(this.qtmp,"qtmp");
         this.step = 1;
       } else if (form.formType == "baseInfo") {
         this.step = 2;
@@ -98,7 +107,10 @@ export default {
             alert("error");
           });
       } else if (form.formType == "layout") {
-        this.step = 3;
+        if(this.qtype=="ver5"){
+          this.step=4;
+        }
+        else this.step = 3;
       } else {
         this.$router.go(0)
       }

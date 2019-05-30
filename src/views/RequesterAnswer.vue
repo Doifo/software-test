@@ -42,6 +42,7 @@ import QuestionVer2 from "@/components/answer/QuestionType2.vue";
 import QuestionVer3 from "@/components/answer/QuestionType3.vue";
 import QuestionVer4 from "@/components/answer/QuestionType4.vue";
 
+
 export default {
   data() {
     return {

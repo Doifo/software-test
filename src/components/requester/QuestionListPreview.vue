@@ -27,6 +27,7 @@ import QuestionVer1 from "@/components/QuestionVer1";
 import QuestionVer2 from "@/components/QuestionVer2";
 import QuestionVer3 from "@/components/QuestionVer3";
 import QuestionVer4 from "@/components/QuestionVer4";
+import QuestionVer5 from "@/components/QuestionVer5";
 import axios from "axios";
 export default {
   props: {
@@ -47,7 +48,8 @@ export default {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
+    QuestionVer4,
+    QuestionVer5
   },
   computed: {
     showedQuestions() {

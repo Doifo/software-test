@@ -99,45 +99,27 @@
               </div>
             </div>
             <question-ver4 :qtmp="templates['tmp5']"></question-ver4>
-            <!--主体-->
-            <!-- <div class="preview_content">
-              <template>
-                <div>
-                  <el-form :model="question_answer" ref="question_answer">
-                    <el-col :span="12">
-                      <el-form-item label="这段文字蕴含的感情是什么？">
-                        <el-input
-                          type="textarea"
-                          placeholder="请输入文档地址"
-                          v-model="question_content"
-                          style="width:90%"
-                        ></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <p style="margin-top:0px;">选项：</p>
-                      <el-form-item
-                        v-for="(domain, index) in question_answer.domains"
-                        :label="'选项' + index"
-                        :key="domain.key"
-                        :prop="'domains.' + index + '.value'"
-                        :rules="{
-                                required: true, message: '选项不能为空', trigger: 'blur'
-                                }"
-                      >
-                        <el-input v-model="domain.value" style="width:60%"></el-input>&nbsp;
-                        <el-button>删除</el-button>
-                      </el-form-item>
+            
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
 
-                      <el-form-item>
-                        <el-button>新增选项</el-button>
-                        <el-button>重置</el-button>
-                      </el-form-item>
-                    </el-col>
-                  </el-form>
-                </div>
-              </template>
-            </div>-->
+        <el-tab-pane label="调查问卷" name="ver5-tmp6">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>调查问卷（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>参与问卷调查</p>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <p>请点击下面的链接完成问卷</p>
+              <a href="http://www.ringsurvey.com/">调查问卷</a>
+            </div>
           </div>
           <!--preview_box end-->
         </el-tab-pane>
@@ -158,12 +140,15 @@ import QuestionVer1 from "@/components/QuestionVer1";
 import QuestionVer2 from "@/components/QuestionVer2";
 import QuestionVer3 from "@/components/QuestionVer3";
 import QuestionVer4 from "@/components/QuestionVer4";
+import QuestionVer5 from "@/components/QuestionVer5";
+
 export default {
   components: {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
+    QuestionVer4,
+    QuestionVer5
   },
   data() {
     return {
@@ -218,6 +203,9 @@ export default {
             { content: "愤怒", isEdit: false }
           ],
           text: "皇军给了你多少好处？"
+        },
+        tmp6:{
+          desc:"请点击链接完成问卷"
         }
       },
       activeName: "ver1-tmp1",
@@ -252,7 +240,7 @@ export default {
       let qtype = this.activeName.substring(fst, lst);
       fst = lst + 1;
       let qtmpIndex = this.activeName.substring(fst);
-      //console.log('activte:',this.activeName)
+            //console.log('activte:',this.activeName)
       let form = {
         formType: "projectTemplate",
         para: {
