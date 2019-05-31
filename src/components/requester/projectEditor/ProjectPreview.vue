@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import QuestionListPreview from '@/components/requester/QuestionListPreview'
+import QuestionListPreview from '@/components/requester/projectEditor/QuestionListPreview'
 
 export default {
   props:{

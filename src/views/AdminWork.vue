@@ -37,7 +37,7 @@
 <script>
 import WorkerHeader from "@/components/WorkerHeader"
 import axios from "axios";
-import WorkerForAdmin from "@/components/WorkerForAdmin";
+import WorkerForAdmin from "@/components/admin/WorkerForAdmin";
 
 export default {
   name: "AdminWorker",
@@ -82,10 +82,10 @@ export default {
     //this.$store.dispatch("Admin/initAllWorkerList");
     axios.get("/api/worker/find-all")
     .then(response => {
-      console.log(response.data)
+      console.log(response.data);
       this.allWorkerList=response.data.workers;
     })
-    .catch(response => {} );;
+    .catch(response => {} );
   },
   components: {
     WorkerForAdmin ,

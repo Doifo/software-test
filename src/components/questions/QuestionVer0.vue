@@ -7,6 +7,17 @@
     >
       <h2>第{{index+1}}份参考答案</h2>
       <component :is="qtmp.qtype" :qtmp="qtmp.baseTmp" :ref="index" :prevAns="ans"></component>
+      <el-row style="margin-top: 20px">
+        <el-col :span="9" style="text-align: right">
+          <strong>请判断正误</strong>
+        </el-col>
+        <el-col :span="6" :offset="1">
+          <el-radio-group v-model="qtmp.acList[index]">
+            <el-radio :label="0">错误</el-radio>
+            <el-radio :label="1">正确</el-radio>
+          </el-radio-group>
+        </el-col>
+      </el-row>
     </div>
     <div style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px">
       <h2>你的答案</h2>
@@ -21,20 +32,22 @@
 </template>
 
 <script>
-import QuestionVer1 from "@/components/QuestionVer1";
-import QuestionVer2 from "@/components/QuestionVer2";
-import QuestionVer3 from "@/components/QuestionVer3";
-import QuestionVer4 from "@/components/QuestionVer4";
-import axios from "axios";
+import QuestionVer1 from "@/components/questions/QuestionVer1";
+import QuestionVer2 from "@/components/questions/QuestionVer2";
+import QuestionVer3 from "@/components/questions/QuestionVer3";
+import QuestionVer4 from "@/components/questions/QuestionVer4";
+import QuestionVer5 from "@/components/questions/QuestionVer5";
+import axios from "axios/index";
 export default {
   props:{
-    qtmp: Object
+    qtmp: Object,
   },
   data() {
     return {
       qtype: "",
       tmpList: [],
       ansList: [],
+      tfList: [],
       taskInfo: {}
     };
   },
@@ -42,7 +55,8 @@ export default {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
+    QuestionVer4,
+    QuestionVer5
   },
   methods: {
     dateToString(draftTimeV) {
@@ -104,8 +118,10 @@ export default {
     }
   },
   mounted() {
+    //console.log(this.qtmp);
+    //alert(this.qtmp.prevAnsList.length);
+    console.log("aclist:"+this.qtmp.acList);
     console.log(this.qtmp);
-    
   }
 };
 </script>

@@ -25,7 +25,7 @@
 
 <script>
 import WorkerHeader from "@/components/WorkerHeader";
-import TaskForAdmin from "@/components/TaskForAdmin";
+import TaskForAdmin from "@/components/admin/TaskForAdmin";
 import axios from "axios";
 
 export default {

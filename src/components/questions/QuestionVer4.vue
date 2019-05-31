@@ -1,10 +1,12 @@
 <template>
   <div style>
     <el-row>
-      <el-col :span="12">
+      <el-col :span="12" :offset="2">
         <el-row>
-          <el-col :span="19" :offset="5">
-            <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt">{{qtmp.desc}}</div>
+          <el-col :span="19" :offset="3">
+            <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
+              <strong>{{qtmp.desc}}</strong>
+            </div>
           </el-col>
         </el-row>
         <el-row style="margin-top: 20px">
@@ -13,8 +15,10 @@
           </div>
         </el-row>
       </el-col>
-      <el-col :span="12">
-        <div style="font-size:18pt; text-align:center">选项</div>
+      <el-col :span="10">
+        <div style="font-size:18pt; text-align:center">
+          <strong>选项</strong>
+        </div>
         <el-radio-group v-model="opt" style="width: 100%">
           <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:12px">
             <el-col :span="9" :offset="3" style="text-align:left">
@@ -31,7 +35,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios/index";
 
 export default {
   props: {

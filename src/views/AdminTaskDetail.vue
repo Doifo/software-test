@@ -7,7 +7,7 @@
 
 <script>
 import axios from "axios";
-import QuestionListPreview from '@/components/requester/QuestionListPreview'
+import QuestionListPreview from '@/components/requester/projectEditor/QuestionListPreview'
 export default {
   name: "AdminTaskDetail",
   data() {
@@ -25,7 +25,7 @@ export default {
     QuestionListPreview
   },
   mounted() {
-    
+    alert("mounted");
   }
 };
 </script>

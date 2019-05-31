@@ -1,27 +1,49 @@
 <template>
-  <div style="width:75%; margin:auto">
-    <h1 style="text-align:center">{{taskInfo.title}}</h1>
-    <div
-      v-for="(item,index) in tmpList"
-      :key="index"
-      style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px"
-    >
-      <component :is="qtype" :qtmp="item" :ref="index"></component>
-    </div>
-    <div style="text-align:right; margin-top:20px">
-      <el-button type="primary" @click="submitAnswer">提交答案</el-button>
-      <!-- <el-button @click="test">测试</el-button> -->
-    </div>
-  </div>
+  <el-container>
+    <el-header class="debugBox" style="padding: 0">
+      <common-header-nav/>
+    </el-header>
+    <el-container>
+      <el-aside class="debugBox" style="width: 10%">
+        <WorkerAsideNav/>
+      </el-aside>
+      <el-container>
+        <el-main class="debugBox" style="background-color: #efefef">
+          <div style="width:75%; margin:auto">
+            <h1 style="text-align:center; font-size: 36pt">{{taskInfo.title}}</h1>
+            <div
+              v-for="(item,index) in tmpList"
+              :key="index"
+              style="margin-top:50px; padding:20px; border-radius:10px; background-color: white"
+            >
+              <component :is="qtype" :qtmp="item" :ref="index"></component>
+            </div>
+            <div style="text-align:right; margin-top:20px">
+              <el-button type="primary" @click="submitAnswer">提交答案</el-button>
+              <!-- <el-button @click="test">测试</el-button> -->
+            </div>
+          </div>
+        </el-main>
+        <el-footer class="debugBox" style="padding: 0">
+          <Footer/>
+        </el-footer>
+      </el-container>
+    </el-container>
+  </el-container>
+
 </template>
 
 <script>
-import QuestionVer0 from "@/components/QuestionVer0";
-import QuestionVer1 from "@/components/QuestionVer1";
-import QuestionVer2 from "@/components/QuestionVer2";
-import QuestionVer3 from "@/components/QuestionVer3";
-import QuestionVer4 from "@/components/QuestionVer4";
-import axios from "axios";
+import QuestionVer0 from "@/components/questions/QuestionVer0";
+import QuestionVer1 from "@/components/questions/QuestionVer1";
+import QuestionVer2 from "@/components/questions/QuestionVer2";
+import QuestionVer3 from "@/components/questions/QuestionVer3";
+import QuestionVer4 from "@/components/questions/QuestionVer4";
+import QuestionVer5 from "@/components/questions/QuestionVer5";
+import WorkerAsideNav from '@/components/public/WorkerAsideNav'
+import CommonHeaderNav from "@/components/public/CommonHeaderNav";
+import Footer from '@/components/public/Footer'
+import axios from "axios/index";
 export default {
   data() {
     return {
@@ -36,7 +58,11 @@ export default {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
+    QuestionVer4,
+    QuestionVer5,
+    Footer,
+    WorkerAsideNav,
+    CommonHeaderNav
   },
   methods: {
     dateToString(draftTimeV) {
@@ -170,7 +196,16 @@ export default {
                     text: urls[i].text,
                     index: urls[i].index
                   };
-                } else {
+                } else if(this.qtype=="question-ver5"){
+                  tmp={
+                    desc: desc,
+                    opts: opts,
+                    context: urls[i].context,
+                    intent: urls[i].intent,
+                    index: urls[i].index
+                  };
+                }
+                else {
                   tmp = {
                     desc: desc,
                     opts: opts,
@@ -188,6 +223,7 @@ export default {
           //审核型任务
           this.qtype = "question" + "-ver" + 0;
           let checkType = "question" + "-" + response.data.Subtask.taskType;
+          console.log(response.data);
           alert("审核模式");
           axios
             .get("/api/sub-task/read-subtask-resource", {
@@ -225,11 +261,13 @@ export default {
                     tmp.baseTmp = baseTmp;
                     tmp.qtype = checkType;
                     tmp.prevAnsList = [];
+                    tmp.acList=[];
                     let ansList = JSON.parse(response.data.answers);
                     //console.log(ansList);
                     //alert(ansList.length);
                     for (let k = 0; k < ansList.length; ++k) {
                       tmp.prevAnsList.push(ansList[k][i]);
+                      tmp.acList.push(0);
                     }
                     this.tmpList.push(tmp);
                   }
@@ -243,3 +281,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+  .el-button {
+    font-size: 16pt;
+  }
+  .debugBox{
+    border: 1px solid black;
+  }
+</style>
+

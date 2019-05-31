@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div style="background-color: white">
     <el-row>
-      <el-col :span="12" :offset="4">
+      <el-col :span="12" :offset="2">
         <el-row>
-          <el-col :span="19" :offset="3">
-            <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt">{{qtmp.desc}}</div>
+          <el-col :span="19" :offset="5">
+            <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
+              <strong>{{qtmp.desc}}</strong>
+            </div>
           </el-col>
         </el-row>
         <div style="width: 420px; height: 420px; position: relative; margin-top:20px">
@@ -18,10 +20,12 @@
         </div>
       </el-col>
       <el-col :span="8">
-        <div style="font-size:18pt; text-align:center">类别</div>
+        <div style="font-size:18pt; text-align:center">
+          <strong>类别</strong>
+        </div>
         <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
           <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:30px">
-            <el-col :span="9" :offset="9" style="text-align:left">
+            <el-col :span="9" :offset="3" style="text-align:left">
               <el-radio-button
                 :label="index"
                 style="font-size:20pt; padding:0; padding-top:5px; padding-left:3px; padding-right:3px"
@@ -34,30 +38,6 @@
         </el-radio-group>
       </el-col>
     </el-row>
-    <!-- <el-row>
-      <el-col :span="8" :offset="8">
-        <el-input v-if="isEditDesc" v-model="desc"></el-input>
-        <div v-else>{{desc}}</div>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="primary" size="mini" @click="editDesc" v-if="isEditDesc">确认</el-button>
-        <el-button type="primary" size="mini" @click="editDesc" v-else>编辑</el-button>
-      </el-col>
-    </el-row>-->
-    <!-- <div style="width: 420px; height: 420px; margin: auto; position: relative">
-      <img
-        style="position: absolute; left: 0px"
-        width="400"
-        height="400"
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg"
-      >
-      <canvas
-        width="400"
-        height="400"
-        style="border: blue 1px solid; margin: 0px; position: absolute; left: 0px"
-        ref="myCanvas"
-      ></canvas>
-    </div>-->
   </div>
 </template>
 

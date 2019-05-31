@@ -12,8 +12,10 @@
         @tab-click="handleClick"
         style="margin-top: 10px;"
       >
+        <el-tab-pane label="视觉" style="min-height:500px;" disabled="">
+        </el-tab-pane>
         <!--物体检测-->
-        <el-tab-pane label="二分问题" name="ver1-tmp1" style="min-height:500px;">
+        <el-tab-pane label="二分问题" name="ver1-tmp1" style="min-height:500px;" class='debugBox'>
           <div class="preview_box">
             <div class="reminder">
               <div class="reminder_title" @click="showReminder">
@@ -85,6 +87,9 @@
           <!--preview_box end-->
         </el-tab-pane>
 
+
+        <el-tab-pane label="语义" style="min-height:500px;" disabled="">
+        </el-tab-pane>
         <!--情感分析-->
         <el-tab-pane label="情感分析" name="ver4-tmp5">
           <div class="preview_box">
@@ -99,47 +104,55 @@
               </div>
             </div>
             <question-ver4 :qtmp="templates['tmp5']"></question-ver4>
-            <!--主体-->
-            <!-- <div class="preview_content">
-              <template>
-                <div>
-                  <el-form :model="question_answer" ref="question_answer">
-                    <el-col :span="12">
-                      <el-form-item label="这段文字蕴含的感情是什么？">
-                        <el-input
-                          type="textarea"
-                          placeholder="请输入文档地址"
-                          v-model="question_content"
-                          style="width:90%"
-                        ></el-input>
-                      </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                      <p style="margin-top:0px;">选项：</p>
-                      <el-form-item
-                        v-for="(domain, index) in question_answer.domains"
-                        :label="'选项' + index"
-                        :key="domain.key"
-                        :prop="'domains.' + index + '.value'"
-                        :rules="{
-                                required: true, message: '选项不能为空', trigger: 'blur'
-                                }"
-                      >
-                        <el-input v-model="domain.value" style="width:60%"></el-input>&nbsp;
-                        <el-button>删除</el-button>
-                      </el-form-item>
-
-                      <el-form-item>
-                        <el-button>新增选项</el-button>
-                        <el-button>重置</el-button>
-                      </el-form-item>
-                    </el-col>
-                  </el-form>
-                </div>
-              </template>
-            </div>-->
           </div>
-          <!--preview_box end-->
+        </el-tab-pane>
+
+        <el-tab-pane label="包含问题" name="ver4-tmp6">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>包含问题</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>请指句中是否含有敏感信息</p>
+              </div>
+            </div>
+            <question-ver4 :qtmp="templates['tmp6']"></question-ver4>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="文本分类" name="ver4-tmp7">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>文本分类</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>请指以下文本属于哪一类</p>
+              </div>
+            </div>
+            <question-ver4 :qtmp="templates['tmp7']"></question-ver4>
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="对话收集" name="ver5-tmp8">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>对话收集</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>请根据语境和对话给出回答</p>
+              </div>
+            </div>
+            <question-ver5 :qtmp="templates['tmp8']"></question-ver5>
+          </div>
         </el-tab-pane>
 
       </el-tabs>
@@ -154,16 +167,18 @@
 
 <script>
 // import RequesterHomepageTopbar from '@/components/RequesterNavi/RequesterHomepageTopbar.vue';
-import QuestionVer1 from "@/components/QuestionVer1";
-import QuestionVer2 from "@/components/QuestionVer2";
-import QuestionVer3 from "@/components/QuestionVer3";
-import QuestionVer4 from "@/components/QuestionVer4";
+import QuestionVer1 from "@/components/questions/QuestionVer1";
+import QuestionVer2 from "@/components/questions/QuestionVer2";
+import QuestionVer3 from "@/components/questions/QuestionVer3";
+import QuestionVer4 from "@/components/questions/QuestionVer4";
+import QuestionVer5 from "@/components/questions/QuestionVer5";
 export default {
   components: {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
+    QuestionVer4,
+    QuestionVer5
   },
   data() {
     return {
@@ -175,18 +190,18 @@ export default {
             { content: "否", isEdit: false }
           ],
           url:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555094734309&di=07cbcb8b48caf576f0a15a3a82eb5a6e&imgtype=0&src=http%3A%2F%2Fwx3.sinaimg.cn%2Fmw690%2F96b2b684gy1fdoq0sis5mj20go0godhw.jpg"
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg"
         },
         tmp2: {
-          desc: "请判断此图中的人的职业",
+          desc: "请判断此图中动物的类别",
           opts: [
-            { content: "学生", isEdit: false },
-            { content: "教官", isEdit: false },
-            { content: "历史老师", isEdit: false },
-            { content: "军人", isEdit: false }
+            { content: "猫", isEdit: false },
+            { content: "狗", isEdit: false },
+            { content: "鸟", isEdit: false },
+            { content: "熊猫", isEdit: false }
           ],
           url:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555094734309&di=07cbcb8b48caf576f0a15a3a82eb5a6e&imgtype=0&src=http%3A%2F%2Fwx3.sinaimg.cn%2Fmw690%2F96b2b684gy1fdoq0sis5mj20go0godhw.jpg"
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg"
         },
         tmp3: {
           desc: "请用矩形框出对应的物体",
@@ -217,7 +232,33 @@ export default {
             { content: "伤心", isEdit: false },
             { content: "愤怒", isEdit: false }
           ],
-          text: "皇军给了你多少好处？"
+          text: "three.js难道不应该被归到图形学的领域吗？"
+        },
+        tmp6: {
+          desc: "请指句中是否含有敏感信息",
+          opts: [
+            { content: "是", isEdit: false },
+            { content: "否", isEdit: false },
+          ],
+          text: "three.js难道不应该被归到图形学的领域吗？"
+        },
+        tmp7: {
+          desc: "请为以下文本进行归类",
+          opts: [
+            { content: "新闻", isEdit: false },
+            { content: "广告", isEdit: false },
+            { content: "期刊", isEdit: false },
+            { content: "报告", isEdit: false },
+          ],
+          text: "three.js难道不应该被归到图形学的领域吗？"
+        },
+        tmp8: {
+          desc: "请根据语境和意图给出回答",
+          opts: [
+          ],
+          text: "three.js难道不应该被归到图形学的领域吗？",
+          context:'你非常认真写代码，但发现最后那些只会写文档的人却可以轻松拿了比你高的分数',
+          intent:'你想表达你的不满'
         }
       },
       activeName: "ver1-tmp1",
@@ -327,4 +368,7 @@ ul {
 .el-radio {
   padding-bottom: 20px;
 }
+  .debugBox{
+    border: 1px solid black;
+  }
 </style>

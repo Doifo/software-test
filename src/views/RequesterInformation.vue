@@ -128,7 +128,7 @@
 <script>
 import WorkerHeader from "@/components/WorkerHeader";
 import axios from "axios";
-import TaskForRequester from "@/components/TaskForRequester";
+import TaskForRequester from "@/components/requester/TaskForRequester";
 
 export default {
   computed:{

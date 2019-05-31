@@ -27,7 +27,6 @@ export default {
       .get("/api/task/read-resource", { params: { taskId: this.taskId } })
       .then(response => {
         this.task = response.data;
-        
         this.url = response.data.urls[this.answer.index - 1].text;
         this.ans = this.task.opts[this.answer.ans].content;
         
