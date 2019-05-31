@@ -5,7 +5,9 @@
         <el-row>
           <el-col :span="14">
             <el-input v-if="isEditDesc" v-model="qtmp.desc"></el-input>
-            <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">{{qtmp.desc}}</div>
+            <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
+              <strong>{{qtmp.desc}}</strong>
+            </div>
           </el-col>
           <el-col :span="4">
             <el-button
@@ -32,6 +34,9 @@
               <img style="width: 400px;" :src="qtmp.url">
             </div>-->
             <el-input type="textarea" v-model="qtmp.text" autosize readonly></el-input>
+            <div style="text-align: left; font-size: 16pt; margin-top: 20px">
+              <strong>文本批量导入</strong>
+            </div>
             <el-upload
               class="upload-demo"
               ref="upload"
@@ -54,13 +59,17 @@
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
             <a href="/static/label.txt" download="template.txt">
-              <el-button size="mini" style="color:#1471eb;margin-left:130px;margin-top:10px">模板下载</el-button>
+              <el-button size="mini" style="color:#1471eb;margin-left:110px;margin-top:10px">模板下载</el-button>
             </a>
           </div>
         </el-row>
       </el-col>
       <el-col :span="12">
-        <div style="font-size:24pt; text-align:center; margin-top:10px">选项</div>
+        <div style="font-size:16pt; text-align:center; margin-top:10px">
+          <strong>
+            编辑选项
+          </strong>
+        </div>
         <el-radio-group v-model="opt" style="width: 100%">
           <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:12px">
             <el-col :span="9" :offset="3" style="text-align:left">
@@ -105,7 +114,7 @@
                 @click="addOpt"
                 style="padding: 3px; margin-top:20px"
                 plain
-              >添加</el-button>
+              >添加选项</el-button>
             </el-col>
           </el-row>
         </el-radio-group>
@@ -208,6 +217,7 @@ export default {
   },
   mounted: function() {
     console.log(this.qtmp);
+    alert('ver4 is mounted');
   }
 };
 </script>

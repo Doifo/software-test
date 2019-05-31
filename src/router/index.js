@@ -9,11 +9,7 @@ import RequesterEditProject from '@/views/RequesterEditProject.vue'
 import Homepage from '@/views/Homepage'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
-import PT from '@/components/requester/ProjectTemplatesChoose'
-//import Q1 from '@/components/QuestionVer1'
-import Q1 from '@/components/QuestionVer1'
-import QList from '@/components/QuestionList'
-import WQList from '@/components/WokerQuestionList'
+import WQList from '@/components/worker/QuestionListForWorker'
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
 import AdminWork from '@/views/AdminWork'
@@ -21,7 +17,8 @@ import RequesterAnswer from '@/views/RequesterAnswer'
 
 import HelloWorld from '@/components/HelloWorld'
 
-Vue.use(Router)
+
+Vue.use(Router);
 
 export default new Router({
   routes: [{
@@ -72,9 +69,6 @@ export default new Router({
     },{
       path:'/admin-work',
       component:AdminWork
-    },{
-      path:'/QList',
-      component:QList
     },{
       path:'/WQList',
       component:WQList

@@ -2,67 +2,43 @@
   <div style="width:75%; margin:auto">
     <h1 style="text-align:center">{{taskInfo.name}}</h1>
     <div
-      v-for="(item,index) in showedQuestions"
+      v-for="(item,index) in tmpList"
       :key="index"
       style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px"
     >
       <component :is="qtype" :qtmp="item" :ref="index"></component>
     </div>
-    <p style="text-align:center"><el-pagination
-      background
-      layout="prev, pager, next"
-      :page-size="pageSize"
-      :total="tmpList.length"
-      :current-page.sync="curPage"
-      @current-change="handleCurrentChange"
-    ></el-pagination></p>
     <div style="text-align:right; margin-top:20px">
-      <el-button type="primary" @click="submitAnswer">模拟提交</el-button>
+      <el-button type="primary" @click="submitAnswer">提交答案</el-button>
+      <el-button @click="test">测试</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import QuestionVer1 from "@/components/QuestionVer1";
-import QuestionVer2 from "@/components/QuestionVer2";
-import QuestionVer3 from "@/components/QuestionVer3";
-import QuestionVer4 from "@/components/QuestionVer4";
-import axios from "axios";
+import QuestionVer1 from "@/components/questions/QuestionVer1";
+import QuestionVer2 from "@/components/questions/QuestionVer2";
+import QuestionVer3 from "@/components/questions/QuestionVer3";
+import QuestionVer4 from "@/components/questions/QuestionVer4";
+import QuestionVer5 from "@/components/questions/QuestionVer5";
+import axios from "axios/index";
 export default {
-  props: {
-    tid: Number
-  },
   data() {
     return {
-      //tid:83,
       qtype: "",
       tmpList: [],
       ansList: [],
-      taskInfo: {},
-      pageSize:5,
-      curPage:1
+      taskInfo: {}
     };
   },
   components: {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
-  },
-  computed: {
-    showedQuestions() {
-      let fst=this.pageSize*(this.curPage-1);
-      let lst=this.pageSize*this.curPage;
-      let tem=this.tmpList.slice(fst,lst);
-      
-      return tem;
-    }
+    QuestionVer4,
+    QuestionVer5
   },
   methods: {
-    handleCurrentChange(val) {
-      this.curPage = val;
-      //alert(val);
-    },
     dateToString(draftTimeV) {
       draftTimeV = draftTimeV + "";
       let date = "";
@@ -89,29 +65,44 @@ export default {
         let tem = this.$refs[i][0].getAns();
         this.ansList.push(tem);
       }
-      //console.log(this.ansList);
-    },
-    test() {
+      // console.log(this.ansList);
+      // console.log(this.tmpList);
+      let date = new Date();
+      let dateStr = this.dateToString(date);
+      let para = new URLSearchParams();
+      para.append("taskId", this.taskInfo.id);
+      para.append("answerTime", dateStr);
+      para.append("answer", JSON.stringify(this.ansList));
       axios
-        .get("/api/answer/find-my-answer")
+        .post("/api/answer/add", para)
         .then(response => {
+          alert("提交成功");
           //console.log(response.data);
+          console.log(response.data);
         })
         .catch(response => {
           alert("error");
         });
+    },
+    test(){
+      axios.get('/api/answer/find-my-answer').then(response=>{
+        console.log(response.data);
+      }).catch(response=>{
+        alert('error');
+      })
     }
   },
   mounted() {
-    //alert(this.tid);
+    let tid = this.$route.query.tid;
+    alert(tid);
     axios
-      .get("/api/task/find-by-id", { params: { id: this.tid } })
+      .get("/api/task/find-by-id", { params: { id: tid } })
       .then(response => {
         // console.log(response.data);
         this.qtype = "question" + "-" + response.data.task.type;
         this.taskInfo = response.data.task;
         axios
-          .get("/api/task/read-resource", { params: { taskId: this.tid } })
+          .get("/api/task/read-resource", { params: { taskId: tid } })
           .then(response => {
             let res = response.data;
             let urls = res.urls;

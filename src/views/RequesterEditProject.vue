@@ -18,7 +18,7 @@
         <p @click="cancel" style="color:#1471eb;font-size:20px;margin-top:50px;cursor:pointer">取消创建</p>
       </el-col>
     </el-row>
-    <project-templates-choose @submitForm="handleSubmitForm" v-if="step==0"></project-templates-choose>
+    <project-templates-choose @submitForm="handleSubmitForm" v-if="step==0" class="debugBox"></project-templates-choose>
     <project-base-info-edit @submitForm="handleSubmitForm" v-if="step==1"></project-base-info-edit>
 
     <project-layout-edit
@@ -27,6 +27,8 @@
       :taskId="taskId"
       @submitForm="handleSubmitForm"
       v-if="step==2"
+      class="debugBox"
+      style="padding: 15px"
     ></project-layout-edit>
 
     <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step==3"></project-preview>
@@ -36,10 +38,10 @@
 <script>
 //import RequesterHomepageTopbar from '@/components/navi/RequesterHomepageTopbar.vue';
 import WorkerHeader from "@/components/WorkerHeader";
-import ProjectBaseInfoEdit from "@/components/requester/ProjectBaseInfoEdit";
-import ProjectLayoutEdit from "@/components/requester/ProjectLayoutEdit";
-import ProjectPreview from "@/components/requester/ProjectPreview";
-import ProjectTemplatesChoose from "@/components/requester/ProjectTemplatesChoose";
+import ProjectBaseInfoEdit from "@/components/requester/projectEditor/ProjectBaseInfoEdit";
+import ProjectLayoutEdit from "@/components/requester/projectEditor/ProjectLayoutEdit";
+import ProjectPreview from "@/components/requester/projectEditor/ProjectPreview";
+import ProjectTemplatesChoose from "@/components/requester/projectEditor/ProjectTemplatesChoose";
 import axios from "axios";
 
 export default {
@@ -117,5 +119,9 @@ export default {
 
 .el-input {
   width: 50%;
+}
+
+.debugBox{
+  border: 1px solid black;
 }
 </style>

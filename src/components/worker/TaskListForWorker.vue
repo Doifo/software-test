@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import TaskForWorker from "@/components/TaskForWorker";
+import TaskForWorker from "@/components/worker/TaskForWorker";
 import axios from "axios";
 import { mapState } from "vuex";
 

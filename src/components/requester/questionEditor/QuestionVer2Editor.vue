@@ -1,15 +1,17 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="12">
+      <el-col :span="10" :offset="2">
         <el-row>
-          <el-col :span="14">
+          <el-col :span="18">
             <el-input v-if="isEditDesc" v-model="qtmp.desc"></el-input>
-            <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">{{qtmp.desc}}</div>
+            <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
+              <strong>{{qtmp.desc}}</strong>
+            </div>
           </el-col>
           <el-col :span="4">
-            <el-button type="primary" size="mini" @click="editDesc" v-if="isEditDesc">确认</el-button>
-            <el-button type="primary" size="mini" @click="editDesc" v-else>编辑</el-button>
+            <el-button type="primary" size="mini" @click="editDesc" plain v-if="isEditDesc">确认</el-button>
+            <el-button type="primary" size="mini" @click="editDesc" plain v-else>编辑</el-button>
           </el-col>
         </el-row>
         <div style="width: 420px; height: 420px; position: relative; margin-top:20px">
@@ -21,34 +23,13 @@
             ref="myCanvas"
           ></canvas>
         </div>
-        <el-upload
-          class="upload-demo"
-          ref="upload"
-          action
-          :http-request="myUpload"
-          :on-preview="handlePreview"
-          :on-remove="handleRemove"
-          :on-success="submitSuccess"
-          :before-remove="beforeRemove"
-          :multiple="false"
-          :limit="1"
-          :on-exceed="handleExceed"
-          :file-list="fileList"
-          :auto-upload="false"
-        >
-          <div
-            class="el_upload_tip"
-            style="font-size:14pt; margin-top:20px"
-          >批量导入图片的url,请上传utf-8编码的txt文件</div>
-          <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
-        </el-upload>
-        <a href="/static/label.txt" download="template.txt">
-              <el-button size="mini" style="color:#1471eb;margin-left:130px;margin-top:10px">模板下载</el-button>
-            </a>
       </el-col>
-      <el-col :span="12">
-        <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
-          <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:30px">
+      <el-col :span="10" style="padding-left: 40px">
+        <div style="font-size:16pt; text-align: left">
+          <strong>编辑选项</strong>
+        </div>
+        <el-radio-group v-model="opt" style="width: 100%; margin-top: 20px" :fill="qtmp.opts[opt].color">
+          <el-row v-for="(item,index) in qtmp.opts" :key="index" style="">
             <el-col :span="9" :offset="3" style="text-align:left">
               <el-input v-model="item.content" v-if="item.isEdit"></el-input>
               <el-radio-button
@@ -99,10 +80,43 @@
                 @click="addOpt"
                 style="padding: 3px; margin-top:20px"
                 plain
-              >添加</el-button>
+              >添加选项</el-button>
             </el-col>
           </el-row>
         </el-radio-group>
+        <div style="font-size:16pt; margin-top:10px; text-align: left">
+          <strong>批量导入图片</strong>
+        </div>
+        <el-row>
+          <el-col :span="20" :offset="4">
+            <el-upload
+              class="upload-demo"
+              ref="upload"
+              action
+              :http-request="myUpload"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :on-success="submitSuccess"
+              :before-remove="beforeRemove"
+              :multiple="false"
+              :limit="1"
+              :on-exceed="handleExceed"
+              :file-list="fileList"
+              :auto-upload="false"
+            >
+              <div
+                class="el_upload_tip"
+                style="font-size:14pt; margin-top:20px"
+              >
+                请按模板格式上传utf-8格式的txt
+              </div>
+              <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
+            </el-upload>
+            <a href="/static/label.txt" download="template.txt">
+              <el-button size="mini" style="color:#1471eb;margin-left:80px;margin-top:10px">模板下载</el-button>
+            </a>
+          </el-col>
+        </el-row>
       </el-col>
     </el-row>
     <!-- <el-row>
@@ -336,4 +350,7 @@ export default {
 .el-button {
   font-size: 16pt;
 }
+  .debugBox{
+    border: 1px solid black;
+  }
 </style>

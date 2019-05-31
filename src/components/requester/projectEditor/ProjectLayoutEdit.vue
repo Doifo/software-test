@@ -5,6 +5,7 @@
     <question-ver2-editor :qtmp="qtmp" ref="ver2" :taskId="taskId" v-if="qtype=='ver2'"></question-ver2-editor>
     <question-ver3-editor :qtmp="qtmp" ref="ver3" :taskId="taskId" v-if="qtype=='ver3'"></question-ver3-editor>
     <question-ver4-editor :qtmp="qtmp" ref="ver4" :taskId="taskId" v-if="qtype=='ver4'"></question-ver4-editor>
+    <question-ver5-editor :qtmp="qtmp" ref="ver5" :taskId="taskId" v-if="qtype=='ver5'"></question-ver5-editor>
     <div style="text-align:right; width:75%; margin:auto">
       <el-button @click="submitForm" type="primary" style="margin-top:20px">下一步</el-button>
     </div>
@@ -12,10 +13,11 @@
 </template>
 
 <script>
-import QuestionVer1Editor from "@/components/requester/layout/QuestionVer1Editor";
-import QuestionVer2Editor from "@/components/requester/layout/QuestionVer2Editor";
-import QuestionVer3Editor from "@/components/requester/layout/QuestionVer3Editor";
-import QuestionVer4Editor from "@/components/requester/layout/QuestionVer4Editor";
+import QuestionVer1Editor from "@/components/requester/questionEditor/QuestionVer1Editor";
+import QuestionVer2Editor from "@/components/requester/questionEditor/QuestionVer2Editor";
+import QuestionVer3Editor from "@/components/requester/questionEditor/QuestionVer3Editor";
+import QuestionVer4Editor from "@/components/requester/questionEditor/QuestionVer4Editor";
+import QuestionVer5Editor from "@/components/requester/questionEditor/QuestionVer5Editor";
 export default {
   name: "ProjectLayoutEdit",
   props: {
@@ -45,7 +47,8 @@ export default {
     QuestionVer1Editor,
     QuestionVer2Editor,
     QuestionVer3Editor,
-    QuestionVer4Editor
+    QuestionVer4Editor,
+    QuestionVer5Editor
   },
   methods: {
     submitForm: function() {
@@ -54,8 +57,11 @@ export default {
         para: { msg: this.msg }
       };
       this.$refs[this.qtype].submitUpload();
-      this.$emit("submitForm", form);
+      setTimeout(()=>{
+        this.$emit("submitForm", form);
+      },3000)
+      //this.$emit("submitForm", form);
     }
-  }
+  },
 };
 </script>

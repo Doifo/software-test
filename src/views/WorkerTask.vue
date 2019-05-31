@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import WorkerMyTask from '@/components/WorkerMyTask'
+import WorkerMyTask from '@/components/worker/ReceivedTaskfForWorker'
 import WorkerHeader from "@/components/WorkerHeader";
-import TaskListForWorker from "@/components/TaskListForWorker";
+import TaskListForWorker from "@/components/worker/TaskListForWorker";
 import axios from "axios";
 import { mapState } from "vuex";
 

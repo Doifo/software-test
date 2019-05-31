@@ -113,7 +113,7 @@
 <script>
 //import axios from 'axios'
 import WorkerHeader from "@/components/WorkerHeader.vue";
-import WorkerMyTask from '@/components/WorkerMyTask.vue'
+import WorkerMyTask from '@/components/worker/ReceivedTaskfForWorker.vue'
 import axios from 'axios'
 
 export default {
