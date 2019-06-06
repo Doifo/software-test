@@ -89,7 +89,7 @@
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane label="交易历史" name="third">
+        <!-- <el-tab-pane label="交易历史" name="third">
           <el-table style="width: 100%;" type="flex" :header-cell-style="{background:'#eff0f1'}">
             <el-table-column prop="time" label="订单编号"></el-table-column>
             <el-table-column prop="time" label="订单金额"></el-table-column>
@@ -97,7 +97,7 @@
             <el-table-column prop="time" label="订单状态"></el-table-column>
             <el-table-column prop="time" label="发票状态"></el-table-column>
           </el-table>
-        </el-tab-pane>
+        </el-tab-pane> -->
 
         <el-tab-pane label="我的任务" name="forth">
           <div class="container">
@@ -133,9 +133,11 @@ import TaskForRequester from "@/components/TaskForRequester";
 export default {
   computed:{
     showedTasks() {
+      
       if(!this.myTaskList) return this.myTaskList
       let begin = this.pageSize * (this.currentPage - 1);
       let end = this.pageSize * this.currentPage;
+      console.log(this.myTaskList[0])
       return this.myTaskList.slice(begin, end);
     }
   },

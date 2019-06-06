@@ -18,9 +18,22 @@
         {{task.area}}
       </el-row>
       <el-row>
+        <span class="dialog-span">题目数量：</span>
+        {{task.numberOfQuestions}}
+      </el-row>
+      <el-row>
+        <span class="dialog-span">奖励/题：</span>
+        {{task.reward}}
+      </el-row>
+      <el-row>
+        <span class="dialog-span">份数：</span>
+        {{task.population}}
+      </el-row>
+      <el-row>
         <span class="dialog-span">时间范围：</span>
         {{task.startTime}} 至 {{task.endTime}}
       </el-row>
+
       <el-row>
         <span class="dialog-span">年龄范围：</span>
         {{task.minAge}} 至 {{task.maxAge}}岁
