@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12">
         <p>请点击下面的链接完成问卷</p>
-        <p><a href="http://www.ringsurvey.com/">调查问卷</a></p>
+        <p><a :href="url">调查问卷</a></p>
       </el-col>
       <el-col :span="12">
         
@@ -34,7 +34,7 @@ export default {
       //   { content: "选项4", isEdit: false }
       // ],
       opt: 0,
-      url:"http://175.102.15.229:8070/cawi/Z3UNBz"
+      url:""
     };
   },
   methods: {
@@ -56,7 +56,13 @@ export default {
       .then(response => {
         this.wid = response.data.worker.id;
         
-      })
+      });
+    axios
+      .get("/api/task/find-by-id", { params: { id: this.taskId } })
+      .then(response => {
+        this.url = response.data.task.resourceLink;
+        console.log(this.url,"url")
+      });
   }
 };
 </script>

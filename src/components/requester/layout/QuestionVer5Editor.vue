@@ -2,7 +2,7 @@
   <div style>
     <el-row>
       <div style="width:50%;margin:50px 30px;;">
-        <p><a href="http://www.ringsurvey.com/">请点击链接进入问卷创建界面</a></p>
+        <p><a href="http://www.ringsurvey.com/platform">请点击链接进入问卷创建界面</a></p>
         <el-input v-model="file" placeholder="请将完成问卷后所给的链接填入此处"></el-input>
         <!--<p style="float:right;"><el-button type="primary" @click="submit()">保存</el-button></p>-->
       </div>

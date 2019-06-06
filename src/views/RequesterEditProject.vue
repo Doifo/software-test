@@ -33,7 +33,7 @@
 
     <div v-if="step==4" style="padding-left:160px;">
         <p>请点击下面的链接完成问卷</p>
-        <p><a href="https://www.baidu.com/">调查问卷</a></p>
+        <p><a :href="url">调查问卷</a></p>
         <el-button type="primary" @click="submitAnswer">模拟提交</el-button>
     </div>
   </div>
@@ -56,7 +56,8 @@ export default {
       taskId: 0,
       baseInfo: {},
       qtype: "ver1",
-      qtmp: {}
+      qtmp: {},
+      url:''
     };
   },
   components: {
@@ -109,6 +110,13 @@ export default {
       } else if (form.formType == "layout") {
         if(this.qtype=="ver5"){
           this.step=4;
+          axios
+          .get("/api/task/find-by-id", { params: { id: this.taskId } })
+          .then(response => {
+            this.url = response.data.task.resourceLink;
+            console.log(this.url,"url")
+          });
+          
         }
         else this.step = 3;
       } else {
