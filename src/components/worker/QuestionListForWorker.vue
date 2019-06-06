@@ -12,12 +12,22 @@
           <div style="width:75%; margin:auto">
             <h1 style="text-align:center; font-size: 36pt">{{taskInfo.title}}</h1>
             <div
-              v-for="(item,index) in tmpList"
+              v-for="(item,index) in showedList"
               :key="index"
               style="margin-top:50px; padding:20px; border-radius:10px; background-color: white"
             >
               <component :is="qtype" :qtmp="item" :ref="index"></component>
             </div>
+            <p style="text-align:center">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :page-size="pageSize"
+                :total="tmpList.length"
+                :current-page.sync="curPage"
+                @current-change="handleCurrentChange"
+              ></el-pagination>
+            </p>
             <div style="text-align:right; margin-top:20px">
               <el-button type="primary" @click="submitAnswer">提交答案</el-button>
               <!-- <el-button @click="test">测试</el-button> -->
@@ -30,7 +40,6 @@
       </el-container>
     </el-container>
   </el-container>
-
 </template>
 
 <script>
@@ -40,9 +49,10 @@ import QuestionVer2 from "@/components/questions/QuestionVer2";
 import QuestionVer3 from "@/components/questions/QuestionVer3";
 import QuestionVer4 from "@/components/questions/QuestionVer4";
 import QuestionVer5 from "@/components/questions/QuestionVer5";
-import WorkerAsideNav from '@/components/public/WorkerAsideNav'
+
+import WorkerAsideNav from "@/components/public/WorkerAsideNav";
 import CommonHeaderNav from "@/components/public/CommonHeaderNav";
-import Footer from '@/components/public/Footer'
+import Footer from "@/components/public/Footer";
 import axios from "axios/index";
 export default {
   data() {
@@ -50,7 +60,9 @@ export default {
       qtype: "",
       tmpList: [],
       ansList: [],
-      taskInfo: {}
+      taskInfo: {},
+      pageSize:5,
+      curPage:1,
     };
   },
   components: {
@@ -64,7 +76,20 @@ export default {
     WorkerAsideNav,
     CommonHeaderNav
   },
+  computed:{
+    showedList() {
+      let fst=this.pageSize*(this.curPage-1);
+      let lst=this.pageSize*this.curPage;
+      let tem=this.tmpList.slice(fst,lst);
+      
+      return tem;
+      //return this.allTaskList;
+    }
+  },
   methods: {
+    handleCurrentChange(val){
+      this.curPage = val;
+    },
     dateToString(draftTimeV) {
       draftTimeV = draftTimeV + "";
       let date = "";
@@ -140,7 +165,7 @@ export default {
                   .post("/api/answer/update", para)
                   .then(response => {
                     alert("提交成功");
-                    this.$router.push('/worker-task')
+                    this.$router.push("/worker-task");
                     console.log(response.data);
                   })
                   .catch(response => {
@@ -171,9 +196,8 @@ export default {
     axios
       .get("/api/sub-task/find-by-sub-task-id", { params: { id: stid } })
       .then(response => {
-        
         this.taskInfo = response.data.Subtask;
-        console.log(this.taskInfo)
+        console.log(this.taskInfo);
         if (this.taskInfo.type == 0) {
           //普通的答题任务
           this.qtype = "question" + "-" + response.data.Subtask.taskType;
@@ -196,16 +220,16 @@ export default {
                     text: urls[i].text,
                     index: urls[i].index
                   };
-                } else if(this.qtype=="question-ver5"){
-                  tmp={
+                } else if (this.qtype == "question-ver5") {
+                  tmp = {
                     desc: desc,
                     opts: opts,
                     context: urls[i].context,
                     intent: urls[i].intent,
                     index: urls[i].index
                   };
-                }
-                else {
+
+                } else {
                   tmp = {
                     desc: desc,
                     opts: opts,
@@ -262,6 +286,7 @@ export default {
                     tmp.qtype = checkType;
                     tmp.prevAnsList = [];
                     tmp.acList=[];
+
                     let ansList = JSON.parse(response.data.answers);
                     //console.log(ansList);
                     //alert(ansList.length);
@@ -281,12 +306,12 @@ export default {
   }
 };
 </script>
-<style scoped>
-  .el-button {
-    font-size: 16pt;
-  }
-  .debugBox{
-    border: 1px solid black;
-  }
-</style>
 
+<style scoped>
+.el-button {
+  font-size: 16pt;
+}
+.debugBox {
+  border: 1px solid black;
+}
+</style>

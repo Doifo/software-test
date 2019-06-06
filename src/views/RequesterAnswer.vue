@@ -11,6 +11,7 @@
       >{{opt.content}}</li>
     </ul>
     <h3>任务答案：</h3>
+    <el-button type="text" @click="exportAns">导出答案</el-button>
     <el-collapse>
       <el-collapse-item v-for="answer in answers" :key="answer.id">
         <template slot="title">
@@ -57,7 +58,27 @@ export default {
     QuestionVer3,
     QuestionVer4
   },
-  methods: {},
+  methods: {
+    exportAns() {
+      let params = new URLSearchParams();
+      params.append("taskId", this.id);
+      axios.post("/api/task/answer-file", params).then(response => {
+        axios.get("/api/task/answer-file?taskId=" + this.id).then(response => {
+          const content = response.data;
+          const blob = new Blob([content]);
+          const fileName = "data.txt";
+          const elink = document.createElement("a");
+          elink.download = fileName;
+          elink.style.display = "none";
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          URL.revokeObjectURL(elink.href);
+          document.body.removeChild(elink);
+        });
+      });
+    }
+  },
   mounted() {
     axios
       .get("/api/answer/find-by-task-id", {
