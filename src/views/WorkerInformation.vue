@@ -122,9 +122,8 @@
 
 <script>
 //import axios from 'axios'
+import WorkerHeader from "@/components/WorkerHeader";
 
-import WorkerMyTask from "@/components/worker/ReceivedTaskfForWorker.vue";
-import axios from "axios";
 import WorkerMyTask from "@/components/worker/ReceivedTaskfForWorker.vue";
 import axios from "axios";
 
@@ -138,7 +137,7 @@ export default {
       this.$prompt("请输入提现金额", "提现", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        inputPattern: /^[1-9]\d*$/,
+        inputPattern: /(^[1-9]\d*$)|(^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$)/,
         inputErrorMessage: "请输入合法金额"
       })
         .then(({ value }) => {
@@ -159,8 +158,13 @@ export default {
                 axios
                   .post("/api/worker/withdrawal-information", param)
                   .then(response => {
-                    this.$message.success("提现成功");
-                    this.$router.go(0);
+                    this.$alert("提现成功", "提现", {
+                      confirmButtonText: "确定",
+                      callback: action => {
+                        this.$router.go(0);
+                      }
+                    });
+                    
                   });
               }
             })
