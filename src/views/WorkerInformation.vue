@@ -6,7 +6,6 @@
       <div style="background:#fffaf7;border:1px solid #ccc;padding-left:20px;">
         <p>
           <span style="font-weight:bold;">{{userInfor.username}}</span>
-          
         </p>
         <p style="font-size:13px;">
           工人ID：
@@ -66,7 +65,7 @@
               <span class="label-span">邮箱：</span>
               <span class="text-span">{{userInfor.email}}</span>
             </p>
-            
+
             <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
           </div>
           <el-form v-show="change" :label-position="'left'" label-width="80px">
@@ -89,22 +88,33 @@
             </el-form-item>
             <!-- <el-form-item label="教育水平">
               <el-input v-model="userInfor.education"></el-input>
-            </el-form-item> -->
+            </el-form-item>-->
             <!-- <el-form-item label="工作地址">
               <el-input v-model="userInfor.workArea"></el-input>
-            </el-form-item> -->
-            
+            </el-form-item>-->
+
             <p style="text-align:center">
               <el-button type="primary" @click="cancelChange">取消修改</el-button>
               <el-button type="primary" @click="changeEnsure">确认修改</el-button>
             </p>
           </el-form>
-          
+        </el-tab-pane>
+
+        <el-tab-pane label="提现记录" name="third">
+          <el-table :data="withdrawalInformation" style="width: 100%;min-height:300px;">
+            <el-table-column prop="id" label="ID"></el-table-column>
+            <el-table-column prop="time" label="提现时间"></el-table-column>
+            <el-table-column prop="value" label="提现金额"></el-table-column>
+            <el-table-column prop="type" label="提现方式"></el-table-column>
+          </el-table>
+          <p style="text-align:right">
+            <el-button type="primary" @click="getMoney">提现</el-button>
+          </p>
         </el-tab-pane>
 
         <el-tab-pane label="我的任务" name="second">
           <worker-my-task></worker-my-task>
-        </el-tab-pane>  
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -112,30 +122,79 @@
 
 <script>
 //import axios from 'axios'
-import WorkerHeader from "@/components/WorkerHeader.vue";
-import WorkerMyTask from '@/components/worker/ReceivedTaskfForWorker.vue'
-import axios from 'axios'
+import WorkerHeader from "@/components/WorkerHeader";
+
+import WorkerMyTask from "@/components/worker/ReceivedTaskfForWorker.vue";
+import axios from "axios";
 
 export default {
-  
   components: {
     "worker-header": WorkerHeader,
-    "worker-my-task":WorkerMyTask,
+    "worker-my-task": WorkerMyTask
   },
   methods: {
+    getMoney() {
+      this.$prompt("请输入提现金额", "提现", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        inputPattern: /(^[1-9]\d*$)|(^[1-9]\d*\.\d*|0\.\d*[1-9]\d*$)/,
+        inputErrorMessage: "请输入合法金额"
+      })
+        .then(({ value }) => {
+          this.$confirm("确认提现吗？", "提现", {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
+          })
+            .then(() => {
+              if (value > this.userInfor.balance) {
+                this.$message.error("超出可提现金额");
+                return this.getMoney();
+              } else {
+                let param = new URLSearchParams();
+                param.append("workerId", this.userInfor.id);
+                param.append("value", value);
+                param.append("type", this.userInfor.withdrawnMethod);
+                axios
+                  .post("/api/worker/withdrawal-information", param)
+                  .then(response => {
+                    this.$alert("提现成功", "提现", {
+                      confirmButtonText: "确定",
+                      callback: action => {
+                        this.$router.go(0);
+                      }
+                    });
+                    
+                  });
+              }
+            })
+            .catch(() => {});
+        })
+        .catch(() => {});
+    },
     loadInfor: function() {
       axios({
         method: "get",
         url: "/api/worker/find-myself"
       }).then(response => {
         this.userInfor = response.data.worker;
-        console.log(this.userInfor)
+        console.log(this.userInfor);
         let areas = JSON.parse(this.userInfor.workArea);
-        for(let key in areas){
-          this.areas.push(areas[key])
+        for (let key in areas) {
+          this.areas.push(areas[key]);
         }
         //console.log(this.areas)
         this.change = false;
+
+        let param = new URLSearchParams();
+        param.append("workerId", this.userInfor.id);
+        axios
+          .get(
+            "/api/worker/withdrawal-information?workerId=" + this.userInfor.id
+          )
+          .then(response => {
+            this.withdrawalInformation = response.data.withdrawal_information;
+          });
       });
     },
     uploadInfor: function() {
@@ -168,41 +227,38 @@ export default {
     },
     changeEnsure: function() {
       this.$options.methods.uploadInfor.call(this);
-    },
+    }
   },
   data() {
     return {
-      areas:[],
+      areas: [],
       change: false,
+      withdrawalInformation: [],
       userInfor: {
-        id:"",
+        id: "",
         username: "",
         name: "",
         teleNumber: "",
         eMail: "",
         balance: "",
-        withdrawnMethod:"",
-        education:"",
-        workArea:"",
+        withdrawnMethod: "",
+        education: "",
+        workArea: "",
         age: "",
-        xp:"",
+        xp: "",
         gender: "",
-        major:"",
-        school:"",
-        level:"",
-        workerId:"",
-        email: "",
+        major: "",
+        school: "",
+        level: "",
+        workerId: "",
+        email: ""
       },
-      genders: ["男", "女"],
-
-      
+      genders: ["男", "女"]
     };
   },
-  mounted(){
+  mounted() {
     this.$options.methods.loadInfor.call(this);
-    
   }
-  
 };
 </script>
 
