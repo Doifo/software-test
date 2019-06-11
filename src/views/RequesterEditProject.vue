@@ -32,6 +32,11 @@
     ></project-layout-edit>
 
     <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step==3"></project-preview>
+    <div v-if="step==4" style="padding-left:160px;">
+        <p>请点击下面的链接完成问卷</p>
+        <p><a :href="url">调查问卷</a></p>
+        <el-button type="primary" @click="submitAnswer">模拟提交</el-button>
+    </div>
   </div>
 </template>
 
@@ -52,7 +57,8 @@ export default {
       taskId: 0,
       baseInfo: {},
       qtype: "ver1",
-      qtmp: {}
+      qtmp: {},
+      url:''
     };
   },
   components: {
@@ -64,6 +70,9 @@ export default {
     WorkerHeader
   },
   methods: {
+    submitAnswer() {
+      this.$router.replace("/requester-information")
+    },
     cancel() {
       console.log("ss");
       this.$router.go(0);
@@ -100,7 +109,17 @@ export default {
             alert("error");
           });
       } else if (form.formType == "layout") {
-        this.step = 3;
+        if(this.qtype=="ver6"){
+          this.step=4;
+          axios
+          .get("/api/task/find-by-id", { params: { id: this.taskId } })
+          .then(response => {
+            this.url = response.data.task.resourceLink;
+            console.log(this.url,"url")
+          });
+          
+        }
+        else this.step = 3;
       } else {
         this.$router.go(0)
       }

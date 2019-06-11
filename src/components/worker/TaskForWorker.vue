@@ -1,5 +1,5 @@
 <template>
-  <el-collapse-item v-show="minNumber != 0">
+  <el-collapse-item >
     <template slot="title">
       <el-row style="width:100%;padding-left:30px">
         <el-col :span="6">
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import axios from "axios/index";
+import axios from "axios";
 
 export default {
   name: "TaskForWorker",

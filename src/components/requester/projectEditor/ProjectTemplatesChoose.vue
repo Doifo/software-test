@@ -155,6 +155,28 @@
           </div>
         </el-tab-pane>
 
+        <el-tab-pane label="问卷" style="min-height:500px;" disabled="">
+        </el-tab-pane>
+        <el-tab-pane label="调查问卷" name="ver6-tmp9">
+          <div class="preview_box">
+            <div class="reminder">
+              <div class="reminder_title" @click="showReminder">
+                <p>
+                  <b>调查问卷（点击展开）</b>
+                </p>
+              </div>
+              <div class="reminder-content" v-if="ifReminder">
+                <p>参与问卷调查</p>
+              </div>
+            </div>
+            <div style="text-align:center;">
+              <p>请点击下面的链接完成问卷</p>
+              <a href="http://www.ringsurvey.com/">调查问卷</a>
+            </div>
+          </div>
+          <!--preview_box end-->
+        </el-tab-pane>
+
       </el-tabs>
 
       <div style="float:right;margin-bottom: 40px;">
@@ -172,13 +194,15 @@ import QuestionVer2 from "@/components/questions/QuestionVer2";
 import QuestionVer3 from "@/components/questions/QuestionVer3";
 import QuestionVer4 from "@/components/questions/QuestionVer4";
 import QuestionVer5 from "@/components/questions/QuestionVer5";
+import QuestionVer6 from "@/components/questions/QuestionVer6";
 export default {
   components: {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
     QuestionVer4,
-    QuestionVer5
+    QuestionVer5,
+    QuestionVer6
   },
   data() {
     return {
@@ -259,6 +283,9 @@ export default {
           text: "three.js难道不应该被归到图形学的领域吗？",
           context:'你非常认真写代码，但发现最后那些只会写文档的人却可以轻松拿了比你高的分数',
           intent:'你想表达你的不满'
+        },
+        tmp9:{
+          desc:"请点击链接完成问卷"
         }
       },
       activeName: "ver1-tmp1",
