@@ -1,44 +1,116 @@
 <template>
   <el-container>
-    <el-header class="debugBox" style="padding: 0">
-      <common-header-nav/>
+    <el-header style="padding: 0; height: 80px">
+      <CommonHeadNav/>
     </el-header>
-    <el-container>
-      <el-aside class="debugBox" style="width: 10%">
-        <WorkerAsideNav/>
-      </el-aside>
+    <el-main style="padding: 0">
       <el-container>
-        <el-main class="debugBox" style="background-color: #efefef">
-          <div style="width:75%; margin:auto">
-            <h1 style="text-align:center; font-size: 36pt">{{taskInfo.title}}</h1>
-            <div
-              v-for="(item,index) in showedList"
-              :key="index"
-              style="margin-top:50px; padding:20px; border-radius:10px; background-color: white"
-            >
-              <component :is="qtype" :qtmp="item" :ref="index"></component>
+        <el-aside style="width: 10%; padding: 0">
+          <WorkerAsideNav/>
+        </el-aside>
+        <el-main style="padding: 0; background-color: #efefef">
+          <el-col :span="16" style="margin-left: 40px" >
+            <div style="width: 100%; margin: auto">
+              <div
+                v-for="(item,index) in showedList"
+                :key="index"
+                style="margin-top:50px; padding:20px; border-radius:10px; background-color: white; padding-top: 40px"
+              >
+                <component :is="qtype" :qtmp="item" :ref="index"></component>
+              </div>
+              <p style="text-align:center">
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :page-size="pageSize"
+                  :total="tmpList.length"
+                  :current-page.sync="curPage"
+                  @current-change="handleCurrentChange"
+                ></el-pagination>
+              </p>
             </div>
-            <p style="text-align:center">
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :page-size="pageSize"
-                :total="tmpList.length"
-                :current-page.sync="curPage"
-                @current-change="handleCurrentChange"
-              ></el-pagination>
-            </p>
-            <div style="text-align:right; margin-top:20px">
-              <el-button type="primary" @click="submitAnswer">提交答案</el-button>
-              <!-- <el-button @click="test">测试</el-button> -->
-            </div>
-          </div>
+          </el-col>
+          <el-col :span="6" style="margin-left: 20px">
+            <el-row style="background-color: white; margin-top: 50px; width: 100%; border-radius: 5px; padding: 20px">
+              <el-row>
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>项目编号</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{taskInfo.id}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>项目名称</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{taskInfo.name}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>请求机构</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{taskInfo.institutionName}}
+                </el-col>
+              </el-row>
+            </el-row>
+            <el-row style="background-color: white; margin-top: 15px; width: 100%; border-radius: 5px; padding: 20px">
+              <el-row>
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>涉及领域</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{taskInfo.area}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <strong style="font-size: 16pt">任务描述</strong>
+                <el-input type="textarea" style="margin-top: 15px;" :autosize="{ minRows: 2, maxRows: 2}"  v-model="taskInfo.description" readonly></el-input>
+
+              </el-row>
+            </el-row>
+            <el-row style="background-color: white; margin-top: 15px; width: 100%; border-radius: 5px; padding: 20px">
+              <el-row>
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>每题奖励</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  ￥{{taskInfo.reward}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>题目总数</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{taskInfo.numberOfQuestions}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="10" style="font-size: 16pt; text-align: left">
+                  <strong>截止时间</strong>
+                </el-col>
+                <el-col :span="12" style="font-size: 12pt; text-align: right">
+                  {{taskInfo.endTime}}
+                </el-col>
+              </el-row>
+            </el-row>
+            <el-row style="background-color: white; margin-top: 15px; width: 100%; border-radius: 5px; padding: 10px">
+              <div style="text-align:left;">
+                <el-button type="primary" @click="submitAnswer">提交答案</el-button>
+                <!-- <el-button @click="test">测试</el-button> -->
+              </div>
+            </el-row>
+          </el-col>
         </el-main>
-        <el-footer class="debugBox" style="padding: 0">
-          <Footer/>
-        </el-footer>
       </el-container>
-    </el-container>
+    </el-main>
+    <el-footer style="padding: 0">
+      <Footer/>
+    </el-footer>
   </el-container>
 </template>
 
@@ -50,9 +122,10 @@ import QuestionVer3 from "@/components/questions/QuestionVer3";
 import QuestionVer4 from "@/components/questions/QuestionVer4";
 import QuestionVer5 from "@/components/questions/QuestionVer5";
 
-import WorkerAsideNav from "@/components/public/WorkerAsideNav";
-import CommonHeaderNav from "@/components/public/CommonHeaderNav";
-import Footer from "@/components/public/Footer";
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import WorkerAsideNav from '@/components/public/WorkerAsideNav'
+import Footer from '@/components/public/Footer'
+
 import axios from "axios/index";
 export default {
   data() {
@@ -61,7 +134,7 @@ export default {
       tmpList: [],
       ansList: [],
       taskInfo: {},
-      pageSize:5,
+      pageSize:2,
       curPage:1,
     };
   },
@@ -72,9 +145,10 @@ export default {
     QuestionVer3,
     QuestionVer4,
     QuestionVer5,
-    Footer,
+
+    CommonHeadNav,
     WorkerAsideNav,
-    CommonHeaderNav
+    Footer
   },
   computed:{
     showedList() {

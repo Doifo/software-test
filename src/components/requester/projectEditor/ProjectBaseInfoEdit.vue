@@ -1,5 +1,10 @@
 <template>
   <div style="width:75%;margin:0 auto;" class="RequesterEditProject">
+    <el-row style="padding: 20px">
+      <el-col :span="8" offset="8">
+        <strong style="color: #5a9ef7; font-size: 20pt">编辑项目的基本信息</strong>
+      </el-col>
+    </el-row>
     <el-form
     ref="form"
       :model="form"

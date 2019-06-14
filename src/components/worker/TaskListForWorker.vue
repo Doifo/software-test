@@ -14,10 +14,10 @@
       </el-col>
       <el-col :span="3">操作</el-col>
     </el-row>
-    <el-collapse style="min-height:250px;border-bottom:none;">
-      <task-for-worker v-for="item in showedList" :key="item.id" :taskInfo="item"></task-for-worker>
+    <el-collapse style="min-height:250px;border-bottom:none;height: 450px">
+      <task-for-worker v-for="item in showedList" :key="item.id" :taskInfo="item" style="margin-top: 10px; padding-bottom: 10px"></task-for-worker>
     </el-collapse>
-    <div class="pages">
+    <div class="pages" style="padding: 20px">
       <el-pagination
         background
         layout="prev, pager, next"
@@ -83,7 +83,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .task-content-header {
-  background: #eff0f1;
+  background: white;
   height: 50px;
   display: flex;
   flex-direction: row;

@@ -1,43 +1,72 @@
 <template>
-  <div>
-    <!-- <RequesterHomepageTopbar></RequesterHomepageTopbar> -->
-    <worker-header></worker-header>
-    <el-row>
-      <el-col :span="2" :offset="3">
-        <p style="color:#1471eb;font-size:20px;margin-top:50px;">模板选择</p>
-      </el-col>
-      <el-col :span="4">
-        <p style="color:#1471eb;font-size:20px;margin-top:50px;">编辑项目&设计布局</p>
-      </el-col>
+  <el-container>
+    <el-header style="height: 80px; padding: 0">
+      <CommonHeadNav/>
+    </el-header>
+    <el-main style="padding: 0">
+      <el-container>
+        <el-aside style="padding: 0; width: 10%">
+          <RequesterAsideNav/>
+        </el-aside>
+        <el-main style="padding: 0">
+          <div>
+            <el-row style="border: #efefef 2px solid">
+              <el-col :span="2" :offset="3">
+                <p style="color: #5a9ef7 ;font-size:20px;margin-top:50px;">
+                  <strong>模板选择</strong>
+                </p>
+              </el-col>
+              <el-col :span="2">
+                <p style="color: #5a9ef7;font-size:20px;margin-top:50px;">
+                  <strong>编辑项目</strong>
+                </p>
+              </el-col>
+              <el-col :span="2">
+                <p style="color: #5a9ef7;font-size:20px;margin-top:50px;">
+                  <strong>设计布局</strong>
+                </p>
+              </el-col>
 
-      <el-col :span="2">
-        <p style="color:#1471eb;font-size:20px;margin-top:50px;">预览并完成</p>
-      </el-col>
+              <el-col :span="2">
+                <p style="color: #5a9ef7;font-size:20px;margin-top:50px;">
+                  <strong>项目预览</strong>
+                </p>
+              </el-col>
 
-      <el-col :span="2" :offset="8">
-        <p @click="cancel" style="color:#1471eb;font-size:20px;margin-top:50px;cursor:pointer">取消创建</p>
-      </el-col>
-    </el-row>
-    <project-templates-choose @submitForm="handleSubmitForm" v-if="step==0" class="debugBox"></project-templates-choose>
-    <project-base-info-edit @submitForm="handleSubmitForm" v-if="step==1"></project-base-info-edit>
+              <el-col :span="2" :offset="8">
+                <p @click="cancel" style="color:#5a9ef7;font-size:20px;margin-top:50px;cursor:pointer">
+                  <strong>取消创建</strong>
+                </p>
+              </el-col>
+            </el-row>
+            <project-templates-choose @submitForm="handleSubmitForm" v-if="step===0"></project-templates-choose>
+            <project-base-info-edit @submitForm="handleSubmitForm" v-if="step===1"></project-base-info-edit>
+            <project-layout-edit
+              :qtype="qtype"
+              :qtmp="qtmp"
+              :taskId="taskId"
+              @submitForm="handleSubmitForm"
+              v-if="step===2"
+              class=""
+              style="padding: 15px"
+            ></project-layout-edit>
 
-    <project-layout-edit
-      :qtype="qtype"
-      :qtmp="qtmp"
-      :taskId="taskId"
-      @submitForm="handleSubmitForm"
-      v-if="step==2"
-      class="debugBox"
-      style="padding: 15px"
-    ></project-layout-edit>
-
-    <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step==3"></project-preview>
-  </div>
+            <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step===3"></project-preview>
+          </div>
+        </el-main>
+      </el-container>
+    </el-main>
+    <el-footer style="padding: 0">
+      <Footer/>
+    </el-footer>
+  </el-container>
 </template>
 
 <script>
-//import RequesterHomepageTopbar from '@/components/navi/RequesterHomepageTopbar.vue';
-import WorkerHeader from "@/components/WorkerHeader";
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import RequesterAsideNav from '@/components/public/RequesterAsideNav'
+import Footer from '@/components/public/Footer'
+
 import ProjectBaseInfoEdit from "@/components/requester/projectEditor/ProjectBaseInfoEdit";
 import ProjectLayoutEdit from "@/components/requester/projectEditor/ProjectLayoutEdit";
 import ProjectPreview from "@/components/requester/projectEditor/ProjectPreview";
@@ -56,12 +85,13 @@ export default {
     };
   },
   components: {
-    //RequesterHomepageTopbar,
     ProjectTemplatesChoose,
     ProjectBaseInfoEdit,
     ProjectLayoutEdit,
     ProjectPreview,
-    WorkerHeader
+    CommonHeadNav,
+    RequesterAsideNav,
+    Footer
   },
   methods: {
     cancel() {

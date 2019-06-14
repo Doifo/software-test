@@ -1,43 +1,66 @@
 <template>
-  <div id="requester-answer">
-    <h3>任务描述：</h3>
-    <p>{{task.desc}}</p>
-    <h3>任务选项：</h3>
-    <ul class="opts">
-      <li
-        v-for="opt in task.opts"
-        :key="opt.content"
-        v-bind:style="{background:opt.color}"
-      >{{opt.content}}</li>
-    </ul>
-    <h3>任务答案：</h3>
-    <el-button type="text" @click="exportAns">导出答案</el-button>
-    <el-collapse>
-      <el-collapse-item v-for="answer in answers" :key="answer.id">
-        <template slot="title">
-          <span class="title">Worker ID：{{answer.workerId}}</span>
-        </template>
-        <el-row>
-          <el-col
-            style="padding:5px;"
-            :span="4"
-            v-for="oneanswer in JSON.parse(answer.answer)"
-            :key="oneanswer.index "
-          >
+  <el-container>
+    <el-header style="height: 80px; padding: 0">
+      <CommonHeadNav/>
+    </el-header>
+    <el-main style="padding: 0">
+      <el-container>
+        <el-aside style="padding: 0; width: 10%">
+          <RequesterAsideNav/>
+        </el-aside>
+        <el-main style="padding: 0">
+          <div id="requester-answer">
+            <h3>任务描述：</h3>
+            <p>{{task.desc}}</p>
+            <h3>任务选项：</h3>
+            <ul class="opts">
+              <li
+                v-for="opt in task.opts"
+                :key="opt.content"
+                v-bind:style="{background:opt.color}"
+              >{{opt.content}}</li>
+            </ul>
+            <h3>任务答案：</h3>
+            <el-button type="text" @click="exportAns">导出答案</el-button>
             <el-collapse>
-              <el-collapse-item v-bind:title="'第'+ oneanswer.index + '题'">
-                <component :is="type" :answer="oneanswer" :taskId="id"></component>
+              <el-collapse-item v-for="answer in answers" :key="answer.id">
+                <template slot="title">
+                  <span class="title">Worker ID：{{answer.workerId}}</span>
+                </template>
+                <el-row>
+                  <el-col
+                    style="padding:5px;"
+                    :span="4"
+                    v-for="oneanswer in JSON.parse(answer.answer)"
+                    :key="oneanswer.index "
+                  >
+                    <el-collapse>
+                      <el-collapse-item v-bind:title="'第'+ oneanswer.index + '题'">
+                        <component :is="type" :answer="oneanswer" :taskId="id"></component>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </el-col>
+                </el-row>
               </el-collapse-item>
             </el-collapse>
-          </el-col>
-        </el-row>
-      </el-collapse-item>
-    </el-collapse>
-  </div>
+          </div>
+        </el-main>
+      </el-container>
+    </el-main>
+    <el-footer style="padding: 0">
+      <Footer/>
+    </el-footer>
+  </el-container>
 </template>
 
+
 <script>
+
 import axios from "axios";
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import RequesterAsideNav from '@/components/public/RequesterAsideNav'
+import Footer from '@/components/public/Footer'
+
 import QuestionVer1 from "@/components/answer/QuestionType1.vue";
 import QuestionVer2 from "@/components/answer/QuestionType2.vue";
 import QuestionVer3 from "@/components/answer/QuestionType3.vue";
@@ -56,7 +79,10 @@ export default {
     QuestionVer1,
     QuestionVer2,
     QuestionVer3,
-    QuestionVer4
+    QuestionVer4,
+    CommonHeadNav,
+    RequesterAsideNav,
+    Footer
   },
   methods: {
     exportAns() {
