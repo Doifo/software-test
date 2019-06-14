@@ -2,7 +2,7 @@
   <div>
     <div style="min-height:300px;">
       <el-table
-        :data="myTasks"
+        :data="showedTasks"
         style="width: 100%; background-color: white"
         type="flex"
         :header-cell-style="{background:'white'}"
@@ -25,6 +25,16 @@
         </el-table-column>
       </el-table>
     </div>
+    <p style="text-align:center">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :page-size="pageSize"
+        :total="tasks.length"
+        :current-page.sync="curPage"
+        @current-change="handleCurrentChange"
+      ></el-pagination>
+    </p>
   </div>
 </template>
 
@@ -34,21 +44,40 @@ export default {
   name: "WorkerMyTask",
   data() {
     return {
-      myTasks: [],
-      theTasks: []
+      // myTasks: [],
+      theTasks: [],
+      pageSize:5,
+      curPage:1,
+
     };
   },
-  methods: {},
+  props:{
+    tasks:Array,
+  },
+  methods: {
+    handleCurrentChange(val){
+       this.curPage = val;
+    }
+  },
+  computed:{
+    showedTasks(){
+      let fst=this.pageSize*(this.curPage-1);
+      let lst=this.pageSize*this.curPage;
+      let tem=this.tasks.slice(fst,lst);
+      
+      return tem;
+    }
+  },
   mounted() {
-    axios
-      .get("/api/sub-task/find-my-sub-task")
-      .then(response => {
-        this.myTasks = response.data.Subtasks;
-        //console.log("my-sub-task:", this.myTasks);
-      })
-      .catch(response => {
-        console.log("error:", response);
-      });
+    // axios
+    //   .get("/api/sub-task/find-my-sub-task")
+    //   .then(response => {
+    //     this.myTasks = response.data.Subtasks;
+    //     //console.log("my-sub-task:", this.myTasks);
+    //   })
+    //   .catch(response => {
+    //     console.log("error:", response);
+    //   });
   }
 };
 </script>
