@@ -50,7 +50,6 @@
               class=""
               style="padding: 15px"
             ></project-layout-edit>
-
             <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step===3"></project-preview>
           </div>
         </el-main>
@@ -81,7 +80,8 @@ export default {
       taskId: 0,
       baseInfo: {},
       qtype: "ver1",
-      qtmp: {}
+      qtmp: {},
+      url:''
     };
   },
   components: {
@@ -94,6 +94,9 @@ export default {
     Footer
   },
   methods: {
+    submitAnswer() {
+      this.$router.replace("/requester-information")
+    },
     cancel() {
       console.log("ss");
       this.$router.go(0);
@@ -130,7 +133,17 @@ export default {
             alert("error");
           });
       } else if (form.formType == "layout") {
-        this.step = 3;
+        if(this.qtype=="ver6"){
+          this.step=4;
+          axios
+          .get("/api/task/find-by-id", { params: { id: this.taskId } })
+          .then(response => {
+            this.url = response.data.task.resourceLink;
+            console.log(this.url,"url")
+          });
+          
+        }
+        else this.step = 3;
       } else {
         this.$router.go(0)
       }
