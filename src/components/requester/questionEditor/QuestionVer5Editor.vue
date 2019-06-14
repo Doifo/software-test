@@ -1,17 +1,17 @@
 <template>
-  <div style>
+  <div style="padding: 20px; padding-top: 40px; padding-bottom: 40px; border: #efefef 2px solid">
     <el-row>
-      <el-col :span="16">
+      <el-col :span="13" :offset="1">
         <el-row>
           <el-col :span="20">
             <el-input v-if="isEditDesc" v-model="qtmp.desc"></el-input>
-            <div v-else style="font-size:20pt;word-wrap:break-word;padding-top:2pt">
+            <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
               <strong>{{qtmp.desc}}</strong>
             </div>
             <div style="margin-top: 45px; font-size: 16pt">
               <strong>语境:</strong>{{qtmp.context}}
             </div>
-            <div style="margin-top: 45px; font-size: 16pt">
+            <div style="margin-top: 25px; font-size: 16pt">
               <strong>意图:</strong>{{qtmp.intent}}
             </div>
           </el-col>
@@ -34,13 +34,15 @@
             >编辑</el-button>
           </el-col>
         </el-row>
-        <el-row style="margin-top: 45px">
+        <el-row style="margin-top: 30px">
           <el-col :span="20">
             <el-input
               placeholder="请输入内容"
               v-model="ansInput"
               clearable
               style="border: 0; border-bottom: 1px"
+              type="textarea"
+              :autosize="{ minRows: 3, maxRows: 3}"
             >
             </el-input>
           </el-col>
@@ -49,9 +51,11 @@
         <el-row style="margin-top: 20px">
         </el-row>
       </el-col>
-      <el-col :span="8" style="padding-left: 40px">
-        <div style="font-size: 16pt; text-align: left">
-          <strong>文本批量导入</strong>
+      <el-col :span="10" style="padding-left: 40px">
+        <el-col :span="20" style="text-align: left; font-size: 16pt">
+          <div style="font-size:16pt; margin-top:10px; text-align: left">
+            <strong>文本批量导入</strong>
+          </div>
           <div>
             <el-upload
               class="upload-demo"
@@ -71,8 +75,8 @@
             >
               <div
                 class="el_upload_tip"
-                style="font-size:14pt; margin-top:20px"
-              >请按模板格式上传utf-8格式的txt文件</div>
+                style="font-size:14pt; margin-top:10px"
+              >请按模板上传utf-8格式的txt文件</div>
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
             <div style="text-align: left; font-size: 16pt; margin-top: 10px">
@@ -89,11 +93,11 @@
             </div>
             <div style="text-align: left; margin-top: 10px">
               <a href="/static/label.txt" download="template.txt" style="text-align: left">
-                <el-button size="mini" style="color:#1471eb;margin-top:10px">模板下载</el-button>
+                <el-button size="mini" type="primary" style="padding: 5px; margin-top:10px" plain>模板下载</el-button>
               </a>
             </div>
           </div>
-        </div>
+        </el-col>
       </el-col>
     </el-row>
     <!-- <el-row>

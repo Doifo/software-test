@@ -1,10 +1,9 @@
 <template>
-  <div style="width:75%; margin:auto">
-    <h1 style="text-align:center">{{taskInfo.name}}</h1>
+  <div>
     <div
       v-for="(item,index) in showedQuestions"
       :key="index"
-      style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px"
+      style="margin-top:50px; border: #efefef 2px solid; padding:20px; padding-top:30px; border-radius:10px; background-color: white"
     >
       <component :is="qtype" :qtmp="item" :ref="index"></component>
     </div>
@@ -16,9 +15,6 @@
       :current-page.sync="curPage"
       @current-change="handleCurrentChange"
     ></el-pagination></p>
-    <div style="text-align:right; margin-top:20px">
-      <el-button type="primary" @click="submitAnswer">模拟提交</el-button>
-    </div>
   </div>
 </template>
 
@@ -40,7 +36,7 @@ export default {
       tmpList: [],
       ansList: [],
       taskInfo: {},
-      pageSize:5,
+      pageSize:2,
       curPage:1
     };
   },
@@ -112,6 +108,7 @@ export default {
         // console.log(response.data);
         this.qtype = "question" + "-" + response.data.task.type;
         this.taskInfo = response.data.task;
+        this.$emit("taskInfoLoaded",this.taskInfo);
         axios
           .get("/api/task/read-resource", { params: { taskId: this.tid } })
           .then(response => {
@@ -155,3 +152,11 @@ export default {
   }
 };
 </script>
+<style>
+  .el-scrollbar{
+    height:100%;
+  }
+  .el-scrollbar__wrap{
+    overflow-x: hidden;
+  }
+</style>

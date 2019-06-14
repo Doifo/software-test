@@ -1,6 +1,5 @@
 <template>
-  <div id="admin-task-detail">
-    
+  <div style="background-color: #efefef; margin: 0; padding: 0">
     <question-list-preview :tid="taskId"></question-list-preview>
   </div>
 </template>
@@ -12,7 +11,7 @@ export default {
   name: "AdminTaskDetail",
   data() {
     return {
-      taskId: parseInt(this.$route.params.id),
+      taskId: parseInt(this.$route.params.tid),
       taskDetail: {
         urls: [],
         opts: [],
