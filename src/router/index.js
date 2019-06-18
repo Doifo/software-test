@@ -6,12 +6,14 @@ import WorkerTask from '@/views/WorkerTask.vue'
 import WorkerInformation from '@/views/WorkerInformation.vue'
 import WorkerQualification from '@/views/WorkerQualification.vue'
 import WorkerTaskPlayground from '@/views/WorkerTaskPlayground.vue'
+import WorkerTransaction from '@/views/WorkerTransaction'
 
 import RequesterInformation from '@/views/RequesterInformation.vue'
 import RequesterEditProject from '@/views/RequesterEditProject.vue'
 import RequesterAnswer from '@/views/RequesterAnswer'
 import RequesterProjectList from '@/views/RequesterProjectList'
 import RequesterProjectPreview from '@/views/RequesterProjectPreview'
+import RequesterTransaction from '@/views/RequesterTransaction'
 
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
@@ -51,6 +53,11 @@ export default new Router({
       component:WorkerInformation
     },
     {
+      path:'/worker/transaction',
+      name:'WorkerTransaction',
+      component:WorkerTransaction
+    },
+    {
       path:'/worker/taskPlayground',
       name:"WorkerQualification",
       component:WorkerTaskPlayground
@@ -69,6 +76,11 @@ export default new Router({
       path:'/requester/project/preview/:tid',
       name:"RequesterInformation",
       component:RequesterProjectPreview
+    },
+    {
+      path:'/requester/transaction',
+      name:'RequesterTransaction',
+      component:RequesterTransaction
     },
     {
       path:'/',
