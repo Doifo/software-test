@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-row class="task-content-header">
-      <el-col :span="6">相关领域</el-col>
-      <el-col :span="6">标题</el-col>
+      <el-col :span="4">相关领域</el-col>
+      <el-col :span="4">标题</el-col>
       <el-col :span="3">
         数量
       </el-col>
       <el-col :span="3">
         奖励
       </el-col>
-      <el-col :span="3">
+      <el-col :span="6">
         创建时间
       </el-col>
       <el-col :span="3">操作</el-col>

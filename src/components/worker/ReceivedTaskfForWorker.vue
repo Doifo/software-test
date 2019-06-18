@@ -1,10 +1,12 @@
 <template>
   <div>
-    <div style="min-height:300px;">
+    <div style="min-height:540px">
       <el-table
         :data="showedTasks"
         style="width: 100%; background-color: white"
         type="flex"
+        stripe
+        border
         :header-cell-style="{background:'white'}"
       >
         <el-table-column prop="username" label="请求者"></el-table-column>
@@ -46,7 +48,7 @@ export default {
     return {
       // myTasks: [],
       theTasks: [],
-      pageSize:5,
+      pageSize:10,
       curPage:1,
 
     };

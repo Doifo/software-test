@@ -20,7 +20,7 @@
         <i class="el-icon-star-on"></i>
         <span slot="title">我的任务</span>
       </el-menu-item>
-      <el-menu-item index="4" style="color: white">
+      <el-menu-item index="/requester/transaction" style="color: white">
         <i class="el-icon-view"></i>
         <span slot="title">交易明细</span>
       </el-menu-item>

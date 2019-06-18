@@ -130,7 +130,6 @@
 </template>
 
 <script>
-import WorkerHeader from "@/components/WorkerHeader";
 import TaskForRequester from "@/components/requester/TaskForRequester";
 
 import CommonHeadNav from '@/components/public/CommonHeaderNav'

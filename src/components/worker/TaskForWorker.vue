@@ -1,15 +1,15 @@
 <template>
   <el-collapse-item >
     <template slot="title">
-      <el-row style="width:100%;padding-left:30px">
-        <el-col :span="6">
+      <el-row style="width:100%;padding-left:30px; font-size: 12pt">
+        <el-col :span="4">
           <!-- <i class="el-icon-circle-plus"></i>上海某公司 -->
           {{taskInfo.area || "无"}}
         </el-col>
-        <el-col :span="6">{{taskInfo.name}}</el-col>
+        <el-col :span="4">{{taskInfo.name}}</el-col>
         <el-col :span="3">{{minNumber}}</el-col>
         <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
-        <el-col :span="3">{{taskInfo.startTime}}</el-col>
+        <el-col :span="6" style="font-size: 14pt">{{taskInfo.startTime}}</el-col>
         <el-col :span="3">
           <el-button type="warning" @click.stop="confirmAdd">接受任务</el-button>
         </el-col>
