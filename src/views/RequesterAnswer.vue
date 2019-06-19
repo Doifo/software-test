@@ -20,8 +20,8 @@
                 v-bind:style="{background:opt.color}"
               >{{opt.content}}</li>
             </ul>
-            <h3>任务答案：</h3>
-            <el-button type="text" @click="exportAns">导出答案</el-button>
+            <h3>任务状态：</h3>
+            <p>{{taskStatus}}</p>
             <el-row v-for="(ansList, index) in answers" :key="index" style="margin-top: 15px; width: 60%">
               <el-row><strong style="font-size: 16pt">第{{index+1}}份数据集</strong></el-row>
               <el-row style="margin-top: 10px; font-size: 14pt">
@@ -30,11 +30,14 @@
                   <el-progress :text-inside="true" :stroke-width="26" :percentage="ansProgress[index]*100"></el-progress>
                 </el-col>
               </el-row>
-              <el-row style="margin-top: 10px; font-size: 14pt">
+              <el-row style="margin-top: 10px; font-size: 14pt" v-show="isFinished==true">
                 <el-col :span="3">准确率:</el-col>
                 <el-col :span="21">
-                  <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
+                  <el-progress :text-inside="true" :stroke-width="24" :percentage="parseInt(correctListRate[index]*100)" status="success"></el-progress>
                 </el-col>
+              </el-row>
+              <el-row>
+                <el-button type="text" @click="exportAns(index)">导出答案</el-button>
               </el-row>
             </el-row>
             <el-row style="margin-top: 15px; width: 60%">
@@ -45,11 +48,16 @@
                   <el-progress :text-inside="true" :stroke-width="26" :percentage="valProgress*100"></el-progress>
                 </el-col>
               </el-row>
-              <el-row style="margin-top: 10px; font-size: 14pt">
+              <el-row style="margin-top: 10px; font-size: 14pt" v-show="isFinished==true">
                 <el-col :span="3">准确率:</el-col>
                 <el-col :span="21">
                   <el-progress :text-inside="true" :stroke-width="24" :percentage="100" status="success"></el-progress>
                 </el-col>
+              </el-row>
+              <el-row>
+                <el-row>
+                  <el-button type="text" @click="exportAns(2)">导出答案</el-button>
+                </el-row>
               </el-row>
             </el-row>
           </div>
@@ -82,7 +90,10 @@ export default {
       type: "question-" + this.$route.params.type,
       answers: [],
       valList: [],
-      task: {}
+      correctListRate:[],
+      task: {},
+      isFinished:false,
+      taskInfo:{}
     };
   },
   components: {
@@ -119,14 +130,25 @@ export default {
         }
       }
       return rate=cnt/this.valList.length;
+    },
+    taskStatus(){
+      if(this.taskInfo.status==0){
+        return "答案收集中"
+      }
+      else if(this.taskInfo.status==1){
+        return "答案审核中"
+      }
+      else{
+        return "已完成"
+      }
     }
   },
   methods: {
-    exportAns() {
+    exportAns(index) {
       let params = new URLSearchParams();
       params.append("taskId", this.id);
       axios.post("/api/task/answer-file", params).then(response => {
-        axios.get("/api/task/answer-file?taskId=" + this.id).then(response => {
+        axios.get("/api/task/answer-file",{params:{taskId:this.id,no:index}}).then(response => {
           const content = response.data;
           const blob = new Blob([content]);
           const fileName = "data.txt";
@@ -147,6 +169,7 @@ export default {
       .get("/api/task/read-resource", { params: { taskId: this.id } })
       .then(response => {
         this.task = response.data;
+        console.log(this.task);
       });
     axios.get('/api/task/find-answer-by-id',{params:{taskId: this.id}})
       .then(response=>{
@@ -155,6 +178,20 @@ export default {
           this.answers.push(tem[i]);
         }
         this.valList=tem[tem.length-1];
+      });
+    axios.get('/api/task/correct-rate',{params:{taskId: this.id}})
+      .then(response=>{
+        if(response.data.code==200) {
+          this.correctListRate = response.data.correctRate;
+          this.isFinished=true;
+        }else {
+          this.isFinished=false
+        }
+      });
+    axios.get('/api/task/find-by-id',{params:{id: this.id}})
+      .then(response=>{
+        console.log("666");
+        this.taskInfo=response.data.task;
       })
   }
 };

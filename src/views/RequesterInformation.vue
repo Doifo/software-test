@@ -8,34 +8,41 @@
         <el-aside style="padding: 0; width: 10%">
           <RequesterAsideNav/>
         </el-aside>
-        <el-main style="background-color: #efefef; padding-left: 0; padding-right: 0;  padding-top: 150px; padding-bottom: 150px">
+        <el-main style="background-color: #efefef; padding-left: 0; padding-right: 0;  padding-top: 50px; padding-bottom: 50px">
 
-          <el-row style="background-color: white; padding: 20px">
-            <el-col :span="20" :offset="4">
+          <el-row style="padding: 20px">
+            <el-col :span="18" :offset="3">
               <el-row id="information" v-show="!change">
-                <el-col :span="12">
+                <div v-show="!change" style="background-color:white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+                  <!--              <p>-->
+                  <!--                <span class="label-span">用户名：</span>-->
+                  <!--                <span class="text-span">{{userInfor.username}}</span>-->
+                  <!--              </p>-->
+                  <p>
+                    <span class="label-span">昵称：</span>
+                    <span class="text-span">{{userInfor.username}}</span>
+                  </p>
                   <p>
                     <span class="label-span">用户ID：</span>
                     <span class="text-span">{{userInfor.requesterId}}</span>
                   </p>
                   <p>
-                    <span class="label-span">用户名：</span>
-                    <span class="text-span">{{userInfor.username}}</span>
+                    <span class="label-span">账户余额：</span>
+                    <span class="text-span">￥{{userInfor.balance}}</span>
                   </p>
+
+
+                  <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
+                </div>
+                <div v-show="!change" style="background-color:white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+                  <!--              <p>-->
+                  <!--                <span class="label-span">用户名：</span>-->
+                  <!--                <span class="text-span">{{userInfor.username}}</span>-->
+                  <!--              </p>-->
                   <p>
-                    <span class="label-span">电话号码：</span>
-                    <span class="text-span">{{userInfor.teleNumber}}</span>
+                    <span class="label-span">姓名：</span>
+                    <span class="text-span">{{userInfor.name}}</span>
                   </p>
-                  <p>
-                    <span class="label-span">机构名称：</span>
-                    <span class="text-span">{{userInfor.institutionName}}</span>
-                  </p>
-                  <p>
-                    <span class="label-span">支付方式：</span>
-                    <span class="text-span">{{userInfor.payMethod}}</span>
-                  </p>
-                </el-col>
-                <el-col :span="12">
                   <p>
                     <span class="label-span">性别：</span>
                     <span class="text-span">{{userInfor.gender}}</span>
@@ -44,19 +51,78 @@
                     <span class="label-span">年龄：</span>
                     <span class="text-span">{{userInfor.age}}</span>
                   </p>
+
+
+                  <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
+                </div>
+                <div v-show="!change" style="background-color: white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
                   <p>
-                    <span class="label-span">联系地址：</span>
-                    <span class="text-span">{{userInfor.address}}</span>
+                    <span class="label-span">电话号码：</span>
+                    <span class="text-span">{{userInfor.teleNumber}}</span>
                   </p>
                   <p>
                     <span class="label-span">邮箱：</span>
                     <span class="text-span">{{userInfor.email}}</span>
                   </p>
                   <p>
-                    <span class="label-span">账户余额：</span>
-                    <span class="text-span">￥ {{userInfor.balance}}</span>
+                    <span class="label-span">支付方式：</span>
+                    <span class="text-span">{{userInfor.payMethod}}</span>
                   </p>
-                </el-col>
+                </div>
+                <div v-show="!change" style="background-color: white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+                  <p>
+                    <span class="label-span">机构名称：</span>
+                    <span class="text-span">{{userInfor.institutionName}}</span>
+                  </p>
+                  <p>
+                    <span class="label-span">联系地址：</span>
+                    <span class="text-span">{{userInfor.address}}</span>
+                  </p>
+                </div>
+<!--                <el-col :span="12">-->
+<!--                  <p>-->
+<!--                    <span class="label-span">用户ID：</span>-->
+<!--                    <span class="text-span">{{userInfor.requesterId}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">用户名：</span>-->
+<!--                    <span class="text-span">{{userInfor.username}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">电话号码：</span>-->
+<!--                    <span class="text-span">{{userInfor.teleNumber}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">机构名称：</span>-->
+<!--                    <span class="text-span">{{userInfor.institutionName}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">支付方式：</span>-->
+<!--                    <span class="text-span">{{userInfor.payMethod}}</span>-->
+<!--                  </p>-->
+<!--                </el-col>-->
+<!--                <el-col :span="12">-->
+<!--                  <p>-->
+<!--                    <span class="label-span">性别：</span>-->
+<!--                    <span class="text-span">{{userInfor.gender}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">年龄：</span>-->
+<!--                    <span class="text-span">{{userInfor.age}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">联系地址：</span>-->
+<!--                    <span class="text-span">{{userInfor.address}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">邮箱：</span>-->
+<!--                    <span class="text-span">{{userInfor.email}}</span>-->
+<!--                  </p>-->
+<!--                  <p>-->
+<!--                    <span class="label-span">账户余额：</span>-->
+<!--                    <span class="text-span">￥ {{userInfor.balance}}</span>-->
+<!--                  </p>-->
+<!--                </el-col>-->
               </el-row>
 
               <el-form v-show="change" :label-position="'left'" label-width="80px">
@@ -96,7 +162,7 @@
 
               <el-row>
                 <el-col :span="4" :offset="8">
-                  <el-button type="primary" @click="changeInfor" style="margin:0 auto;">修改</el-button>
+<!--                  <el-button type="primary" @click="changeInfor" style="margin:0 auto;">修改</el-button>-->
                 </el-col>
               </el-row>
             </el-col>

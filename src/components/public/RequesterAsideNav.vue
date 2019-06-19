@@ -4,8 +4,6 @@
       default-active="2"
       class="el-menu-vertical-demo"
       background-color="#34495e"
-      @open="handleOpen"
-      @close="handleClose"
       router
     >
       <el-menu-item index="/requester/information" style="color: white">
@@ -36,12 +34,6 @@
   export default {
     name: "RequesterAsideNav",
     methods:{
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
     }
   }
 </script>

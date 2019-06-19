@@ -7,6 +7,7 @@ import WorkerInformation from '@/views/WorkerInformation.vue'
 import WorkerQualification from '@/views/WorkerQualification.vue'
 import WorkerTaskPlayground from '@/views/WorkerTaskPlayground.vue'
 import WorkerTransaction from '@/views/WorkerTransaction'
+import QuestionListForWorker from '@/components/worker/QuestionListForWorker'
 
 import RequesterInformation from '@/views/RequesterInformation.vue'
 import RequesterEditProject from '@/views/RequesterEditProject.vue'
@@ -14,6 +15,7 @@ import RequesterAnswer from '@/views/RequesterAnswer'
 import RequesterProjectList from '@/views/RequesterProjectList'
 import RequesterProjectPreview from '@/views/RequesterProjectPreview'
 import RequesterTransaction from '@/views/RequesterTransaction'
+
 
 import AdminTask from '@/views/AdminTask'
 import AdminTaskDetail from '@/views/AdminTaskDetail'
@@ -25,7 +27,7 @@ import Register from '@/views/Register'
 
 
 
-import WQList from '@/components/worker/QuestionListForWorker'
+
 import HelloWorld from '@/components/HelloWorld'
 
 
@@ -121,7 +123,7 @@ export default new Router({
     },
     {
       path:'/worker/task/answer',
-      component:WQList
+      component:QuestionListForWorker
     },
     {
       path:'/requester-answer/:id/:type',
