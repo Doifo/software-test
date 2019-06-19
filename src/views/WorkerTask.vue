@@ -8,7 +8,7 @@
         <el-aside style="width: 10%; padding: 0">
           <WorkerAsideNav/>
         </el-aside>
-        <el-main style="padding: 30px; background-color: #efefef">
+        <el-main style="padding: 30px; background-color: #efefef; padding-top: 50px; padding-bottom: 50px">
           <div style="width: 75%; float: left; background-color: white; border-radius: 5px">
             <div v-show="tabState==='unfinished'">
               <worker-my-task :tasks='myTasksUnfinished'></worker-my-task>

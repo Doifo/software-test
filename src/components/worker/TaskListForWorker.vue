@@ -17,7 +17,7 @@
     <el-collapse style="min-height:250px;border-bottom:none;height: 450px">
       <task-for-worker v-for="item in showedList" :key="item.id" :taskInfo="item" style="margin-top: 10px; padding-bottom: 10px"></task-for-worker>
     </el-collapse>
-    <div class="pages" style="padding: 20px">
+    <div class="pages" style="padding: 0px">
       <el-pagination
         background
         layout="prev, pager, next"

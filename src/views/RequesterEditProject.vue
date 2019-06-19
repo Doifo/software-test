@@ -33,11 +33,11 @@
                 </p>
               </el-col>
 
-              <el-col :span="2" :offset="8">
-                <p @click="cancel" style="color:#5a9ef7;font-size:20px;margin-top:50px;cursor:pointer">
-                  <strong>取消创建</strong>
-                </p>
-              </el-col>
+<!--              <el-col :span="2" :offset="8">-->
+<!--                <p @click="cancel" style="color:#5a9ef7;font-size:20px;margin-top:50px;cursor:pointer">-->
+<!--                  <strong>取消创建</strong>-->
+<!--                </p>-->
+<!--              </el-col>-->
             </el-row>
             <project-templates-choose @submitForm="handleSubmitForm" v-if="step===0"></project-templates-choose>
             <project-base-info-edit @submitForm="handleSubmitForm" v-if="step===1"></project-base-info-edit>

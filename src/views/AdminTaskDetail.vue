@@ -1,17 +1,25 @@
 <template>
-  <div style="background-color: #efefef; margin: 0; padding: 0">
-    <question-list-preview :tid="taskId"></question-list-preview>
+  <div style="background-color: #efefef">
+    <common-head-nav style="width: 100%"></common-head-nav>
+    <div style="background-color: #efefef; padding: 0; width: 45%; padding-left: 400px">
+      <div  style="padding-top: 50px">
+        <question-list-preview :tid="taskId"></question-list-preview>
+      </div>
+    </div>
+    <Footer style="width: 100%"></Footer>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import QuestionListPreview from '@/components/requester/projectEditor/QuestionListPreview'
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import Footer from '@/components/public/Footer'
 export default {
   name: "AdminTaskDetail",
   data() {
     return {
-      taskId: parseInt(this.$route.params.tid),
+      taskId: parseInt(this.$route.params.id),
       taskDetail: {
         urls: [],
         opts: [],
@@ -21,10 +29,13 @@ export default {
     };
   },
   components:{
-    QuestionListPreview
+    QuestionListPreview,
+    CommonHeadNav,
+    Footer
   },
   mounted() {
     alert("mounted");
+    alert(taskId);
   }
 };
 </script>

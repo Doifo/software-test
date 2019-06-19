@@ -4,8 +4,6 @@
       default-active="2"
       class="el-menu-vertical-demo"
       background-color="#34495e"
-      @open="handleOpen"
-      @close="handleClose"
       router
     >
       <el-menu-item index="/worker/information" style="color: white">
@@ -13,7 +11,7 @@
         <span slot="title">个人中心</span>
       </el-menu-item>
       <el-menu-item index="/worker/taskPlayground" style="color: white">
-        <i class="el-icon-star-on"></i>
+        <i class="el-icon-goods"></i>
         <span slot="title">任务广场</span>
       </el-menu-item>
       <el-menu-item index="/worker/task" style="color: white">

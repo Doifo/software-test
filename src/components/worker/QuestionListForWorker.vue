@@ -12,9 +12,10 @@
           <el-col :span="16" style="margin-left: 40px" >
             <div style="width: 100%; margin: auto">
               <div
-                v-for="(item,index) in showedList"
+                v-for="(item,index) in tmpList"
                 :key="index"
                 style="margin-top:50px; padding:20px; border-radius:10px; background-color: white; padding-top: 40px"
+                v-show="shoudShow(index)"
               >
                 <component :is="qtype" :qtmp="item" :ref="index"></component>
               </div>
@@ -45,7 +46,7 @@
                   <strong>项目名称</strong>
                 </el-col>
                 <el-col :span="10" style="font-size: 16pt; text-align: right">
-                  {{taskInfo.name}}
+                  {{mainTaskInfo.name}}
                 </el-col>
               </el-row>
               <el-row style="margin-top: 15px">
@@ -53,7 +54,7 @@
                   <strong>请求机构</strong>
                 </el-col>
                 <el-col :span="10" style="font-size: 16pt; text-align: right">
-                  {{taskInfo.institutionName}}
+                  {{mainTaskInfo.institutionName}}
                 </el-col>
               </el-row>
             </el-row>
@@ -63,12 +64,12 @@
                   <strong>涉及领域</strong>
                 </el-col>
                 <el-col :span="10" style="font-size: 16pt; text-align: right">
-                  {{taskInfo.area}}
+                  {{mainTaskInfo.area}}
                 </el-col>
               </el-row>
               <el-row style="margin-top: 15px">
                 <strong style="font-size: 16pt">任务描述</strong>
-                <el-input type="textarea" style="margin-top: 15px;" :autosize="{ minRows: 2, maxRows: 2}"  v-model="taskInfo.description" readonly></el-input>
+                <el-input type="textarea" style="margin-top: 15px;" :autosize="{ minRows: 2, maxRows: 2}"  v-model="mainTaskInfo.description" readonly></el-input>
 
               </el-row>
             </el-row>
@@ -78,7 +79,7 @@
                   <strong>每题奖励</strong>
                 </el-col>
                 <el-col :span="10" style="font-size: 16pt; text-align: right">
-                  ￥{{taskInfo.reward}}
+                  ￥{{mainTaskInfo.reward}}
                 </el-col>
               </el-row>
               <el-row style="margin-top: 15px">
@@ -86,7 +87,7 @@
                   <strong>题目总数</strong>
                 </el-col>
                 <el-col :span="10" style="font-size: 16pt; text-align: right">
-                  {{taskInfo.numberOfQuestions}}
+                  {{mainTaskInfo.numberOfQuestions}}
                 </el-col>
               </el-row>
               <el-row style="margin-top: 15px">
@@ -94,7 +95,7 @@
                   <strong>截止时间</strong>
                 </el-col>
                 <el-col :span="12" style="font-size: 12pt; text-align: right">
-                  {{taskInfo.endTime}}
+                  {{mainTaskInfo.endTime}}
                 </el-col>
               </el-row>
             </el-row>
@@ -136,6 +137,8 @@ export default {
       taskInfo: {},
       pageSize:2,
       curPage:1,
+      judgeList:[],
+      mainTaskInfo:{}
     };
   },
   components: {
@@ -161,6 +164,13 @@ export default {
     }
   },
   methods: {
+    shoudShow(index){
+      let fst=(this.curPage-1)*this.pageSize;
+      let lst=this.curPage*this.pageSize;
+      return index >= fst && index < lst;
+
+
+    },
     handleCurrentChange(val){
       this.curPage = val;
     },
@@ -214,6 +224,9 @@ export default {
                 for (let i = 0; i < num.value; ++i) {
                   let tem = this.$refs[i][0].getAns();
                   this.ansList.push(tem);
+                  if(this.taskInfo.type != 0){
+                    this.judgeList.push(this.$refs[i][0].getJudges())
+                  }
                 }
                 let date = new Date();
                 let dateStr = this.dateToString(date);
@@ -227,6 +240,9 @@ export default {
                   "endAt",
                   parseInt(this.taskInfo.nowBegin) + parseInt(num.value - 1)
                 );
+                if(this.taskInfo.type != 0){
+                  para.append("isCorrect",JSON.stringify(this.judgeList))
+                }
                 console.log(
                   this.taskInfo.taskId,
                   dateStr,
@@ -235,16 +251,18 @@ export default {
                   this.taskInfo.nowBegin,
                   parseInt(this.taskInfo.nowBegin) + parseInt(num.value - 1)
                 );
+                alert("OK");
                 axios
                   .post("/api/answer/update", para)
                   .then(response => {
                     alert("提交成功");
-                    this.$router.push("/worker-task");
+                    this.$router.push("/worker/task");
                     console.log(response.data);
                   })
                   .catch(response => {
                     alert("error");
                   });
+
               })
               .catch(() => {
                 console.log("cancel");
@@ -272,10 +290,18 @@ export default {
       .then(response => {
         this.taskInfo = response.data.Subtask;
         console.log(this.taskInfo);
+
+        axios
+          .get("/api/task/find-by-id", { params: {id:this.taskInfo.taskId} })
+          .then(response=>{
+            console.log("66666");
+            console.log(response.data);
+            this.mainTaskInfo=response.data.task;
+          });
+
         if (this.taskInfo.type == 0) {
           //普通的答题任务
           this.qtype = "question" + "-" + response.data.Subtask.taskType;
-          alert("OK");
           axios
             .get("/api/sub-task/read-subtask-resource", {
               params: { subtaskId: stid }
@@ -366,7 +392,7 @@ export default {
                     //alert(ansList.length);
                     for (let k = 0; k < ansList.length; ++k) {
                       tmp.prevAnsList.push(ansList[k][i]);
-                      tmp.acList.push(0);
+                      tmp.acList.push(1);
                     }
                     this.tmpList.push(tmp);
                   }

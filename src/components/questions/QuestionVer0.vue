@@ -1,9 +1,9 @@
 <template>
-  <div style="width:75%; margin:auto">
+  <div style="margin:auto">
     <div
       v-for="(ans,index) in qtmp.prevAnsList"
       :key="index"
-      style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px"
+      style="margin-bottom:50px; border:#efefef 4px solid; padding:20px; border-radius:10px"
     >
       <h2>第{{index+1}}份参考答案</h2>
       <component :is="qtmp.qtype" :qtmp="qtmp.baseTmp" :ref="index" :prevAns="ans"></component>
@@ -19,7 +19,7 @@
         </el-col>
       </el-row>
     </div>
-    <div style="margin-top:50px; border:blue 1px solid; padding:20px; border-radius:10px">
+    <div style="margin-top:50px; border:#efefef 4px solid; padding:20px; border-radius:10px">
       <h2>你的答案</h2>
       <component :is="qtmp.qtype" :qtmp="qtmp.baseTmp" ref="qta"></component>
       <el-button @click="getAns">测试</el-button>
@@ -48,7 +48,8 @@ export default {
       tmpList: [],
       ansList: [],
       tfList: [],
-      taskInfo: {}
+      taskInfo: {},
+      judgeList:[]
     };
   },
   components: {
@@ -109,13 +110,16 @@ export default {
       console.log(tem);
       return tem;
     },
+    getJudges(){
+      return this.qtmp.acList;
+    },
     test(){
       axios.get('/api/answer/find-my-answer').then(response=>{
         console.log(response.data);
       }).catch(response=>{
         alert('error');
       })
-    }
+    },
   },
   mounted() {
     //console.log(this.qtmp);

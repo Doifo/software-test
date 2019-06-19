@@ -9,7 +9,7 @@
         <el-aside style="width: 10%; padding: 0">
           <WorkerAsideNav/>
         </el-aside>
-        <el-main style="padding: 0; background-color: #efefef">
+        <el-main style="padding: 0; background-color: #efefef; padding-bottom: 40px">
           <div style="width:70%;margin:0 auto; margin-top:50px;">
             <div style="background:white;border:1px solid #ccc;padding-left:20px;">
               <p>
@@ -25,23 +25,44 @@
               </p>
             </div>
 
-            <div id="information" v-show="!change" style="background:white;border:1px solid #ccc;padding-left:20px; margin-top: 15px; margin-bottom: 40px">
-              <p>
-                <span class="label-span">用户名：</span>
-                <span class="text-span">{{userInfor.username}}</span>
-              </p>
+            <div id="information" v-show="!change" style="background-color:white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+<!--              <p>-->
+<!--                <span class="label-span">用户名：</span>-->
+<!--                <span class="text-span">{{userInfor.username}}</span>-->
+<!--              </p>-->
               <p>
                 <span class="label-span">姓名：</span>
                 <span class="text-span">{{userInfor.name}}</span>
               </p>
               <p>
-                <span class="label-span">提现方式：</span>
-                <span class="text-span">{{userInfor.withdrawnMethod}}</span>
+                <span class="label-span">性别：</span>
+                <span class="text-span">{{userInfor.gender}}</span>
               </p>
+              <p>
+                <span class="label-span">年龄：</span>
+                <span class="text-span">{{userInfor.age}}</span>
+              </p>
+
+
+              <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
+            </div>
+
+            <div v-show="!change" style="background-color: white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
               <p>
                 <span class="label-span">电话号码：</span>
                 <span class="text-span">{{userInfor.teleNumber}}</span>
               </p>
+              <p>
+                <span class="label-span">邮箱：</span>
+                <span class="text-span">{{userInfor.email}}</span>
+              </p>
+              <p>
+                <span class="label-span">提现方式：</span>
+                <span class="text-span">{{userInfor.withdrawnMethod}}</span>
+              </p>
+            </div>
+
+            <div v-show="!change" style="background-color:white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
               <p>
                 <span class="label-span">专业：</span>
                 <span class="text-span">{{userInfor.major}}</span>
@@ -54,25 +75,13 @@
                 <span class="label-span">擅长领域：</span>
                 <span class="text-span" v-for="area in areas" :key="area">{{area}}&nbsp;&nbsp;&nbsp;</span>
               </p>
-              <p>
-                <span class="label-span">性别：</span>
-                <span class="text-span">{{userInfor.gender}}</span>
-              </p>
-              <p>
-                <span class="label-span">年龄：</span>
-                <span class="text-span">{{userInfor.age}}</span>
-              </p>
+
               <p>
                 <span class="label-span">所属机构：</span>
                 <span class="text-span">{{userInfor.institution}}</span>
               </p>
-              <p>
-                <span class="label-span">邮箱：</span>
-                <span class="text-span">{{userInfor.email}}</span>
-              </p>
-
-              <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
             </div>
+
             <el-form v-show="change" :label-position="'left'" label-width="80px">
               <el-form-item label="用户名">
                 <el-input v-model="userInfor.username"></el-input>

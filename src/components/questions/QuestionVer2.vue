@@ -98,6 +98,25 @@ export default {
       console.log(this.rectCollection);
     },
     getAns() {
+      // let norm=[];
+      // for (let i = 0; i < this.rectCollection.length; ++i){
+      //   norm.push([]);
+      // }
+      // for (let i = 0; i < this.rectCollection.length; ++i) {
+      //   // let w = this.endPoints[i].x - this.startPoints[i].x;
+      //   // let h = this.endPoints[i].y - this.startPoints[i].y;
+      //   let tem = this.rectCollection[i];
+      //   for (let j = 0; j < tem.length; ++j) {
+      //     //ctx.strokeStyle = this.qtmp.opts[i].color;
+      //     norm[i][j].x=tem[j].x/256;
+      //     norm[i][j].y=tem[j].y/256;
+      //     norm[i][j].w=tem[j].w/256;
+      //     norm[i][j].h=tem[j].h/256;
+      //   }
+      //   // this.$refs.myCanvas
+      //   //   .getContext("2d")
+      //   //   .strokeRect(this.startPoints[i].x, this.startPoints[i].y, w, h);
+      // }
       let tem = {
         index: this.qtmp.index,
         ans: this.rectCollection
