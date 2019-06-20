@@ -58,7 +58,7 @@
               >批量导入文本,请上传utf-8编码的txt文件</div>
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
-            <a href="/static/label.txt" download="template.txt">
+            <a href="/static/template2.txt" download="template.txt">
               <el-button size="mini" type="primary" plain style="padding: 5px; margin-left:118px;margin-top:10px">模板下载</el-button>
             </a>
           </div>

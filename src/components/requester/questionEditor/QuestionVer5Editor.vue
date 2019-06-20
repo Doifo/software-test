@@ -92,7 +92,7 @@
               <strong>index: </strong>题号（对应用）
             </div>
             <div style="text-align: left; margin-top: 10px">
-              <a href="/static/label.txt" download="template.txt" style="text-align: left">
+              <a href="/static/template1.txt" download="template.txt" style="text-align: left">
                 <el-button size="mini" type="primary" style="padding: 5px; margin-top:10px" plain>模板下载</el-button>
               </a>
             </div>

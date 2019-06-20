@@ -43,7 +43,7 @@
                       <span style="font-size:16pt; margin-top:15px">{{item.content}}</span>
                     </el-radio-button>
                   </el-col>
-                  <el-col :span="2" :offset="3 "style="margin-top: 7px">
+                  <el-col :span="2" :offset="3" style="margin-top: 7px">
                     <el-color-picker v-model="item.color"></el-color-picker>
                   </el-col>
                   <el-col :span="3" :offset="2" style="margin-top: 5px">
@@ -117,7 +117,7 @@
               </div>
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
-            <a href="/static/label.txt" download="template.txt">
+            <a href="/static/template3.txt" download="template.txt">
               <el-button size="mini" type="primary" style="margin-left:87px;margin-top:10px; padding: 5px" plain>模板下载</el-button>
             </a>
           </el-col>

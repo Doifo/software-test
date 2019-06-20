@@ -121,7 +121,7 @@
               </div>
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
-            <a href="/static/label.txt" download="template.txt">
+            <a href="/static/template3.txt" download="template.txt">
               <el-button size="mini" type="primary" style=";margin-left:87px;margin-top:10px; padding: 5px" plain>模板下载</el-button>
             </a>
           </el-col>

@@ -261,10 +261,15 @@ export default {
     };
   },
   watch: {
-    min_age(val) {
-      if (this.max_age < val) {
-        this.max_age = val;
+    formMinAge(val) {
+      if (this.form.max_age < val) {
+        this.form.max_age = val;
       }
+    }
+  },
+  computed:{
+    formMinAge(){
+      return this.form.min_age
     }
   },
   methods: {
