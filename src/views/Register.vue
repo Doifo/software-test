@@ -203,7 +203,12 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            max: 10,
+            message: "长度不大于10",
+            trigger: "blur"
+          }
         ],
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
@@ -225,7 +230,12 @@ export default {
           { required: true, message: "请重复密码", trigger: "blur" }
         ],
         name: [
-          { required: true, message: "请输入您的真实姓名", trigger: "blur" }
+          { required: true, message: "请输入您的真实姓名", trigger: "blur" },
+          {
+            max: 10,
+            message: "长度不大于10",
+            trigger: "blur"
+          }
         ],
         teleNumber: [
           { required: true, message: "请输入您的手机号码", trigger: "blur" },
