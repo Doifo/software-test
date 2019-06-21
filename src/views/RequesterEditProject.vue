@@ -51,6 +51,13 @@
               style="padding: 15px"
             ></project-layout-edit>
             <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step===3"></project-preview>
+
+            <div v-if="step==4" style="text-align:center">
+              <p>请点击下面的链接完成问卷</p>
+              <p><a :href="url">调查问卷</a></p>
+              <el-button type="primary" @click="reFresh()">完成</el-button>
+            </div>
+
           </div>
         </el-main>
       </el-container>
@@ -94,6 +101,9 @@ export default {
     Footer
   },
   methods: {
+    reFresh(){
+      this.$router.push("/requester/project/edit")
+    },
     submitAnswer() {
       this.$router.replace("/requester-information")
     },
@@ -120,8 +130,26 @@ export default {
           para.append(key, form.para[key]);
         }
         para.append("type", this.qtype);
-        
-        axios
+
+        console.log(this.qtype,"type")
+
+        if(this.qtype=="ver6"){
+          para.append("numberOfQuestions","1");
+          axios
+          .post("/api/task/add-questionnaire", para)
+          .then(response => {
+            alert("提交成功");
+            this.taskId = response.data.taskId;
+            console.log(response)
+            alert("该项目被分配到的taskId为" + this.taskId);
+          })
+          .catch(response => {
+            alert("error");
+          });
+          console.log("questionnaire added")
+        }
+        else{
+          axios
           .post("/api/task/add", para)
           .then(response => {
             alert("提交成功");
@@ -132,6 +160,8 @@ export default {
           .catch(response => {
             alert("error");
           });
+        }
+        
       } else if (form.formType == "layout") {
         if(this.qtype=="ver6"){
           this.step=4;
