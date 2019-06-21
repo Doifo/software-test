@@ -13,5 +13,6 @@
 <style scoped>
   #footer{
     background: url("https://cdn.luogu.org/fe/footer-bg.png?c32d69c2308cb4267b8bd6fafadddd32");
+    
   }
 </style>

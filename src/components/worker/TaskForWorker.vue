@@ -21,6 +21,7 @@
         <el-col :span="8">过期时间：{{taskInfo.endTime}}</el-col>
         <el-col :span="8">资格要求：{{taskInfo.restrictions}}</el-col>
       </el-row>
+      <p>问卷类型：{{statusComp}}</p>
       <p>描述：{{taskInfo.description}}</p>
     </div>
   </el-collapse-item>
@@ -50,6 +51,17 @@ export default {
       // }
       minNumber: 0
     };
+  },
+  computed:{
+    statusComp(){
+      if(this.taskInfo.status == 0){
+        return "普通问卷"
+      }else if(this.taskInfo.status == 1){
+        return "审核问卷"
+      }else{
+        return "未知问卷"
+      }
+    }
   },
   methods: {
     confirmAdd() {

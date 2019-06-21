@@ -65,7 +65,7 @@ export default new Router({
       component:WorkerTaskPlayground
     },
     {
-      path:'/worker-qualification',
+      path:'/worker/qualification',
       name:"WorkerQualification",
       component:WorkerQualification
     },

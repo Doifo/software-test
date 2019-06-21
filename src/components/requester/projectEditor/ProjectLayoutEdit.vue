@@ -2,7 +2,7 @@
   <div style="width:75%;margin:auto">
 
     <el-row style="padding: 20px; padding-top: 0">
-      <el-col :span="8" offset="8">
+      <el-col :span="8" :offset="8">
         <strong style="color: #5a9ef7; font-size: 20pt">编辑问题模板的布局</strong>
       </el-col>
     </el-row>
