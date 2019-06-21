@@ -1,193 +1,175 @@
 <template>
   <div>
-    <el-row
-      style="border-bottom:1px solid #ccc;display:flex;flex-direction:row;align-items:center;"
-    >
-      <el-col :span="4">
-        <div>
-          <p
-            style="font-size:30px;font-weight:bold;color:rgb(59,94,135);text-align:right;padding-right:20px;border-right:1.5px solid #ccc;"
-          >众包平台</p>
-        </div>
-      </el-col>
 
-      <el-col :span="10">
-        <div>
-          <p style="font-size:18px;padding-left:20px;">注册账号</p>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <div>
-          <p style="font-size:14px;text-align:right;padding-right:15px;">我已注册，现在就</p>
-        </div>
-      </el-col>
-      <el-col :span="4">
-        <router-link to="/login">
-          <el-button>登录</el-button>
-        </router-link>
-      </el-col>
-    </el-row>
-
-    <el-row>
-      <el-col :span="14" style="padding-top:50px;padding-right:30px;padding-left:90px">
-        <template>
-          <el-form label-width="80px" :model="formData" :rules="rules" ref="login">
-            <el-form-item label="身份">
-              <el-select v-model="formData.status" placeholder="请选择身份" style="width:80%;">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="用户名" prop="username">
-              <el-input v-model="formData.username" placeholder="请输入用户名" style="width:80%"></el-input>
-            </el-form-item>
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="formData.email" placeholder="请输入邮箱" style="width:80%"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-              <el-input
-                v-model="formData.password"
-                placeholder="请输入密码"
-                style="width:80%"
-                type="password"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="re_password">
-              <el-input
-                v-model="formData.re_password"
-                placeholder="请重复输入密码"
-                style="width:80%"
-                type="password"
-              ></el-input>
-            </el-form-item>
-            <el-form-item label="手机号码" prop="teleNumber">
-              <el-input v-model="formData.teleNumber" placeholder="请输入您的手机号码" style="width:80%"></el-input>
-            </el-form-item>
-            <el-form-item label="年龄" prop="age">
-              <el-input v-model="formData.age" placeholder="请输入您的年龄" style="width:80%"></el-input>
-            </el-form-item>
-            <el-form-item label="性别" prop="gender">
-              <el-select v-model="formData.gender">
-                <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="姓名" prop="name">
-              <el-input v-model="formData.name" placeholder="请输入真实姓名" style="width:80%"></el-input>
-            </el-form-item>
-
-
-            <div v-if="worker">
-              <el-form-item label="学历" prop="workerReg.education">
-                <el-select v-model="formData.workerReg.education">
-                  <el-option v-for="education in educations" :key="education" :value="education"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="提现方式" prop="workerReg.withdrawnMethod">
-                <el-select v-model="formData.workerReg.withdrawnMethod">
-                  <el-option v-for="method in methods" :key="method" :value="method"></el-option>
-                </el-select>
-              </el-form-item>
-              <el-form-item label="专业" prop="workerReg.major">
-                <el-input
-                  v-model="formData.workerReg.major"
-                  placeholder="请输入您的专业"
-                  style="width:80%"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="所属机构" prop="workerReg.institution">
-                <el-input
-                  v-model="formData.workerReg.institution"
-                  placeholder="请输入您的所属机构"
-                  style="width:80%"
-                ></el-input>
-              </el-form-item>
-              <el-form-item label="擅长领域" prop="workerReg.workArea">
-                <el-select v-model="formData.workerReg.workArea[1]">
-                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
-                </el-select>
-                <el-select v-model="formData.workerReg.workArea[2]">
-                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
-                </el-select>
-                <el-select v-model="formData.workerReg.workArea[3]">
-                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
-                </el-select>
-              </el-form-item>
-              <!-- <el-select v-model="formData.workerReg.major2">
+    <HomePageNav/>
+    <el-row style="background-color: #efefef">
+      <el-col :offset="2" :span="20" style="background-color: white">
+        <el-col :span="14" style="padding-top:50px;padding-right:30px;padding-left:90px">
+          <template>
+            <el-form label-width="80px" :model="formData" :rules="rules" ref="login">
+              <el-form-item label="身份">
+                <el-select v-model="formData.status" placeholder="请选择身份" style="width:80%;">
                   <el-option
-                    v-for="major in filterMajor"
-                    :key="major"
-                    :value="major"
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
                   ></el-option>
                 </el-select>
-                <el-select v-model="formData.workerReg.major3">
-                  <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
-                </el-select> -->
-            </div>
-
-
-            <div v-if="requester">
-              
-              <el-form-item label="机构" prop="requesterReg.institutionName">
+              </el-form-item>
+              <el-form-item label="用户名" prop="username">
+                <el-input v-model="formData.username" placeholder="请输入用户名" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="邮箱" prop="email">
+                <el-input v-model="formData.email" placeholder="请输入邮箱" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="密码" prop="password">
                 <el-input
-                  v-model="formData.requesterReg.institutionName"
-                  placeholder="请输入您的所在机构"
+                  v-model="formData.password"
+                  placeholder="请输入密码"
                   style="width:80%"
+                  type="password"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="地址" prop="requesterReg.address">
+              <el-form-item label="确认密码" prop="re_password">
                 <el-input
-                  v-model="formData.requesterReg.address"
-                  placeholder="请输入您的住址"
+                  v-model="formData.re_password"
+                  placeholder="请重复输入密码"
                   style="width:80%"
+                  type="password"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="支付方式" prop="requesterReg.payMethod">
-                <el-select v-model="formData.requesterReg.payMethod">
-                  <el-option v-for="method in methods" :key="method" :value="method"></el-option>
+              <el-form-item label="手机号码" prop="teleNumber">
+                <el-input v-model="formData.teleNumber" placeholder="请输入您的手机号码" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="年龄" prop="age">
+                <el-input v-model="formData.age" placeholder="请输入您的年龄" style="width:80%"></el-input>
+              </el-form-item>
+              <el-form-item label="性别" prop="gender">
+                <el-select v-model="formData.gender">
+                  <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
                 </el-select>
               </el-form-item>
-            </div>
-            <el-form-item>
-              <el-button
-                style="width:300px;"
-                type="primary"
-                v-show="worker"
-                @click="submitWorker"
-              >注册</el-button>
-              <el-button
-                style="width:300px;display:inline-block;margin-left:0"
-                type="primary"
-                v-show="requester"
-                @click="submitRequester"
-              >注册</el-button>
+              <el-form-item label="姓名" prop="name">
+                <el-input v-model="formData.name" placeholder="请输入真实姓名" style="width:80%"></el-input>
+              </el-form-item>
 
-              <el-button
-                style="width:300px;display:inline-block;margin-left:0"
-                type="primary"
-                disabled
-                v-show="!(worker || requester)"
-              >注册</el-button>
-            </el-form-item>
-          </el-form>
-        </template>
-      </el-col>
 
-      <el-col :span="10">
-        <div class="picture">
-          <img :src="signup">
-        </div>
+              <div v-if="worker">
+                <el-form-item label="学历" prop="workerReg.education">
+                  <el-select v-model="formData.workerReg.education">
+                    <el-option v-for="education in educations" :key="education" :value="education"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="提现方式" prop="workerReg.withdrawnMethod">
+                  <el-select v-model="formData.workerReg.withdrawnMethod">
+                    <el-option v-for="method in methods" :key="method" :value="method"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="专业" prop="workerReg.major">
+                  <el-input
+                    v-model="formData.workerReg.major"
+                    placeholder="请输入您的专业"
+                    style="width:80%"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="所属机构" prop="workerReg.institution">
+                  <el-input
+                    v-model="formData.workerReg.institution"
+                    placeholder="请输入您的所属机构"
+                    style="width:80%"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="擅长领域" prop="workerReg.workArea">
+                  <el-select v-model="formData.workerReg.workArea[1]">
+                    <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                  </el-select>
+                  <el-select v-model="formData.workerReg.workArea[2]">
+                    <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                  </el-select>
+                  <el-select v-model="formData.workerReg.workArea[3]">
+                    <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                  </el-select>
+                </el-form-item>
+                <!-- <el-select v-model="formData.workerReg.major2">
+                    <el-option
+                      v-for="major in filterMajor"
+                      :key="major"
+                      :value="major"
+                    ></el-option>
+                  </el-select>
+                  <el-select v-model="formData.workerReg.major3">
+                    <el-option v-for="major in filterMajor" :key="major" :value="major"></el-option>
+                  </el-select> -->
+              </div>
+
+
+              <div v-if="requester">
+
+                <el-form-item label="机构" prop="requesterReg.institutionName">
+                  <el-input
+                    v-model="formData.requesterReg.institutionName"
+                    placeholder="请输入您的所在机构"
+                    style="width:80%"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="地址" prop="requesterReg.address">
+                  <el-input
+                    v-model="formData.requesterReg.address"
+                    placeholder="请输入您的住址"
+                    style="width:80%"
+                  ></el-input>
+                </el-form-item>
+                <el-form-item label="支付方式" prop="requesterReg.payMethod">
+                  <el-select v-model="formData.requesterReg.payMethod">
+                    <el-option v-for="method in methods" :key="method" :value="method"></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <el-form-item>
+                <el-button
+                  style="width:300px;"
+                  type="primary"
+                  v-show="worker"
+                  @click="submitWorker"
+                >注册</el-button>
+                <el-button
+                  style="width:300px;display:inline-block;margin-left:0"
+                  type="primary"
+                  v-show="requester"
+                  @click="submitRequester"
+                >注册</el-button>
+
+                <el-button
+                  style="width:300px;display:inline-block;margin-left:0"
+                  type="primary"
+                  disabled
+                  v-show="!(worker || requester)"
+                >注册</el-button>
+              </el-form-item>
+            </el-form>
+          </template>
+        </el-col>
+        <el-col :span="10">
+          <div class="picture">
+            <img :src="signup">
+          </div>
+        </el-col>
       </el-col>
     </el-row>
+    <Footer style="height: 60px"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import HomePageNav from '@/components/public/HomePageNav'
+import Footer from '@/components/public/Footer'
 export default {
+  components:{
+    HomePageNav,
+    Footer
+  },
   data() {
     return {
       signup: require("../../static/signup.png"),
@@ -221,7 +203,12 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            max: 10,
+            message: "长度不大于10",
+            trigger: "blur"
+          }
         ],
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
@@ -243,7 +230,12 @@ export default {
           { required: true, message: "请重复密码", trigger: "blur" }
         ],
         name: [
-          { required: true, message: "请输入您的真实姓名", trigger: "blur" }
+          { required: true, message: "请输入您的真实姓名", trigger: "blur" },
+          {
+            max: 10,
+            message: "长度不大于10",
+            trigger: "blur"
+          }
         ],
         teleNumber: [
           { required: true, message: "请输入您的手机号码", trigger: "blur" },
@@ -466,7 +458,6 @@ export default {
         });
     }
   },
-  components: {}
 };
 </script>
 

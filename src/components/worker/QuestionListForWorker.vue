@@ -1,44 +1,117 @@
 <template>
   <el-container>
-    <el-header class="debugBox" style="padding: 0">
-      <common-header-nav/>
+    <el-header style="padding: 0; height: 80px">
+      <CommonHeadNav/>
     </el-header>
-    <el-container>
-      <el-aside class="debugBox" style="width: 10%">
-        <WorkerAsideNav/>
-      </el-aside>
+    <el-main style="padding: 0">
       <el-container>
-        <el-main class="debugBox" style="background-color: #efefef">
-          <div style="width:75%; margin:auto">
-            <h1 style="text-align:center; font-size: 36pt">{{taskInfo.title}}</h1>
-            <div
-              v-for="(item,index) in showedList"
-              :key="index"
-              style="margin-top:50px; padding:20px; border-radius:10px; background-color: white"
-            >
-              <component :is="qtype" :qtmp="item" :ref="index"></component>
+        <el-aside style="width: 10%; padding: 0">
+          <WorkerAsideNav/>
+        </el-aside>
+        <el-main style="padding: 0; background-color: #efefef">
+          <el-col :span="16" style="margin-left: 40px" >
+            <div style="width: 100%; margin: auto">
+              <div
+                v-for="(item,index) in tmpList"
+                :key="index"
+                style="margin-top:50px; padding:20px; border-radius:10px; background-color: white; padding-top: 40px"
+                v-show="shoudShow(index)"
+              >
+                <component :is="qtype" :qtmp="item" :ref="index"></component>
+              </div>
+              <p style="text-align:center">
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :page-size="pageSize"
+                  :total="tmpList.length"
+                  :current-page.sync="curPage"
+                  @current-change="handleCurrentChange"
+                ></el-pagination>
+              </p>
             </div>
-            <p style="text-align:center">
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :page-size="pageSize"
-                :total="tmpList.length"
-                :current-page.sync="curPage"
-                @current-change="handleCurrentChange"
-              ></el-pagination>
-            </p>
-            <div style="text-align:right; margin-top:20px">
-              <el-button type="primary" @click="submitAnswer">提交答案</el-button>
-              <!-- <el-button @click="test">测试</el-button> -->
-            </div>
-          </div>
+          </el-col>
+          <el-col :span="6" style="margin-left: 20px">
+            <el-row style="background-color: white; margin-top: 50px; width: 100%; border-radius: 5px; padding: 20px">
+              <el-row>
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>项目编号</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{taskInfo.id}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>项目名称</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{mainTaskInfo.name}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>请求机构</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{mainTaskInfo.institutionName}}
+                </el-col>
+              </el-row>
+            </el-row>
+            <el-row style="background-color: white; margin-top: 15px; width: 100%; border-radius: 5px; padding: 20px">
+              <el-row>
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>涉及领域</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{mainTaskInfo.area}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <strong style="font-size: 16pt">任务描述</strong>
+                <el-input type="textarea" style="margin-top: 15px;" :autosize="{ minRows: 2, maxRows: 2}"  v-model="mainTaskInfo.description" readonly></el-input>
+
+              </el-row>
+            </el-row>
+            <el-row style="background-color: white; margin-top: 15px; width: 100%; border-radius: 5px; padding: 20px">
+              <el-row>
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>每题奖励</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  ￥{{mainTaskInfo.reward}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="12" style="font-size: 16pt; text-align: left">
+                  <strong>题目总数</strong>
+                </el-col>
+                <el-col :span="10" style="font-size: 16pt; text-align: right">
+                  {{mainTaskInfo.numberOfQuestions}}
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 15px">
+                <el-col :span="10" style="font-size: 16pt; text-align: left">
+                  <strong>截止时间</strong>
+                </el-col>
+                <el-col :span="12" style="font-size: 12pt; text-align: right">
+                  {{mainTaskInfo.endTime}}
+                </el-col>
+              </el-row>
+            </el-row>
+            <el-row style="background-color: white; margin-top: 15px; width: 100%; border-radius: 5px; padding: 10px">
+              <div style="text-align:left;">
+                <el-button type="primary" @click="submitAnswer">提交答案</el-button>
+                <!-- <el-button @click="test">测试</el-button> -->
+              </div>
+            </el-row>
+          </el-col>
         </el-main>
-        <el-footer class="debugBox" style="padding: 0">
-          <Footer/>
-        </el-footer>
       </el-container>
-    </el-container>
+    </el-main>
+    <el-footer style="padding: 0">
+      <Footer/>
+    </el-footer>
   </el-container>
 </template>
 
@@ -50,9 +123,10 @@ import QuestionVer3 from "@/components/questions/QuestionVer3";
 import QuestionVer4 from "@/components/questions/QuestionVer4";
 import QuestionVer5 from "@/components/questions/QuestionVer5";
 
-import WorkerAsideNav from "@/components/public/WorkerAsideNav";
-import CommonHeaderNav from "@/components/public/CommonHeaderNav";
-import Footer from "@/components/public/Footer";
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import WorkerAsideNav from '@/components/public/WorkerAsideNav'
+import Footer from '@/components/public/Footer'
+
 import axios from "axios/index";
 export default {
   data() {
@@ -61,8 +135,10 @@ export default {
       tmpList: [],
       ansList: [],
       taskInfo: {},
-      pageSize:5,
+      pageSize:2,
       curPage:1,
+      judgeList:[],
+      mainTaskInfo:{}
     };
   },
   components: {
@@ -72,9 +148,10 @@ export default {
     QuestionVer3,
     QuestionVer4,
     QuestionVer5,
-    Footer,
+
+    CommonHeadNav,
     WorkerAsideNav,
-    CommonHeaderNav
+    Footer
   },
   computed:{
     showedList() {
@@ -87,6 +164,13 @@ export default {
     }
   },
   methods: {
+    shoudShow(index){
+      let fst=(this.curPage-1)*this.pageSize;
+      let lst=this.curPage*this.pageSize;
+      return index >= fst && index < lst;
+
+
+    },
     handleCurrentChange(val){
       this.curPage = val;
     },
@@ -140,6 +224,9 @@ export default {
                 for (let i = 0; i < num.value; ++i) {
                   let tem = this.$refs[i][0].getAns();
                   this.ansList.push(tem);
+                  if(this.taskInfo.type != 0){
+                    this.judgeList.push(this.$refs[i][0].getJudges())
+                  }
                 }
                 let date = new Date();
                 let dateStr = this.dateToString(date);
@@ -153,6 +240,9 @@ export default {
                   "endAt",
                   parseInt(this.taskInfo.nowBegin) + parseInt(num.value - 1)
                 );
+                if(this.taskInfo.type != 0){
+                  para.append("isCorrect",JSON.stringify(this.judgeList))
+                }
                 console.log(
                   this.taskInfo.taskId,
                   dateStr,
@@ -161,16 +251,18 @@ export default {
                   this.taskInfo.nowBegin,
                   parseInt(this.taskInfo.nowBegin) + parseInt(num.value - 1)
                 );
+                alert("OK");
                 axios
                   .post("/api/answer/update", para)
                   .then(response => {
                     alert("提交成功");
-                    this.$router.push("/worker-task");
+                    this.$router.push("/worker/task");
                     console.log(response.data);
                   })
                   .catch(response => {
                     alert("error");
                   });
+
               })
               .catch(() => {
                 console.log("cancel");
@@ -198,10 +290,18 @@ export default {
       .then(response => {
         this.taskInfo = response.data.Subtask;
         console.log(this.taskInfo);
+
+        axios
+          .get("/api/task/find-by-id", { params: {id:this.taskInfo.taskId} })
+          .then(response=>{
+            console.log("66666");
+            console.log(response.data);
+            this.mainTaskInfo=response.data.task;
+          });
+
         if (this.taskInfo.type == 0) {
           //普通的答题任务
           this.qtype = "question" + "-" + response.data.Subtask.taskType;
-          alert("OK");
           axios
             .get("/api/sub-task/read-subtask-resource", {
               params: { subtaskId: stid }
@@ -292,7 +392,7 @@ export default {
                     //alert(ansList.length);
                     for (let k = 0; k < ansList.length; ++k) {
                       tmp.prevAnsList.push(ansList[k][i]);
-                      tmp.acList.push(0);
+                      tmp.acList.push(1);
                     }
                     this.tmpList.push(tmp);
                   }

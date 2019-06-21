@@ -1,9 +1,9 @@
 <template>
-  <div style>
+  <div style="padding: 20px; padding-top: 40px; padding-bottom: 40px; border: #efefef 2px solid">
     <el-row>
-      <el-col :span="12">
+      <el-col :span="12" :offset="1">
         <el-row>
-          <el-col :span="14">
+          <el-col :span="20">
             <el-input v-if="isEditDesc" v-model="qtmp.desc"></el-input>
             <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
               <strong>{{qtmp.desc}}</strong>
@@ -54,17 +54,17 @@
             >
               <div
                 class="el_upload_tip"
-                style="font-size:14pt; margin-top:20px"
+                style="font-size:14pt; margin-top:10px"
               >批量导入文本,请上传utf-8编码的txt文件</div>
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
-            <a href="/static/label.txt" download="template.txt">
-              <el-button size="mini" style="color:#1471eb;margin-left:110px;margin-top:10px">模板下载</el-button>
+            <a href="/static/template2.txt" download="template.txt">
+              <el-button size="mini" type="primary" plain style="padding: 5px; margin-left:118px;margin-top:10px">模板下载</el-button>
             </a>
           </div>
         </el-row>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="11">
         <div style="font-size:16pt; text-align:center; margin-top:10px">
           <strong>
             编辑选项

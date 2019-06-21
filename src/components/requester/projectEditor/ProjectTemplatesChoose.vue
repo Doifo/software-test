@@ -3,8 +3,8 @@
     <!-- <RequesterHomepageTopbar></RequesterHomepageTopbar> -->
     <!--主体部分-->
     <div style="width:75%;margin:0 auto;font-size:18px;">
-      <p style="color:#1873EB; text-align:center">
-        <b>选择可自定义的模板-启动新项目</b>
+      <p style="color:#5a9ef7; text-align:center; font-size: 16pt; padding: 0">
+        <strong>选择可自定义的模板-启动新项目</strong>
       </p>
       <el-tabs
         v-model="activeName"
@@ -12,10 +12,10 @@
         @tab-click="handleClick"
         style="margin-top: 10px;"
       >
-        <el-tab-pane label="视觉" style="min-height:500px;" disabled="">
+        <el-tab-pane label="视觉" style="min-height:500px" disabled="">
         </el-tab-pane>
         <!--物体检测-->
-        <el-tab-pane label="二分问题" name="ver1-tmp1" style="min-height:500px;" class='debugBox'>
+        <el-tab-pane label="二分问题" name="ver1-tmp1" style="min-height:500px;" class=''>
           <div class="preview_box">
             <div class="reminder">
               <div class="reminder_title" @click="showReminder">
@@ -208,7 +208,7 @@ export default {
     return {
       templates: {
         tmp1: {
-          desc: "此图中是否含有人脸",
+          desc: "请问此图中是否含有人脸?",
           opts: [
             { content: "是", isEdit: false },
             { content: "否", isEdit: false }
@@ -366,8 +366,9 @@ ul {
 .preview_box {
   border: 1px solid #dcdfe6;
   min-height: 480px;
-  padding: 0 30px;
+  padding: 0;
   margin-bottom: 20px;
+  text-align: center;
 }
 .reminder {
   padding: 30px 0;

@@ -1,7 +1,7 @@
 <template>
-  <div style>
+  <div style="border: #efefef 2px solid; padding-top: 40px; padding-bottom: 40px">
     <el-row>
-      <el-col :span="10" :offset="2">
+      <el-col :span="10" :offset="2" style="background-color: #efefef; padding: 20px; height: 390px">
         <el-row>
           <el-col :span="18">
             <el-input v-if="isEditDesc" v-model="qtmp.desc"></el-input>
@@ -30,74 +30,72 @@
             >编辑</el-button>
           </el-col>
         </el-row>
-        <el-row style="margin-top: 45px">
-          <div>
-            <div style="height: 400px; width: 400px; overflow:hidden; border:blue 1px solid; ">
-              <img style="width: 400px; height: 400px" :src="qtmp.url">
-            </div>
+        <el-row style="margin-top: 20px">
+          <div style="text-align: center">
+              <img style="width: 256px; height: 256px" :src="qtmp.url">
           </div>
         </el-row>
       </el-col>
-      <el-col :span="10" style="padding-left: 40px">
-        <el-row>
-          <div style="font-size:16pt; margin-top:10px; text-align: left">
-            <strong>编辑选项</strong>
-          </div>
-          <el-radio-group v-model="opt" style="width: 100%">
-            <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:8px">
-              <el-col :span="9" :offset="3" style="text-align:left">
-                <el-input v-model="item.content" v-if="item.isEdit"></el-input>
-                <el-radio :label="index" v-else style="font-size:20pt">
-                  <span style="font-size:16pt">{{item.content}}</span>
-                </el-radio>
-              </el-col>
-              <el-col :span="3" :offset="2">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="editOpt(index)"
-                  style="padding: 2px"
-                  plain
-                  v-if="item.isEdit"
-                >确认</el-button>
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="editOpt(index)"
-                  style="padding: 2px"
-                  plain
-                  v-else
-                >编辑</el-button>
-              </el-col>
-              <el-col :span="3">
-                <el-button
-                  type="primary"
-                  size="mini"
-                  @click="deleteOpt(index)"
-                  style="padding: 2px"
-                  plain
-                >删除</el-button>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :offset="10">
+      <el-col :span="10" style="border: #efefef 2px solid; height: 390px">
+        <el-row style="height: 200px; border-bottom: #efefef 2px solid; padding-left: 40px">
+          <el-scrollbar style="height: 100%">
+            <div style="font-size:16pt; padding: 20px; padding-left:0; text-align: left">
+              <strong>编辑选项</strong>
+            </div>
+            <el-radio-group v-model="opt" style="width: 100%">
+              <el-row v-for="(item,index) in qtmp.opts" :key="index">
+                <el-col :span="9" :offset="3" style="text-align:left">
+                  <el-input v-model="item.content" v-if="item.isEdit"></el-input>
+                  <el-radio :label="index" v-else style="font-size:16pt">
+                    <span style="font-size:16pt">{{item.content}}</span>
+                  </el-radio>
+                </el-col>
+                <el-col :span="3" :offset="2">
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    @click="editOpt(index)"
+                    style="padding: 2px"
+                    plain
+                    v-if="item.isEdit"
+                  >确认</el-button>
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    @click="editOpt(index)"
+                    style="padding: 2px"
+                    plain
+                    v-else
+                  >编辑</el-button>
+                </el-col>
+                <el-col :span="3" :offset="1">
+                  <el-button
+                    type="primary"
+                    size="mini"
+                    @click="deleteOpt(index)"
+                    style="padding: 2px"
+                    plain
+                  >删除</el-button>
+                </el-col>
+              </el-row>
+              <el-row style="padding-bottom: 20px; text-align: center">
                 <el-button
                   type="primary"
                   size="mini"
                   @click="addOpt"
-                  style="padding: 3px; margin-top:20px"
+                  style="padding: 3px; margin-top:0px"
                   plain
                 >添加</el-button>
-              </el-col>
             </el-row>
-          </el-radio-group>
+            </el-radio-group>
+          </el-scrollbar>
         </el-row>
-        <el-row>
+        <el-row style="padding-left: 40px">
           <div style="font-size:16pt; margin-top:10px; text-align: left">
             <strong>批量导入图片</strong>
           </div>
         </el-row>
-        <el-row>
+        <el-row style="padding-left: 40px">
           <el-upload
             class="upload-demo"
             ref="upload"
@@ -115,13 +113,13 @@
           >
             <div
               class="el_upload_tip"
-              style="font-size:14pt; margin-top:20px"
+              style="font-size:14pt; margin-top:10px"
             >请按模板格式上传utf-8格式的txt文件</div>
             <!-- <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div> -->
             <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
           </el-upload>
-          <a href="/static/label.txt" download="template.txt">
-            <el-button size="mini" style="color:#1471eb;margin-left:98px;margin-top:10px">模板下载</el-button>
+          <a href="/static/template3.txt" download="template.txt">
+            <el-button size="mini" type="primary"  plain style="margin-left:107px;margin-top:10px;padding:5px">模板下载</el-button>
           </a>
         </el-row>
       </el-col>

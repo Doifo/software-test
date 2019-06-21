@@ -14,7 +14,7 @@ export default {
     let a ={
       1:"ss",
       2:"aa"
-    }
+    };
 
     console.log(JSON.stringify(a))
   }

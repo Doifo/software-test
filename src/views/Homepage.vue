@@ -1,22 +1,10 @@
 <template>
   <div>
-    <el-row class="homepage">
-      <el-col :span="8" class="title">众测平台</el-col>
-      <el-col :span="16">
-        <div style="text-align:right;padding-right:30px;">
-          <router-link to="/register">
-            <el-button>注册</el-button>
-          </router-link>
-          <router-link to="/login">
-            <el-button>登录</el-button>
-          </router-link>
-        </div>
-      </el-col>
-    </el-row>
+    <HomePageNav/>
 
     <el-row>
       <div style="background:rgb(59,94,135);padding-top:100px;">
-        <p style="font-size:45px;color:rgb(255,255,255);margin:0px;padding-left:150px;">众包任务平台</p>
+        <p style="font-size:45px;color:rgb(255,255,255);margin:0;padding-left:150px;">众包任务平台</p>
         <p
           style="font-size:25px;color:rgb(255,255,255);padding-left:150px;padding-top:30px;padding-bottom:120px"
         >问卷调查、语言处理、视觉处理、数据采集，让数据更智能！</p>
@@ -26,7 +14,7 @@
     <el-row>
       <el-col :span="8" style="padding-left:10px;padding-top:10px">
         <div class="first">
-          <img :src="main">
+          <img :src="main" alt="">
         </div>
       </el-col>
       <el-col :span="15" style="padding-left:16px;padding-top:16px;padding-right:16px">
@@ -63,34 +51,28 @@
         >众包平台提供了一种有效管理和雇佣和管理临时员工的人工和间接成本的方法。通过在按任务付费模型上利用分布式工作人员的技能，实现仅通过专门团队可能无法实现的结果。</p>
       </el-col>
     </el-row>
+    <Footer style="height: 60px"/>
   </div>
 </template>
 
 <script>
+import Footer from '@/components/public/Footer'
+import HomePageNav from '@/components/public/HomePageNav'
 export default {
+  components:{
+    Footer,
+    HomePageNav
+  },
   data() {
     return {
       main: require("../../static/main.png")
     };
   },
-  components: {}
 };
 </script>
 
 <style>
-.homepage {
-  background-color: #1c2541;
-  display: flex;
-  align-items: center;
-  height: 60px;
-}
-.title {
-  padding-left: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 20px;
-  color: rgb(255, 255, 255);
-}
+
 .login {
   border-radius: 5px;
   border: 1px solid #000;

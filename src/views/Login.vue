@@ -1,104 +1,87 @@
 <template>
   <div>
-    <el-row
-      style="border-bottom:1px solid #ccc;display:flex;flex-direction:row;align-items:center;"
-    >
-      <el-col :span="4">
-        <div>
-          <p
-            style="font-size:30px;font-weight:bold;color:rgb(59,94,135);text-align:right;padding-right:20px;border-right:1.5px solid #ccc;"
-          >众包平台</p>
-        </div>
-      </el-col>
-
-      <el-col :span="10">
-        <div>
-          <p style="font-size:18px;padding-left:25px;">登录</p>
-        </div>
-      </el-col>
-      <el-col :span="6" style>
-        <div>
-          <p style="font-size:14px;text-align:right;padding-right:15px;">立即</p>
-        </div>
-      </el-col>
-      <el-col :span="4" style>
-        <div>
-          <router-link to="/register">
-            <el-button @click="register">注册</el-button>
-          </router-link>
-        </div>
-      </el-col>
-    </el-row>
-
     <el-row>
-      <el-col :span="10">
-        <div class="picture">
-          <img :src="signup">
-        </div>
-      </el-col>
+      <HomePageNav/>
+    </el-row>
 
-      <el-col :span="14" style="padding-top:50px;padding-right:30px;padding-left:90px">
-        <template>
-          <el-form label-width="100px" style="width:80%;padding-top:50px;">
-            <el-form-item label="登录身份">
-              <el-select v-model="status" placeholder="请选择" style="width:100%;">
-                <el-option
-                  v-for="singleStatus in statuses"
-                  :key="singleStatus"
-                  :value="singleStatus"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="邮箱">
-              <el-input v-model="email" placeholder="请输入注册邮箱"></el-input>
-            </el-form-item>
-            <el-form-item label="密码">
-              <el-input show-password v-model="pwd" placeholder="请输入密码"></el-input>
-            </el-form-item>
-          </el-form>
-          <el-col>
-            <div style="width:80%">
-              <p style="text-align:center">
-                <el-button
-                  style="width:300px;"
-                  type="primary"
-                  @click="loginWorker"
-                  v-show="worker"
-                >登录</el-button>
-              </p>
+    <el-row style="height: 650px; background-color: #efefef">
 
-              <p style="text-align:center">
-                <el-button
-                  style="width:300px;"
-                  type="primary"
-                  @click="loginRequester"
-                  v-show="requester"
-                >登录</el-button>
-              </p>
+      <el-col style="background-color: white; margin-top: 120px">
+        <el-col :span="10" style="background-color: white;">
+          <div class="picture">
+            <img :src="signup" alt="">
+          </div>
+        </el-col>
+        <el-col :span="14" style="padding-top:50px;padding-right:30px;padding-left:90px;background-color: white">
+          <template>
+            <el-form label-width="100px" style="width:80%;padding-top:50px;">
+              <el-form-item label="登录身份">
+                <el-select v-model="status" placeholder="请选择" style="width:100%;">
+                  <el-option
+                    v-for="singleStatus in statuses"
+                    :key="singleStatus"
+                    :value="singleStatus"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="邮箱">
+                <el-input v-model="email" placeholder="请输入注册邮箱"></el-input>
+              </el-form-item>
+              <el-form-item label="密码">
+                <el-input show-password v-model="pwd" placeholder="请输入密码"></el-input>
+              </el-form-item>
+            </el-form>
+            <el-col>
+              <div style="width:80%">
+                <p style="text-align:center">
+                  <el-button
+                    style="width:300px;"
+                    type="primary"
+                    @click="loginWorker"
+                    v-show="worker"
+                  >登录</el-button>
+                </p>
 
-              <p style="text-align:center">
-                <el-button style="width:300px;" type="primary" v-show="admin" @click="loginAdmin">登录</el-button>
-              </p>
-              <p style="text-align:center">
-                <el-button
-                  style="width:300px;"
-                  type="primary"
-                  disabled
-                  v-show="!(worker || requester || admin)"
-                >登录</el-button>
-              </p>
-            </div>
-          </el-col>
-        </template>
+                <p style="text-align:center">
+                  <el-button
+                    style="width:300px;"
+                    type="primary"
+                    @click="loginRequester"
+                    v-show="requester"
+                  >登录</el-button>
+                </p>
+
+                <p style="text-align:center">
+                  <el-button style="width:300px;" type="primary" v-show="admin" @click="loginAdmin">登录</el-button>
+                </p>
+                <p style="text-align:center">
+                  <el-button
+                    style="width:300px;"
+                    type="primary"
+                    disabled
+                    v-show="!(worker || requester || admin)"
+                  >登录</el-button>
+                </p>
+              </div>
+            </el-col>
+          </template>
+        </el-col>
       </el-col>
     </el-row>
+    <Footer style="height: 60px"/>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import HomePageNav from '@/components/public/HomePageNav'
+import Footer from '@/components/public/Footer'
 
 export default {
+  components:{
+    Footer,
+    HomePageNav
+  },
   data() {
     return {
       status: "",
@@ -184,7 +167,7 @@ export default {
                   };
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
-                  that.$router.replace("/requester-information");
+                  that.$router.replace("/requester/information");
                 })
                 .catch(function(error) {
                   console.log(error);
@@ -240,7 +223,7 @@ export default {
                   };
                   user_information.username = username;
                   that.$store.commit("UserInfo", user_information);
-                  that.$router.replace("/worker-information");
+                  that.$router.replace("/worker/information");
                 })
                 .catch(function(error) {
                   console.log(error);
@@ -326,10 +309,12 @@ export default {
 
 <style scoped>
 .picture {
-  padding: 120px;
+  /*padding: 120px;*/
   padding-left: 170px;
-  transform: scale(1.5);
+  transform: scale(1);
+  padding-top: 30px;
 }
+
 
 .picture img {
   width: 80%;

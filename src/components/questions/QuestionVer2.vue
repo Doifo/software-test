@@ -1,41 +1,43 @@
 <template>
-  <div style="background-color: white">
+  <div style="background-color: white; padding-bottom: 30px">
     <el-row>
-      <el-col :span="12" :offset="2">
+      <el-col :span="12" :offset="2" style="text-align: center; background-color: #efefef; height: 350px; padding: 20px">
         <el-row>
-          <el-col :span="19" :offset="5">
+          <div style="text-align: center">
             <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
               <strong>{{qtmp.desc}}</strong>
             </div>
-          </el-col>
+          </div>
         </el-row>
-        <div style="width: 420px; height: 420px; position: relative; margin-top:20px">
-          <img style="position: absolute; left: 0px" width="400" height="400" :src="qtmp.url">
+        <div style="width: 256px; height: 256px; position: relative; margin-top:20px; left: 74px">
+          <img style="position: absolute; left: 0px" width="256" height="256" :src="qtmp.url">
           <canvas
-            width="400"
-            height="400"
-            style="border: blue 1px solid; margin: 0px; position: absolute; left: 0px"
+            width="256"
+            height="256"
+            style="margin: 0px; position: absolute; left: 0px"
             ref="myCanvas"
           ></canvas>
         </div>
       </el-col>
-      <el-col :span="8">
-        <div style="font-size:18pt; text-align:center">
-          <strong>类别</strong>
-        </div>
-        <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
-          <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:30px">
-            <el-col :span="9" :offset="3" style="text-align:left">
-              <el-radio-button
-                :label="index"
-                style="font-size:20pt; padding:0; padding-top:5px; padding-left:3px; padding-right:3px"
-                border
-              >
-                <span style="font-size:16pt; margin-top:15px">{{item.content}}</span>
-              </el-radio-button>
-            </el-col>
-          </el-row>
-        </el-radio-group>
+      <el-col :span="8" style="border: #efefef 2px solid; height:350px; padding: 20px">
+        <el-scrollbar>
+          <div style="font-size:16pt; text-align:center; padding-bottom: 20px; border-bottom: #efefef 2px solid">
+            <strong>类别</strong>
+          </div>
+          <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
+            <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top:10px; border-bottom: #efefef 2px solid; padding-bottom: 10px">
+              <el-col :span="9" :offset="3" style="text-align:left">
+                <el-radio-button
+                  :label="index"
+                  style="font-size:16pt; padding:0; padding-left:3px; padding-right:3px"
+                  border
+                >
+                  <span style="font-size:16pt; margin-top:15px">{{item.content}}</span>
+                </el-radio-button>
+              </el-col>
+            </el-row>
+          </el-radio-group>
+        </el-scrollbar>
       </el-col>
     </el-row>
   </div>
@@ -96,6 +98,25 @@ export default {
       console.log(this.rectCollection);
     },
     getAns() {
+      // let norm=[];
+      // for (let i = 0; i < this.rectCollection.length; ++i){
+      //   norm.push([]);
+      // }
+      // for (let i = 0; i < this.rectCollection.length; ++i) {
+      //   // let w = this.endPoints[i].x - this.startPoints[i].x;
+      //   // let h = this.endPoints[i].y - this.startPoints[i].y;
+      //   let tem = this.rectCollection[i];
+      //   for (let j = 0; j < tem.length; ++j) {
+      //     //ctx.strokeStyle = this.qtmp.opts[i].color;
+      //     norm[i][j].x=tem[j].x/256;
+      //     norm[i][j].y=tem[j].y/256;
+      //     norm[i][j].w=tem[j].w/256;
+      //     norm[i][j].h=tem[j].h/256;
+      //   }
+      //   // this.$refs.myCanvas
+      //   //   .getContext("2d")
+      //   //   .strokeRect(this.startPoints[i].x, this.startPoints[i].y, w, h);
+      // }
       let tem = {
         index: this.qtmp.index,
         ans: this.rectCollection

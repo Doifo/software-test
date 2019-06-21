@@ -1,136 +1,163 @@
 <template>
-  <div>
-    <!--导航-->
-    <worker-header></worker-header>
-    <div style="width:70%;margin:0 auto; margin-top:50px;">
-      <div style="background:#fffaf7;border:1px solid #ccc;padding-left:20px;">
-        <p>
-          <span style="font-weight:bold;">{{userInfor.username}}</span>
-        </p>
-        <p style="font-size:13px;">
-          工人ID：
-          <span>{{userInfor.id}}</span>
-        </p>
-        <p style="font-size:13px;">
-          账户余额：
-          <span style="color:#db4946">￥{{userInfor.balance}}</span>
-        </p>
-      </div>
 
-      <el-tabs value="first" type="card" style="margin-top:10px;">
-        <el-tab-pane label="个人信息" name="first" style="padding-left:20px;">
-          <div id="information" v-show="!change">
-            <p>
-              <span class="label-span">用户名：</span>
-              <span class="text-span">{{userInfor.username}}</span>
-            </p>
-            <p>
-              <span class="label-span">姓名：</span>
-              <span class="text-span">{{userInfor.name}}</span>
-            </p>
-            <p>
-              <span class="label-span">提现方式：</span>
-              <span class="text-span">{{userInfor.withdrawnMethod}}</span>
-            </p>
-            <p>
-              <span class="label-span">电话号码：</span>
-              <span class="text-span">{{userInfor.teleNumber}}</span>
-            </p>
-            <p>
-              <span class="label-span">专业：</span>
-              <span class="text-span">{{userInfor.major}}</span>
-            </p>
-            <p>
-              <span class="label-span">教育水平：</span>
-              <span class="text-span">{{userInfor.education}}</span>
-            </p>
-            <p>
-              <span class="label-span">擅长领域：</span>
-              <span class="text-span" v-for="area in areas" :key="area">{{area}}&nbsp;&nbsp;&nbsp;</span>
-            </p>
-            <p>
-              <span class="label-span">性别：</span>
-              <span class="text-span">{{userInfor.gender}}</span>
-            </p>
-            <p>
-              <span class="label-span">年龄：</span>
-              <span class="text-span">{{userInfor.age}}</span>
-            </p>
-            <p>
-              <span class="label-span">所属机构：</span>
-              <span class="text-span">{{userInfor.institution}}</span>
-            </p>
-            <hr style="border:none;background:#ccc;height:1.5px">
-            <p>
-              <span class="label-span">邮箱：</span>
-              <span class="text-span">{{userInfor.email}}</span>
-            </p>
+  <el-container>
+    <el-header style="padding: 0; height: 80px">
+      <CommonHeadNav/>
+    </el-header>
+    <el-main style="padding: 0">
+      <el-container>
+        <el-aside style="width: 10%; padding: 0">
+          <WorkerAsideNav/>
+        </el-aside>
+        <el-main style="padding: 0; background-color: #efefef; padding-bottom: 40px">
+          <div style="width:70%;margin:0 auto; margin-top:50px;">
+            <div style="background:white;border:1px solid #ccc;padding-left:20px;">
+              <p>
+                <span style="font-weight:bold;">{{userInfor.username}}</span>
+              </p>
+              <p style="font-size:13px;">
+                工人ID：
+                <span>{{userInfor.id}}</span>
+              </p>
+              <p style="font-size:13px;">
+                账户余额：
+                <span style="color:#db4946">￥{{userInfor.balance}}</span>
+              </p>
+            </div>
 
-            <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
+            <div id="information" v-show="!change" style="background-color:white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+<!--              <p>-->
+<!--                <span class="label-span">用户名：</span>-->
+<!--                <span class="text-span">{{userInfor.username}}</span>-->
+<!--              </p>-->
+              <p>
+                <span class="label-span">姓名：</span>
+                <span class="text-span">{{userInfor.name}}</span>
+              </p>
+              <p>
+                <span class="label-span">性别：</span>
+                <span class="text-span">{{userInfor.gender}}</span>
+              </p>
+              <p>
+                <span class="label-span">年龄：</span>
+                <span class="text-span">{{userInfor.age}}</span>
+              </p>
+
+
+              <el-button type="primary" @click="changeInfor" style="margin:0 auto;display:none;">修改</el-button>
+            </div>
+
+            <div v-show="!change" style="background-color: white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+              <p>
+                <span class="label-span">电话号码：</span>
+                <span class="text-span">{{userInfor.teleNumber}}</span>
+              </p>
+              <p>
+                <span class="label-span">邮箱：</span>
+                <span class="text-span">{{userInfor.email}}</span>
+              </p>
+              <p>
+                <span class="label-span">提现方式：</span>
+                <span class="text-span">{{userInfor.withdrawnMethod}}</span>
+              </p>
+            </div>
+
+            <div v-show="!change" style="background-color:white; border:1px solid #ccc;padding-left:20px; margin-top: 15px; ">
+              <p>
+                <span class="label-span">专业：</span>
+                <span class="text-span">{{userInfor.major}}</span>
+              </p>
+              <p>
+                <span class="label-span">教育水平：</span>
+                <span class="text-span">{{userInfor.education}}</span>
+              </p>
+              <p>
+                <span class="label-span">擅长领域：</span>
+                <span class="text-span" v-for="area in areas" :key="area">{{area}}&nbsp;&nbsp;&nbsp;</span>
+              </p>
+
+              <p>
+                <span class="label-span">所属机构：</span>
+                <span class="text-span">{{userInfor.institution}}</span>
+              </p>
+            </div>
+
+            <el-form v-show="change" :label-position="'left'" label-width="80px">
+              <el-form-item label="用户名">
+                <el-input v-model="userInfor.username"></el-input>
+              </el-form-item>
+              <el-form-item label="电话号码">
+                <el-input v-model="userInfor.teleNumber"></el-input>
+              </el-form-item>
+              <el-form-item label="专业">
+                <el-input v-model="userInfor.major"></el-input>
+              </el-form-item>
+              <el-form-item label="性别">
+                <el-select v-model="userInfor.gender">
+                  <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="年龄">
+                <el-input v-model="userInfor.age"></el-input>
+              </el-form-item>
+              <!-- <el-form-item label="教育水平">
+                <el-input v-model="userInfor.education"></el-input>
+              </el-form-item>-->
+              <!-- <el-form-item label="工作地址">
+                <el-input v-model="userInfor.workArea"></el-input>
+              </el-form-item>-->
+
+              <p style="text-align:center">
+                <el-button type="primary" @click="cancelChange">取消修改</el-button>
+                <el-button type="primary" @click="changeEnsure">确认修改</el-button>
+              </p>
+            </el-form>
+<!--            <el-tabs value="first" type="card" style="margin-top:10px;">-->
+<!--              <el-tab-pane label="个人信息" name="first" style="padding-left:20px;">-->
+<!--                -->
+<!--              </el-tab-pane>-->
+
+<!--              <el-tab-pane label="提现记录" name="third">-->
+<!--                <el-table :data="withdrawalInformation" style="width: 100%;min-height:300px;">-->
+<!--                  <el-table-column prop="id" label="ID"></el-table-column>-->
+<!--                  <el-table-column prop="time" label="提现时间"></el-table-column>-->
+<!--                  <el-table-column prop="value" label="提现金额"></el-table-column>-->
+<!--                  <el-table-column prop="type" label="提现方式"></el-table-column>-->
+<!--                </el-table>-->
+<!--                <p style="text-align:right">-->
+<!--                  <el-button type="primary" @click="getMoney">提现</el-button>-->
+<!--                </p>-->
+<!--              </el-tab-pane>-->
+
+<!--              <el-tab-pane label="我的任务" name="second">-->
+<!--                <worker-my-task></worker-my-task>-->
+<!--              </el-tab-pane>-->
+<!--            </el-tabs>-->
           </div>
-          <el-form v-show="change" :label-position="'left'" label-width="80px">
-            <el-form-item label="用户名">
-              <el-input v-model="userInfor.username"></el-input>
-            </el-form-item>
-            <el-form-item label="电话号码">
-              <el-input v-model="userInfor.teleNumber"></el-input>
-            </el-form-item>
-            <el-form-item label="专业">
-              <el-input v-model="userInfor.major"></el-input>
-            </el-form-item>
-            <el-form-item label="性别">
-              <el-select v-model="userInfor.gender">
-                <el-option v-for="gender in genders" :key="gender" :value="gender"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="年龄">
-              <el-input v-model="userInfor.age"></el-input>
-            </el-form-item>
-            <!-- <el-form-item label="教育水平">
-              <el-input v-model="userInfor.education"></el-input>
-            </el-form-item>-->
-            <!-- <el-form-item label="工作地址">
-              <el-input v-model="userInfor.workArea"></el-input>
-            </el-form-item>-->
+        </el-main>
+      </el-container>
+    </el-main>
+    <el-footer style="padding: 0">
+      <Footer/>
+    </el-footer>
+  </el-container>
 
-            <p style="text-align:center">
-              <el-button type="primary" @click="cancelChange">取消修改</el-button>
-              <el-button type="primary" @click="changeEnsure">确认修改</el-button>
-            </p>
-          </el-form>
-        </el-tab-pane>
-
-        <el-tab-pane label="提现记录" name="third">
-          <el-table :data="withdrawalInformation" style="width: 100%;min-height:300px;">
-            <el-table-column prop="id" label="ID"></el-table-column>
-            <el-table-column prop="time" label="提现时间"></el-table-column>
-            <el-table-column prop="value" label="提现金额"></el-table-column>
-            <el-table-column prop="type" label="提现方式"></el-table-column>
-          </el-table>
-          <p style="text-align:right">
-            <el-button type="primary" @click="getMoney">提现</el-button>
-          </p>
-        </el-tab-pane>
-
-        <el-tab-pane label="我的任务" name="second">
-          <worker-my-task></worker-my-task>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-  </div>
 </template>
 
 <script>
-//import axios from 'axios'
-import WorkerHeader from "@/components/WorkerHeader";
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import WorkerAsideNav from '@/components/public/WorkerAsideNav'
+import Footer from '@/components/public/Footer'
 
 import WorkerMyTask from "@/components/worker/ReceivedTaskfForWorker.vue";
 import axios from "axios";
 
 export default {
   components: {
-    "worker-header": WorkerHeader,
-    "worker-my-task": WorkerMyTask
+    WorkerMyTask,
+    CommonHeadNav,
+    WorkerAsideNav,
+    Footer
   },
   methods: {
     getMoney() {

@@ -4,15 +4,15 @@
       <el-col :span="18" :offset="3">
         <el-row>
           <el-col :span="19">
-            <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
+            <div style="font-size:16pt;word-wrap:break-word;padding-top:2pt; text-align: left">
               <strong>{{qtmp.desc}}</strong>
             </div>
           </el-col>
         </el-row>
         <el-row style="margin-top: 30px">
           <div>
-            <div><strong>语境: </strong>{{qtmp.context}}</div>
-            <div style="margin-top: 20px"><strong>意图: </strong>{{qtmp.intent}}</div>
+            <div style="text-align: left"><strong>语境: </strong>{{qtmp.context}}</div>
+            <div style="margin-top: 20px; text-align: left"><strong>意图: </strong>{{qtmp.intent}}</div>
           </div>
         </el-row>
       </el-col>
@@ -30,7 +30,7 @@
 <!--        </el-radio-group>-->
 <!--      </el-col>-->
     </el-row>
-    <el-row style="margin-top: 40px">
+    <el-row style="margin-top: 25px">
       <el-col :span="18" :offset="3">
         <el-input
           placeholder="请输入内容"

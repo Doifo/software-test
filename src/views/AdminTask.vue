@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <worker-header></worker-header>
+  <div style="padding-bottom: 300px">
+    <CommonHeadNav style="width: 100%"></CommonHeadNav>
     <div class="container">
       <el-row class="task-title">
         <el-col :span="5" :offset="1">相关领域</el-col>
@@ -20,13 +20,15 @@
         :total="tasks.length"
       ></el-pagination>
     </p>
+    <Footer style="width: 100%; height: 60px; margin-right: 300px"></Footer>
   </div>
 </template>
 
 <script>
-import WorkerHeader from "@/components/WorkerHeader";
 import TaskForAdmin from "@/components/admin/TaskForAdmin";
 import axios from "axios";
+import CommonHeadNav from '@/components/public/CommonHeaderNav'
+import Footer from '@/components/public/Footer'
 
 export default {
   name: "AdminTask",
@@ -38,8 +40,9 @@ export default {
     };
   },
   components: {
-    WorkerHeader,
-    TaskForAdmin
+    TaskForAdmin,
+    CommonHeadNav,
+    Footer
   },
   mounted() {
 

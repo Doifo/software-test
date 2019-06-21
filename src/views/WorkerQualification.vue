@@ -8,10 +8,10 @@
         <el-col :span="6" style=" ">
           <div class="task-card">
             <p class="task-card-num">
-              0
+              {{myInfor.credit}}
             </p>
             <p class="task-card-word">
-              任务放弃率(%)
+              信誉度(5)
             </p>
           </div>
         </el-col>
@@ -19,10 +19,10 @@
         <el-col :span="6" :offset="3" style=" ">
           <div class="task-card">
             <p class="task-card-num">
-              100
+              {{myInfor.correctNumberAnswered}}
             </p>
             <p class="task-card-word">
-              任务批准率(%)
+              正确问题数
             </p>
           </div>
         </el-col>
@@ -30,10 +30,10 @@
         <el-col :span="6" :offset="3" style=" ">
           <div class="task-card">
             <p class="task-card-num">
-              0
+              {{myInfor.allNumberAnswered}}
             </p>
             <p class="task-card-word">
-              任务拒绝率(%)
+              全部问题数
             </p>
           </div>
         </el-col>
@@ -43,10 +43,10 @@
         <el-col :span="6" style=" ">
           <div class="task-card">
             <p class="task-card-num">
-              90
+              {{myInfor.overtimeNumber}}
             </p>
             <p class="task-card-word">
-              任务提交率(%)
+              超时任务次数
             </p>
           </div>
         </el-col>
@@ -54,24 +54,15 @@
         <el-col :span="6" :offset="3" style=" ">
           <div class="task-card">
             <p class="task-card-num">
-              0
+              {{parseInt(myInfor.correctNumberAnswered/myInfor.allNumberAnswered*100)}}
             </p>
             <p class="task-card-word">
-              任务退回率(%)
+              任务正确率(%)
             </p>
           </div>
         </el-col>
 
-        <el-col :span="6" :offset="3" style=" ">
-          <div class="task-card">
-            <p class="task-card-num">
-              10
-            </p>
-            <p class="task-card-word">
-              批准的任务总数(%)
-            </p>
-          </div>
-        </el-col>
+        
       </el-row>
     </el-main>
   </div>
@@ -114,9 +105,18 @@
         questions: [],
         answer:[],
         question_index:[],
-    
+        myInfor:[]
       }
     },
+    mounted(){
+       axios({
+        method: "get",
+        url: "/api/worker/find-myself"
+      }).then(response => {
+        //console.log(response.data)
+        this.myInfor = response.data.worker
+      })
+    }
 
   }
 </script>

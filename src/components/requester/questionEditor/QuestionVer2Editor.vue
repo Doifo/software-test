@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div style="padding: 20px; padding-top: 40px; padding-bottom: 40px; border: #efefef 2px solid" >
     <el-row>
-      <el-col :span="10" :offset="2">
-        <el-row>
+      <el-col :span="10" :offset="2" style="background-color: #efefef; height: 390px">
+        <el-row style="padding: 20px">
           <el-col :span="18">
             <el-input v-if="isEditDesc" v-model="qtmp.desc"></el-input>
             <div v-else style="font-size:16pt;word-wrap:break-word;padding-top:2pt">
@@ -14,81 +14,86 @@
             <el-button type="primary" size="mini" @click="editDesc" plain v-else>编辑</el-button>
           </el-col>
         </el-row>
-        <div style="width: 420px; height: 420px; position: relative; margin-top:20px">
-          <img style="position: absolute; left: 0px" width="400" height="400" :src="qtmp.url">
+        <div style="width: 256px; height: 256px; position: relative; left: 78px">
+          <img style="position: absolute; left: 0px" width="256" height="256" :src="qtmp.url">
           <canvas
-            width="400"
-            height="400"
+            width="256"
+            height="256"
             style="border: blue 1px solid; margin: 0px; position: absolute; left: 0px"
             ref="myCanvas"
           ></canvas>
         </div>
       </el-col>
-      <el-col :span="10" style="padding-left: 40px">
-        <div style="font-size:16pt; text-align: left">
-          <strong>编辑选项</strong>
-        </div>
-        <el-radio-group v-model="opt" style="width: 100%; margin-top: 20px" :fill="qtmp.opts[opt].color">
-          <el-row v-for="(item,index) in qtmp.opts" :key="index" style="">
-            <el-col :span="9" :offset="3" style="text-align:left">
-              <el-input v-model="item.content" v-if="item.isEdit"></el-input>
-              <el-radio-button
-                :label="index"
-                v-else
-                style="font-size:20pt; padding:0; padding-top:5px; padding-left:3px; padding-right:3px"
-                border
-              >
-                <span style="font-size:16pt; margin-top:15px">{{item.content}}</span>
-              </el-radio-button>
-            </el-col>
-            <el-col :span="3">
-              <el-color-picker v-model="item.color"></el-color-picker>
-            </el-col>
-            <el-col :span="3" :offset="2">
-              <el-button
-                type="primary"
-                size="mini"
-                @click="editOpt(index)"
-                style="padding: 2px; margin-top:8px"
-                plain
-                v-if="item.isEdit"
-              >确认</el-button>
-              <el-button
-                type="primary"
-                size="mini"
-                @click="editOpt(index)"
-                style="padding: 2px; margin-top:8px"
-                plain
-                v-else
-              >编辑</el-button>
-            </el-col>
-            <el-col :span="3">
-              <el-button
-                type="primary"
-                size="mini"
-                @click="deleteOpt(index)"
-                style="padding: 2px; margin-top:8px"
-                plain
-              >删除</el-button>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :offset="10">
-              <el-button
-                type="primary"
-                size="mini"
-                @click="addOpt"
-                style="padding: 3px; margin-top:20px"
-                plain
-              >添加选项</el-button>
-            </el-col>
-          </el-row>
-        </el-radio-group>
-        <div style="font-size:16pt; margin-top:10px; text-align: left">
-          <strong>批量导入图片</strong>
-        </div>
+      <el-col :span="10" style="border: #efefef 2px solid; height: 390px">
+        <el-row style="height: 200px; border-bottom: #efefef 2px solid; padding-left: 20px">
+          <el-scrollbar style="height: 100%">
+            <div style="font-size:16pt; text-align: left; padding: 20px; padding-bottom: 10px">
+              <strong>编辑选项</strong>
+            </div>
+            <el-radio-group v-model="opt" style="width: 100%" :fill="qtmp.opts[opt].color">
+                <el-row v-for="(item,index) in qtmp.opts" :key="index" style="margin-top: 10px">
+                  <el-col :span="6" :offset="2" style="text-align:left">
+                    <el-input v-model="item.content" v-if="item.isEdit"></el-input>
+                    <el-radio-button
+                      :label="index"
+                      v-else
+                      style="font-size:16pt; padding:0; padding-top:5px; padding-left:3px; padding-right:3px"
+                      border
+                    >
+                      <span style="font-size:16pt; margin-top:15px">{{item.content}}</span>
+                    </el-radio-button>
+                  </el-col>
+                  <el-col :span="2" :offset="3" style="margin-top: 7px">
+                    <el-color-picker v-model="item.color"></el-color-picker>
+                  </el-col>
+                  <el-col :span="3" :offset="2" style="margin-top: 5px">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="editOpt(index)"
+                      style="padding: 2px; margin-top:8px"
+                      plain
+                      v-if="item.isEdit"
+                    >确认</el-button>
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="editOpt(index)"
+                      style="padding: 2px; margin-top:8px"
+                      plain
+                      v-else
+                    >编辑</el-button>
+                  </el-col>
+                  <el-col :span="3" :offset="1" style="margin-top: 5px">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="deleteOpt(index)"
+                      style="padding: 2px; margin-top:8px"
+                      plain
+                    >删除</el-button>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :offset="10">
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="addOpt"
+                      style="padding: 3px; margin-top:20px"
+                      plain
+                    >添加</el-button>
+                  </el-col>
+                </el-row>
+              </el-radio-group>
+          </el-scrollbar>
+        </el-row>
         <el-row>
-          <el-col :span="20" :offset="4">
+
+          <el-col :span="20" style="padding-left: 40px">
+            <div style="font-size:16pt; margin-top:10px; text-align: left;">
+              <strong>批量导入图片</strong>
+            </div>
             <el-upload
               class="upload-demo"
               ref="upload"
@@ -106,45 +111,19 @@
             >
               <div
                 class="el_upload_tip"
-                style="font-size:14pt; margin-top:20px"
+                style="font-size:14pt; margin-top:10px"
               >
                 请按模板格式上传utf-8格式的txt
               </div>
               <el-button size="mini" type="primary" style="margin-top:10px; padding:5px" plain>点击上传</el-button>
             </el-upload>
-            <a href="/static/label.txt" download="template.txt">
-              <el-button size="mini" style="color:#1471eb;margin-left:80px;margin-top:10px">模板下载</el-button>
+            <a href="/static/template3.txt" download="template.txt">
+              <el-button size="mini" type="primary" style="margin-left:87px;margin-top:10px; padding: 5px" plain>模板下载</el-button>
             </a>
           </el-col>
         </el-row>
       </el-col>
     </el-row>
-    <!-- <el-row>
-      <el-col :span="8" :offset="8">
-        <el-input v-if="isEditDesc" v-model="desc"></el-input>
-        <div v-else>{{desc}}</div>
-      </el-col>
-      <el-col :span="2">
-        <el-button type="primary" size="mini" @click="editDesc" v-if="isEditDesc">确认</el-button>
-        <el-button type="primary" size="mini" @click="editDesc" v-else>编辑</el-button>
-      </el-col>
-    </el-row>-->
-    <!-- <div style="width: 420px; height: 420px; margin: auto; position: relative">
-      <img
-        style="position: absolute; left: 0px"
-        width="400"
-        height="400"
-        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553590617718&di=accf7a96bf02a04228a10fea868c0ab2&imgtype=0&src=http%3A%2F%2Fpic6.58cdn.com.cn%2Fp1%2Fbig%2Fn_v1bl2lwto7dfkvqwb4en3q_4b902c3d9f8abab8.jpg"
-      >
-      <canvas
-        width="400"
-        height="400"
-        style="border: blue 1px solid; margin: 0px; position: absolute; left: 0px"
-        ref="myCanvas"
-      ></canvas>
-    </div>-->
-    <!-- <div>画框</div>
-    <el-button @click="test">测试</el-button>-->
   </div>
 </template>
 
