@@ -7,8 +7,9 @@
           {{taskInfo.area || "无"}}
         </el-col>
         <el-col :span="4">{{taskInfo.name}}</el-col>
-        <el-col :span="3">{{minNumber}}</el-col>
-        <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
+        <el-col :span="3" >{{minNumber}}</el-col>
+        
+        <el-col :span="3">{{statusComp}}</el-col>
         <el-col :span="6" style="font-size: 14pt">{{taskInfo.startTime}}</el-col>
         <el-col :span="3">
           <el-button type="warning" @click.stop="confirmAdd" v-show="taskInfo.type!='ver6'">接受任务</el-button>
@@ -22,6 +23,7 @@
         <el-col :span="8">过期时间：{{taskInfo.endTime}}</el-col>
         <el-col :span="8">资格要求：{{taskInfo.restrictions}}</el-col>
       </el-row>
+      <p>奖励：¥{{taskInfo.reward}}/条</p>
       <p>描述：{{taskInfo.description}}</p>
     </div>
   </el-collapse-item>
@@ -51,6 +53,17 @@ export default {
       // }
       minNumber: 0
     };
+  },
+  computed:{
+    statusComp(){
+      if(this.taskInfo.status == 0){
+        return "普通问卷"
+      }else if(this.taskInfo.status == 1){
+        return "审核问卷"
+      }else{
+        return "未知问卷"
+      }
+    }
   },
   methods: {
     confirmAddQuestionaire(){

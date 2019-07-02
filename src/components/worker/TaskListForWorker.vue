@@ -7,14 +7,14 @@
         数量
       </el-col>
       <el-col :span="3">
-        奖励
+        任务类型
       </el-col>
       <el-col :span="6">
         创建时间
       </el-col>
       <el-col :span="3">操作</el-col>
     </el-row>
-    <el-collapse style="min-height:250px;border-bottom:none;height: 450px">
+    <el-collapse style="min-height:450px;border-bottom:none;">
       <task-for-worker v-for="item in showedList" :key="item.id" :taskInfo="item" style="margin-top: 10px; padding-bottom: 10px"></task-for-worker>
     </el-collapse>
     <div class="pages" style="padding: 0px">
