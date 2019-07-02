@@ -13,7 +13,7 @@
         <el-col :span="6" style="font-size: 14pt">{{taskInfo.startTime}}</el-col>
         <el-col :span="3">
           <el-button type="warning" @click.stop="confirmAdd" v-show="taskInfo.type!='ver6'">接受任务</el-button>
-          <el-button type="warning" @click.stop="confirmAddQuestionaire" v-show="taskInfo.type=='ver6'">接受任务</el-button>
+          <el-button style="margin-left:0;" type="warning" @click.stop="confirmAddQuestionaire" v-show="taskInfo.type=='ver6'">接受任务</el-button>
         </el-col>
       </el-row>
     </template>
