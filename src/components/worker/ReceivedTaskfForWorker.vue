@@ -19,7 +19,10 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <router-link v-bind:to="'/worker/task/answer?stid='+scope.row.id" target="_blank">
-              <el-button size="small" type="text" v-show="scope.row.isFinished == '0'">继续任务</el-button>
+              <el-button size="small" type="text" v-show="scope.row.isFinished == '0' && scope.row.taskType != 'ver6'">继续任务</el-button>
+            </router-link>
+            <router-link v-bind:to="'/worker/task/answer/questionnaire?stid=' +scope.row.id" target="_blank">
+              <el-button size="small" type="text" v-show="scope.row.isFinished == '0'&& scope.row.taskType == 'ver6'">继续任务</el-button>
             </router-link>
             <span v-show="scope.row.isFinished == '1'" style="color:green;font-size:12px">已完成</span>
             <span v-show="scope.row.isFinished == '-1'" style="color:red;font-size:12px">过期</span>
@@ -67,6 +70,7 @@ export default {
       let lst=this.pageSize*this.curPage;
       let tem=this.tasks.slice(fst,lst);
       
+      console.log(tem,"tem");
       return tem;
     }
   },

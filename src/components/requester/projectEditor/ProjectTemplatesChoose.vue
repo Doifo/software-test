@@ -171,7 +171,11 @@
             </div>
             <div style="text-align:center;">
               <p>请点击下面的链接完成问卷</p>
-              <a href="http://www.ringsurvey.com/">调查问卷</a>
+              <p> <a href="http://www.ringsurvey.com/">调查问卷</a></p>
+              <p><el-input style="width:60%" v-model="responseGuid" placeholder="请输入responseGuid"></el-input></p>
+              
+           
+              
             </div>
           </div>
           <!--preview_box end-->
@@ -206,6 +210,7 @@ export default {
   },
   data() {
     return {
+      responseGuid:'',
       templates: {
         tmp1: {
           desc: "请问此图中是否含有人脸?",
