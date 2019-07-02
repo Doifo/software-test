@@ -7,7 +7,7 @@
         数量
       </el-col>
       <el-col :span="3">
-        奖励
+        任务类型
       </el-col>
       <el-col :span="6">
         创建时间

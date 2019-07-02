@@ -5,7 +5,7 @@
       <strong style="font-size: 24pt">恭 喜 你 ！！！</strong>
     </el-row>
     <el-row style="text-align: center; font-size: 20pt; margin-top: 20px">
-      您已完成创建问醒目需的所有步骤
+      您已完成创建任务的所有步骤
     </el-row>
     <el-row style="text-align: center; font-size: 20pt; margin-top: 20px">
       您的项目已经成功创建
