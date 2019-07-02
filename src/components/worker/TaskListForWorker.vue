@@ -48,6 +48,7 @@ export default {
       let lst=this.pageSize*this.curPage;
       let tem=this.allTaskList.slice(fst,lst);
       
+      console.log("tem",tem)
       return tem;
       //return this.allTaskList;
     }
@@ -65,7 +66,7 @@ export default {
       alert(val);
     },
     test() {
-      console.log(this.allTaskList);
+      //console.log(this.allTaskList);
     }
   },
   props:{

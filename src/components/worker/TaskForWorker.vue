@@ -103,18 +103,23 @@ export default {
     }
   },
   mounted() {
-    console.log(this.taskInfo);
-    let minNumber = 65525;
-    let restQuestion = JSON.parse(this.taskInfo.restOfQuestion);
-    for (let key in restQuestion) {
-      for (let item of restQuestion[key]) {
-        if (minNumber > item.end - item.begin + 1) {
-          minNumber = item.end - item.begin + 1;
+    console.log("taskInfo",this.taskInfo);
+    if(this.taskInfo.type=="ver6"){
+      this.minNumber=1;
+    }
+    else{
+      let minNumber = 65525;
+      let restQuestion = JSON.parse(this.taskInfo.restOfQuestion);
+      for (let key in restQuestion) {
+        for (let item of restQuestion[key]) {
+          if (minNumber > item.end - item.begin + 1) {
+            minNumber = item.end - item.begin + 1;
+          }
         }
       }
+      if(minNumber == 65525) minNumber = 0;
+      this.minNumber = minNumber; 
     }
-    if(minNumber == 65525) minNumber = 0;
-    this.minNumber = minNumber;
   }
 };
 </script>
