@@ -42,9 +42,12 @@
       <span slot="footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="confirm">确认通过</el-button>
-        <router-link v-bind:to="'/admin-task-detail/' + task.id" target="_blank">
+        <router-link v-bind:to="'/admin-task-detail/' + task.id" v-show="task.type!='ver6'" target="_blank">
           <el-button type="primary" @click="dialogVisible = false;">查看问卷详情</el-button>
         </router-link>
+         <a v-bind:href="task.resourceLink" v-show="task.type=='ver6'" target="_blank">
+          <el-button type="primary" @click="dialogVisible = false;">查看问卷详情</el-button>
+        </a>
       </span>
     </el-dialog>
   </div>
@@ -66,11 +69,13 @@ export default {
     task: Object
   },
   mounted() {
+    
     if (this.task.name.length >= 10) {
       this.taskName = this.task.name.slice(0, 10) + " ...";
     } else {
       this.taskName = this.task.name.slice(0, 10);
     }
+    console.log(this.task,"props")
   },
   methods: {
     confirm() {

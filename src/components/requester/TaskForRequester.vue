@@ -48,9 +48,12 @@
         <router-link v-bind:to="'/requester-answer/'  + task.id + '/' +task.type" target="_blank">
           <el-button type="primary" @click="getAns">查看答案</el-button>
         </router-link>
-        <router-link v-bind:to="'/requester/project/preview/' + task.id" target="_blank">
+        <router-link v-bind:to="'/requester/project/preview/' + task.id" target="_blank"  v-show="task.type!='ver6'">
           <el-button type="primary" @click="dialogVisible = false">查看详情</el-button>
         </router-link>
+        <a v-bind:href="task.resourceLink" v-show="task.type=='ver6'" target="_blank">
+          <el-button type="primary" @click="dialogVisible = false;">查看详情</el-button>
+        </a>
       </span>
     </el-dialog>
   </div>

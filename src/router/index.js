@@ -8,6 +8,7 @@ import WorkerQualification from '@/views/WorkerQualification.vue'
 import WorkerTaskPlayground from '@/views/WorkerTaskPlayground.vue'
 import WorkerTransaction from '@/views/WorkerTransaction'
 import QuestionListForWorker from '@/components/worker/QuestionListForWorker'
+import QuestionnaireForWorker from '@/components/worker/QuestionnaireForWorker'
 
 import RequesterInformation from '@/views/RequesterInformation.vue'
 import RequesterEditProject from '@/views/RequesterEditProject.vue'
@@ -128,6 +129,9 @@ export default new Router({
     {
       path:'/requester-answer/:id/:type',
       component:RequesterAnswer
+    },{
+      path:'/worker/task/answer/questionnaire',
+      component:QuestionnaireForWorker
     }
   ],
   mode:"history"

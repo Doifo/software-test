@@ -52,9 +52,10 @@
             ></project-layout-edit>
             <project-preview @submitForm="handleSubmitForm" :taskId="taskId" v-if="step===3"></project-preview>
 
-            <div v-if="step==4" style="text-align:center">
+            <div v-if="step==4" style="text-align:center;height:400px">
               <p>请点击下面的链接完成问卷</p>
               <p><a :href="url">调查问卷</a></p>
+              <p><el-input style="width:60%" v-model="responseGuid" placeholder="请输入responseGuid"></el-input></p>
               <el-button type="primary" @click="reFresh()">完成</el-button>
             </div>
 
@@ -88,7 +89,8 @@ export default {
       baseInfo: {},
       qtype: "ver1",
       qtmp: {},
-      url:''
+      url:'',
+      responseGuid:''
     };
   },
   components: {
@@ -102,7 +104,7 @@ export default {
   },
   methods: {
     reFresh(){
-      this.$router.push("/requester/project/edit")
+      this.$router.replace("/requester/information")
     },
     submitAnswer() {
       this.$router.replace("/requester-information")
