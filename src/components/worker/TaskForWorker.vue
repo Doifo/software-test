@@ -11,7 +11,8 @@
         <el-col :span="3">¥{{taskInfo.reward}}/条</el-col>
         <el-col :span="6" style="font-size: 14pt">{{taskInfo.startTime}}</el-col>
         <el-col :span="3">
-          <el-button type="warning" @click.stop="confirmAdd">接受任务</el-button>
+          <el-button type="warning" @click.stop="confirmAdd" v-show="taskInfo.type!='ver6'">接受任务</el-button>
+          <el-button type="warning" @click.stop="confirmAddQuestionaire" v-show="taskInfo.type=='ver6'">接受任务</el-button>
         </el-col>
       </el-row>
     </template>
@@ -52,6 +53,22 @@ export default {
     };
   },
   methods: {
+    confirmAddQuestionaire(){
+     this.$confirm("确定接受任务吗？", "接受任务", {
+              confirmButtonText: "确认",
+              cancelButtonText: "取消",
+              type: "warning"
+            })
+              .then(() => {
+                //this.$router.replace(this.taskInfo.resourceLink)
+                var url = this.taskInfo.resourceLink;
+                //window.open(url,"_blank");
+                window.location.href = url
+              })
+              .catch(() => {
+                console.log("cancel");
+              });
+    },
     confirmAdd() {
       this.$prompt("请选择要接受的题目数量", "选择题数", {
         confirmButtonText: "确定",
