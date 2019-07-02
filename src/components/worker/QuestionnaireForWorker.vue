@@ -11,13 +11,14 @@
         <el-main style="padding: 0; background-color: #efefef">
           <el-col :span="16" style="margin-left: 40px" >
               <!--answerver0-5-->
-            <div style="width: 100%; margin: auto">
-              <div style="width: 100%; margin: 20px;text-align:center;padding:20px;background-color:#fff;border-radius:4px">
+            
+              <div style="text-align:center;padding:40px;padding-top:80px;margin:20px;background-color:#fff;border-radius:4px">
               <p>请点击下面的链接完成问卷</p>
               <p><a :href="this.mainTaskInfo.resourceLink">调查问卷</a></p>
-              <el-input v-model="responseGuid" placeholder="请输入responseGuid"></el-input>
+              <el-input style="width:60%" v-model="responseGuid" placeholder="请输入responseGuid"></el-input>
+              <div style="height:200px"></div>
                 </div>
-            </div>
+           
 
           </el-col>
           <el-col :span="6" style="margin-left: 20px">
