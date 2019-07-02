@@ -12,7 +12,8 @@
         <el-col :span="3">{{statusComp}}</el-col>
         <el-col :span="6" style="font-size: 14pt">{{taskInfo.startTime}}</el-col>
         <el-col :span="3">
-          <el-button type="warning" @click.stop="confirmAdd">接受任务</el-button>
+          <el-button type="warning" @click.stop="confirmAdd" v-show="taskInfo.type!='ver6'">接受任务</el-button>
+          <el-button type="warning" @click.stop="confirmAddQuestionaire" v-show="taskInfo.type=='ver6'">接受任务</el-button>
         </el-col>
       </el-row>
     </template>
@@ -65,6 +66,22 @@ export default {
     }
   },
   methods: {
+    confirmAddQuestionaire(){
+     this.$confirm("确定接受任务吗？", "接受任务", {
+              confirmButtonText: "确认",
+              cancelButtonText: "取消",
+              type: "warning"
+            })
+              .then(() => {
+                //this.$router.replace(this.taskInfo.resourceLink)
+                var url = this.taskInfo.resourceLink;
+                //window.open(url,"_blank");
+                window.location.href = url
+              })
+              .catch(() => {
+                console.log("cancel");
+              });
+    },
     confirmAdd() {
       this.$prompt("请选择要接受的题目数量", "选择题数", {
         confirmButtonText: "确定",
@@ -116,18 +133,23 @@ export default {
     }
   },
   mounted() {
-    console.log(this.taskInfo);
-    let minNumber = 65525;
-    let restQuestion = JSON.parse(this.taskInfo.restOfQuestion);
-    for (let key in restQuestion) {
-      for (let item of restQuestion[key]) {
-        if (minNumber > item.end - item.begin + 1) {
-          minNumber = item.end - item.begin + 1;
+    console.log("taskInfo",this.taskInfo);
+    if(this.taskInfo.type=="ver6"){
+      this.minNumber=1;
+    }
+    else{
+      let minNumber = 65525;
+      let restQuestion = JSON.parse(this.taskInfo.restOfQuestion);
+      for (let key in restQuestion) {
+        for (let item of restQuestion[key]) {
+          if (minNumber > item.end - item.begin + 1) {
+            minNumber = item.end - item.begin + 1;
+          }
         }
       }
+      if(minNumber == 65525) minNumber = 0;
+      this.minNumber = minNumber; 
     }
-    if(minNumber == 65525) minNumber = 0;
-    this.minNumber = minNumber;
   }
 };
 </script>
